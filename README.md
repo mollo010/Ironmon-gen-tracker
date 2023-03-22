@@ -3,9 +3,6 @@ This is a in developement fork of the https://github.com/besteon/Ironmon-Tracker
 
 This project is based on [MKDasher's PokemonBizhawkLua project](https://github.com/besteon/Ironmon-Tracker).
 
-## Supported Games
-
-For NDS (gen 4/5) games, please use the [NDS IronMon Tracker](https://github.com/Brian0255/NDS-Ironmon-Tracker) by OnlySpaghettiCode
 
 Currently supported Pokémon games / languages:
 Nothing
