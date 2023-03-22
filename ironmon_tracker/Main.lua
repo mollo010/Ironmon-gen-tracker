@@ -5,7 +5,7 @@ Main.Version = { major = "7", minor = "4", patch = "2" }
 
 Main.CreditsList = { -- based on the PokemonBizhawkLua project by MKDasher
 	CreatedBy = "Besteon",
-	Contributors = { "UTDZac", "Fellshadow", "ninjafriend", "OnlySpaghettiCode", "bdjeffyp", "Amber Cyprian", "thisisatest", "kittenchilly", "Kurumas", "davidhouweling", "AKD", "rcj001", "GB127", },
+	Contributors = { "Sannji","UTDZac", "Fellshadow", "ninjafriend", "OnlySpaghettiCode", "bdjeffyp", "Amber Cyprian", "thisisatest", "kittenchilly", "Kurumas", "davidhouweling", "AKD", "rcj001", "GB127", },
 }
 
 Main.EMU = {
@@ -76,7 +76,7 @@ function Main.Initialize()
 	-- Get the quickload files just once to be used in several places during start-up, removed later
 	Main.tempQuickloadFiles = Main.GetQuickloadFiles()
 	Main.ReadAttemptsCount()
-	Main.CheckForVersionUpdate()
+	-- Main.CheckForVersionUpdate()
 
 	return true
 end
@@ -134,6 +134,7 @@ function Main.Run()
 	-- After a game is successfully loaded, then initialize the remaining Tracker files
 	Main.ReadAttemptsCount() -- re-check attempts count if different game is loaded
 	Main.InitializeAllTrackerFiles()
+
 	Main.tempQuickloadFiles = nil -- From now on, quickload files should be re-checked
 
 	-- Final garbage collection prior to game loops beginning
@@ -260,10 +261,13 @@ function Main.InitializeAllTrackerFiles()
 	for _, luafile in ipairs(FileManager.LuaCode) do
 		local luaObject = globalRef[luafile.name or ""]
 		if type(luaObject.initialize) == "function" then
+
 			luaObject.initialize()
 		end
+
 	end
 
+	return
 	CustomCode.startup()
 end
 

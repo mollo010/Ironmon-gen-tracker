@@ -67,14 +67,17 @@ end
 
 -- Splits the address into [Memory Domain], [Remaining Addr]
 function Memory.splitDomainAndAddress(addr)
+
 	local memdomain = Utils.bit_rshift(addr, 24)
 	local splitaddr = Utils.bit_and(addr, 0xFFFFFF)
 	if memdomain == 0 then
 		return "BIOS", splitaddr
 	elseif memdomain == 2 then
-		return "EWRAM", splitaddr
+		return "WRAM", splitaddr
 	elseif memdomain == 3 then
 		return "IWRAM", splitaddr
+	elseif memdomain == 4 then
+		return "WRAM", splitaddr
 	elseif memdomain == 8 then
 		return "ROM", splitaddr
 	end

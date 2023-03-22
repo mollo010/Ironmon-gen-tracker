@@ -73,11 +73,13 @@ Battle.EnemyTrainersToHideAlly = {
 }
 
 function Battle.update()
+
 	if not Program.isValidMapLocation() then
 		return
 	end
 
 	if Program.Frames.highAccuracyUpdate == 0 and not Program.inCatchingTutorial then
+
 		Battle.updateBattleStatus()
 	end
 
@@ -90,32 +92,44 @@ function Battle.update()
 	end
 
 	if Program.Frames.highAccuracyUpdate == 0 then
+
 		Battle.updateHighAccuracy()
+
 	end
 	if Program.Frames.lowAccuracyUpdate == 0 then
+		-- wip will need changes
 		Battle.updateLowAccuracy()
+
 		CustomCode.afterBattleDataUpdate()
+
 	end
+
 end
 
 -- Check if we can enter battle (opposingPokemon check required for lab fight), or if a battle has just finished
 function Battle.updateBattleStatus()
-	-- BattleStatus [0 = In battle, 1 = Won the match, 2 = Lost the match, 4 = Fled, 7 = Caught]
-	local lastBattleStatus = Memory.readbyte(GameSettings.gBattleOutcome)
-	local opposingPokemon = Tracker.getPokemon(1, false) -- get the lead pokemon on the enemy team
-	local totalBattles = Utils.getGameStat(Constants.GAME_STATS.TOTAL_BATTLES)
-	if Battle.totalBattles ~= 0 and (Battle.totalBattles < totalBattles) then
-		Battle.battleStarting = true
-	end
-	Battle.totalBattles = totalBattles
 
-	if not Battle.inBattle and lastBattleStatus == 0 and opposingPokemon ~= nil then
+	-- BattleStatus [0 = In battle, 1 = Won the match, 2 = Lost the match, 4 = Fled, 7 = Caught]
+	local lastBattleStatus = Memory.readbyte(GameSettings.gBattleTypeFlags)
+	local opposingPokemon = Tracker.getPokemon(1, false) -- get the lead pokemon on the enemy team
+	--local totalBattles = Utils.getGameStat(Constants.GAME_STATS.TOTAL_BATTLES)
+	--if Battle.totalBattles ~= 0 and (Battle.totalBattles < totalBattles) then
+	--	Battle.battleStarting = true
+	--end
+	--Battle.totalBattles = totalBattles
+
+	if not Battle.inBattle and lastBattleStatus ~= 0 and opposingPokemon ~= nil then
 		-- Battle.isWildEncounter = Tracker.Data.trainerID == opposingPokemon.trainerID -- NOTE: doesn't work well, temporarily removing
+
 		Battle.beginNewBattle()
-	elseif Battle.inBattle and (lastBattleStatus ~= 0 or opposingPokemon==nil) then
+
+	elseif Battle.inBattle and (lastBattleStatus == 0 or opposingPokemon==nil) then
 		Battle.endCurrentBattle()
+
 	end
-	if GameOverScreen.shouldDisplay(lastBattleStatus) then -- should occur exactly once per lost battle
+	local lead = Tracker.getPokemon(1, true)
+	if lastBattleStatus == 0 and lead.curHP==0 then -- should occur exactly once per lost battle
+
 		if not Battle.isWildEncounter then
 			GameOverScreen.incrementLosses()
 		end
@@ -156,8 +170,8 @@ function Battle.updateViewSlots()
 	local prevOwnPokemonRight = Battle.Combatants.RightOwn
 
 	--update all 2 (or 4)
-	Battle.Combatants.LeftOwn = Memory.readbyte(GameSettings.gBattlerPartyIndexes) + 1
-	Battle.Combatants.LeftOther = Memory.readbyte(GameSettings.gBattlerPartyIndexes + 2) + 1
+	Battle.Combatants.LeftOwn = Memory.readbyte(GameSettings.gBattlerPartyIndexes+1)
+	Battle.Combatants.LeftOther = Memory.readbyte(GameSettings.gBattlerPartyIndexes + 2)
 
 	-- Verify the view slots are within bounds, and that for doubles, the pokemon is not fainted (data is not cleared if there are no remaining pokemon)
 	if Battle.Combatants.LeftOwn < 1 or Battle.Combatants.LeftOwn > 6 then
@@ -198,24 +212,24 @@ end
 
 function Battle.processBattleTurn()
 	-- attackerValue = 0 or 2 for player mons and 1 or 3 for enemy mons (2,3 are doubles partners)
-	Battle.attacker = Memory.readbyte(GameSettings.gBattlerAttacker)
 
-	local currentTurn = Memory.readbyte(GameSettings.gBattleResults + 0x13)
-	local currDamageTotal = Memory.readword(GameSettings.gTakenDmg)
+
+	local currentTurn = Memory.readbyte(GameSettings.gTurn)
+
 
 	-- As a new turn starts, note the previous amount of total damage, reset turn counters
 	if currentTurn ~= Battle.turnCount then
 		Battle.turnCount = currentTurn
-		Battle.prevDamageTotal = currDamageTotal
+		Battle.prevDamageTotal = 0
 		Battle.enemyHasAttacked = false
 		Battle.isNewTurn = true
 	end
 
-	local damageDelta = currDamageTotal - Battle.prevDamageTotal
-	if damageDelta ~= 0 then
+
+
 		-- Check current and previous attackers to see if enemy attacked within the last 30 frames
-		if Battle.attacker % 2 ~= 0 then
-			local enemyMoveId = Memory.readword(GameSettings.gBattleResults + 0x24)
+
+			local enemyMoveId = Memory.readbyte(GameSettings.eMove)
 			if enemyMoveId ~= 0 then
 				-- If a new move is being used, reset the damage from the last move
 				if not Battle.enemyHasAttacked then
@@ -225,22 +239,13 @@ function Battle.processBattleTurn()
 
 				Battle.lastEnemyMoveId = enemyMoveId
 				Battle.actualEnemyMoveId = enemyMoveId
-				Battle.damageReceived = Battle.damageReceived + damageDelta
-				Battle.prevDamageTotal = currDamageTotal
+
 			end
-		else
-			Battle.prevDamageTotal = currDamageTotal
-		end
-	elseif Battle.attacker % 2 ~= 0 then
-		-- For recording any move (including non-damaging moves) to be used by mGBA Move Info Lookup
-		local actualEnemyMoveId = Memory.readword(GameSettings.gBattleResults + 0x24)
-		if actualEnemyMoveId ~= 0 then
-			Battle.actualEnemyMoveId = actualEnemyMoveId
-		end
-	end
+
+
 
 	-- Track moves for transformed mons if applicable; need high accuracy checking since moves window can be opened an closed in < .5 second
-	Battle.trackTransformedMoves()
+	--Battle.trackTransformedMoves()
 end
 
 function Battle.updateTrackedInfo()
@@ -577,6 +582,7 @@ function Battle.beginNewBattle()
 	if Battle.inBattle then return end
 
 	GameOverScreen.createTempSaveState()
+
 	Program.updateBattleEncounterType()
 
 	Program.Frames.battleDataDelay = 60
@@ -595,14 +601,11 @@ function Battle.beginNewBattle()
 	Battle.Synchronize.attacker = -1
 	Battle.Synchronize.battlerTarget = -1
 	-- RS allocated a dword for the party size
-	if GameSettings.game == 1 then
-		Battle.partySize = Memory.readdword(GameSettings.gPlayerPartyCount)
-	else
-		Battle.partySize = Memory.readbyte(GameSettings.gPlayerPartyCount)
-	end
-	Battle.isGhost = false
 
-	Battle.opposingTrainerId = Memory.readword(GameSettings.gTrainerBattleOpponent_A)
+	Battle.partySize = Memory.readbyte(GameSettings.gPlayerPartyCount)
+
+
+	Battle.opposingTrainerId = Memory.readword(GameSettings.estats)
 
 	Tracker.Data.isViewingOwn = not Options["Auto swap to enemy"]
 	-- If the player hasn't fought the Rival yet, use this to determine their pokemon team based on starter ball selection
@@ -617,6 +620,7 @@ function Battle.beginNewBattle()
 		RightOwn = 2,
 		RightOther = 2,
 	}
+
 	Battle.populateBattlePartyObject()
 	Input.StatHighlighter:resetSelectedStat()
 
@@ -754,7 +758,7 @@ function Battle.populateBattlePartyObject()
 	--populate BattleParties for all Pokemon with their starting Abilities and pokemonIDs
 	Battle.BattleParties[0] = {}
 	Battle.BattleParties[1] = {}
-	for i=1, 6, 1 do
+	for i=1, 1, 1 do
 		local ownPokemon = Tracker.getPokemon(i, true)
 		if ownPokemon ~= nil then
 			local ownMoves = {
@@ -764,7 +768,7 @@ function Battle.populateBattlePartyObject()
 				ownPokemon.moves[4].id
 
 			}
-			local ability = PokemonData.getAbilityId(ownPokemon.pokemonID, ownPokemon.abilityNum)
+			local ability = ""
 			Battle.BattleParties[0][i] = {
 				abilityOwner = {
 					isOwn = true,
@@ -788,7 +792,7 @@ function Battle.populateBattlePartyObject()
 				enemyPokemon.moves[4].id
 
 			}
-			local ability = PokemonData.getAbilityId(enemyPokemon.pokemonID, enemyPokemon.abilityNum)
+			local ability = ""
 			Battle.BattleParties[1][i] = {
 				abilityOwner = {
 					isOwn = false,

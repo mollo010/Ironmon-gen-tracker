@@ -514,8 +514,8 @@ function Tracker.resetData()
 		},
 		encounterTable = { -- key: mapId, value: lookup table with key for terrain type and value of unique pokemonIDs
 		},
-		gameStatsFishing = Utils.getGameStat(Constants.GAME_STATS.FISHING_CAPTURES), -- Tally of fishing encounters, to track when one occurs
-		gameStatsRockSmash = Utils.getGameStat(Constants.GAME_STATS.USED_ROCK_SMASH), -- Tally of rock smash uses, to track encounters
+		gameStatsFishing = 0, -- Tally of fishing encounters, to track when one occurs
+		gameStatsRockSmash = 0, -- Tally of rock smash uses, to track encounters
 		isNewGame = true, -- Flag for new game, to check if stored trainerID is correct
 		whichRival = nil, -- To determine which rival the player will fight through the entire game, based on starter ball selection
 	}

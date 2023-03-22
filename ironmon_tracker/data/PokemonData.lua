@@ -1,10 +1,11 @@
 PokemonData = {
-	totalPokemon = 411,
+	totalPokemon = 190,
 }
 
 PokemonData.IsRand = {
 	pokemonTypes = false,
 	pokemonAbilities = false, -- Currently unused by the Tracker, as it never reveals this information by default
+
 }
 
 -- Enumerated constants that defines the various types a Pokémon and its Moves are
@@ -156,7 +157,7 @@ function PokemonData.initialize()
 end
 
 function PokemonData.readPokemonTypesFromMemory(pokemonID)
-	local typesData = Memory.readword(GameSettings.gBaseStats + (pokemonID * 0x1C) + 0x06)
+	local typesData = Memory.readword(GameSettings.gBaseStats + ((pokemonID-1) * 0x1C) + 0x06)
 	local typeOne = Utils.getbits(typesData, 0, 8)
 	local typeTwo = Utils.getbits(typesData, 8, 8)
 
@@ -183,26 +184,22 @@ function PokemonData.checkIfDataIsRandomized()
 
 	-- Check once if any data was randomized
 	local types = PokemonData.readPokemonTypesFromMemory(1) -- Bulbasaur
-	local abilities = PokemonData.readPokemonAbilitiesFromMemory(1) -- Bulbasaur
+	--local abilities = PokemonData.readPokemonAbilitiesFromMemory(1) -- Bulbasaur
 
 	if types ~= nil then
 		areTypesRandomized = types[1] ~= PokemonData.Types.GRASS or types[2] ~= PokemonData.Types.POISON
 	end
-	if abilities ~= nil then
-		areAbilitiesRandomized = abilities[1] ~= 65 or abilities[2] ~= 65 -- 65 = Overgrow
-	end
+
 
 	-- Check twice if any data was randomized (Randomizer does *not* force a change)
 	if not areTypesRandomized or not areAbilitiesRandomized then
 		types = PokemonData.readPokemonTypesFromMemory(131) -- Lapras
-		abilities = PokemonData.readPokemonAbilitiesFromMemory(131) -- Lapras
+
 
 		if types ~= nil and (types[1] ~= PokemonData.Types.WATER or types[2] ~= PokemonData.Types.ICE) then
 			areTypesRandomized = true
 		end
-		if abilities ~= nil and (abilities[1] ~= 11 or abilities[2] ~= 75) then -- 11 = Water Absorb, 75 = Shell Armor
-			areAbilitiesRandomized = true
-		end
+
 	end
 
 	PokemonData.IsRand.pokemonTypes = areTypesRandomized
@@ -214,7 +211,7 @@ function PokemonData.checkIfDataIsRandomized()
 end
 
 function PokemonData.getAbilityId(pokemonID, abilityNum)
-	if abilityNum == nil or not PokemonData.isValid(pokemonID) then
+	if true then
 		return 0
 	end
 
@@ -234,7 +231,7 @@ end
 
 function PokemonData.getIdFromName(pokemonName)
 	for id, pokemon in pairs(PokemonData.Pokemon) do
-		if pokemon.name == pokemonName then
+		if string.upper(pokemon.name) == pokemonName then
 			return id
 		end
 	end
@@ -292,18 +289,15 @@ PokemonData.TypeIndexMap = {
 	[0x03] = PokemonData.Types.POISON,
 	[0x04] = PokemonData.Types.GROUND,
 	[0x05] = PokemonData.Types.ROCK,
-	[0x06] = PokemonData.Types.BUG,
-	[0x07] = PokemonData.Types.GHOST,
-	[0x08] = PokemonData.Types.STEEL,
-	[0x09] = PokemonData.Types.UNKNOWN, -- MYSTERY
-	[0x0A] = PokemonData.Types.FIRE,
-	[0x0B] = PokemonData.Types.WATER,
-	[0x0C] = PokemonData.Types.GRASS,
-	[0x0D] = PokemonData.Types.ELECTRIC,
-	[0x0E] = PokemonData.Types.PSYCHIC,
-	[0x0F] = PokemonData.Types.ICE,
-	[0x10] = PokemonData.Types.DRAGON,
-	[0x11] = PokemonData.Types.DARK,
+	[0x07] = PokemonData.Types.BUG,
+	[0x08] = PokemonData.Types.GHOST,
+	[0x14] = PokemonData.Types.FIRE,
+	[0x15] = PokemonData.Types.WATER,
+	[0x16] = PokemonData.Types.GRASS,
+	[0x17] = PokemonData.Types.ELECTRIC,
+	[0x18] = PokemonData.Types.PSYCHIC,
+	[0x19] = PokemonData.Types.ICE,
+	[0x1A] = PokemonData.Types.DRAGON,
 }
 
 --[[
@@ -542,7 +536,7 @@ PokemonData.Pokemon = {
 		weight = 29.5
 	},
 	{
-		name = "Nidoran F",
+		name = "Nidoran",
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = "16",
 		bst = "275",

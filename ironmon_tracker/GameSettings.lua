@@ -33,166 +33,98 @@ GameSettings.ABILITIES = {}
 -- https://github.com/pret/pokefirered/blob/9aaabcc30da51bea0c47d6e5df1dc6f8f534991c/charmap.txt
 -- Likely need a second set for Japanese Hiragana, Katakana, and punctuation
 GameSettings.GameCharMap = {
-	[0x00] = ' ',
-	[0x01] = 'À',
-	[0x02] = 'Á',
-	[0x03] = 'Â',
-	[0x04] = 'Ç',
-	[0x05] = 'È',
-	[0x06] = 'É',
-	[0x07] = 'Ê',
-	[0x08] = 'Ë',
-	[0x09] = 'Ì',
-	[0x0B] = 'Î',
-	[0x0C] = 'Ï',
-	[0x0D] = 'Ò',
-	[0x0E] = 'Ó',
-	[0x0F] = 'Ô',
-	[0x10] = 'Œ',
-	[0x11] = 'Ù',
-	[0x12] = 'Ú',
-	[0x13] = 'Û',
-	[0x14] = 'Ñ',
-	[0x15] = 'ß',
-	[0x16] = 'à',
-	[0x17] = 'á',
-	[0x19] = 'ç',
-	[0x1A] = 'è',
-	[0x1B] = 'é',
-	[0x1C] = 'ê',
-	[0x1D] = 'ë',
-	[0x1E] = 'ì',
-	[0x20] = 'î',
-	[0x21] = 'ï',
-	[0x22] = 'ò',
-	[0x23] = 'ó',
-	[0x24] = 'ô',
-	[0x25] = 'œ',
-	[0x26] = 'ù',
-	[0x27] = 'ú',
-	[0x28] = 'û',
-	[0x29] = 'ñ',
-	[0x2A] = 'º',
-	[0x2B] = 'ª',
-	[0x2C] = Constants.HIDDEN_INFO or 'SUPER_ER',
-	[0x2D] = '&',
-	[0x2E] = '+',
-	[0x34] = 'LV',
-	[0x35] = '=',
-	[0x36] = ';',
-	[0x51] = '¿',
-	[0x52] = '¡',
-	[0x53] = 'PK',
-	[0x54] = 'MN',
-	[0x55] = 'PO',
-	[0x56] = 'KE',
-	[0x57] = 'BL',
-	[0x58] = 'OC',
-	[0x59] = 'K',
-	[0x5A] = 'Í',
-	[0x5B] = '%',
-	[0x5C] = '(',
-	[0x5D] = ')',
-	[0x68] = 'â',
-	[0x6F] = 'í',
-	[0x79] = Constants.HIDDEN_INFO or 'UP_ARROW',
-	[0x7A] = Constants.HIDDEN_INFO or 'DOWN_ARROW',
-	[0x7B] = Constants.HIDDEN_INFO or 'LEFT_ARROW',
-	[0x7C] = Constants.HIDDEN_INFO or 'RIGHT_ARROW',
-	[0x84] = Constants.HIDDEN_INFO or 'SUPER_E',
-	[0x85] = '<',
-	[0x86] = '>',
-	[0xA0] = Constants.HIDDEN_INFO or 'SUPER_RE',
-	[0xA1] = '0',
-	[0xA2] = '1',
-	[0xA3] = '2',
-	[0xA4] = '3',
-	[0xA5] = '4',
-	[0xA6] = '5',
-	[0xA7] = '6',
-	[0xA8] = '7',
-	[0xA9] = '8',
-	[0xAA] = '9',
-	[0xAB] = '!',
-	[0xAC] = '?',
-	[0xAD] = '.',
-	[0xAE] = '-',
-	[0xB0] = '…',
-	[0xB1] = '“',
-	[0xB2] = '”',
-	[0xB3] = '‘',
-	[0xB4] = "'",
-	[0xB5] = '♂',
-	[0xB6] = '♀',
-	[0xB7] = '¥',
-	[0xB8] = ',',
-	[0xB9] = '×',
-	[0xBA] = '/',
-	[0xBB] = 'A',
-	[0xBC] = 'B',
-	[0xBD] = 'C',
-	[0xBE] = 'D',
-	[0xBF] = 'E',
-	[0xC0] = 'F',
-	[0xC1] = 'G',
-	[0xC2] = 'H',
-	[0xC3] = 'I',
-	[0xC4] = 'J',
-	[0xC5] = 'K',
-	[0xC6] = 'L',
-	[0xC7] = 'M',
-	[0xC8] = 'N',
-	[0xC9] = 'O',
-	[0xCA] = 'P',
-	[0xCB] = 'Q',
-	[0xCC] = 'R',
-	[0xCD] = 'S',
-	[0xCE] = 'T',
-	[0xCF] = 'U',
-	[0xD0] = 'V',
-	[0xD1] = 'W',
-	[0xD2] = 'X',
-	[0xD3] = 'Y',
-	[0xD4] = 'Z',
-	[0xD5] = 'a',
-	[0xD6] = 'b',
-	[0xD7] = 'c',
-	[0xD8] = 'd',
-	[0xD9] = 'e',
-	[0xDA] = 'f',
-	[0xDB] = 'g',
-	[0xDC] = 'h',
-	[0xDD] = 'i',
-	[0xDE] = 'j',
-	[0xDF] = 'k',
-	[0xE0] = 'l',
-	[0xE1] = 'm',
-	[0xE2] = 'n',
-	[0xE3] = 'o',
-	[0xE4] = 'p',
-	[0xE5] = 'q',
-	[0xE6] = 'r',
-	[0xE7] = 's',
-	[0xE8] = 't',
-	[0xE9] = 'u',
-	[0xEA] = 'v',
-	[0xEB] = 'w',
-	[0xEC] = 'x',
-	[0xED] = 'y',
-	[0xEE] = 'z',
-	[0xEF] = '?',
-	[0xF0] = ':',
-	[0xF1] = 'Ä',
-	[0xF2] = 'Ö',
-	[0xF3] = 'Ü',
-	[0xF4] = 'ä',
-	[0xF5] = 'ö',
-	[0xF6] = 'ü',
-	[0xFF] = '$',
+	[0x4A] ='[pk]' ,
+	[0x54] ='[POKé]' ,
+	[0x74] ='№' ,
+	[0x75] ='…' ,
+	[0x7F] ='' ,
+	[0x79] ='┌' ,
+	[0x7A] ='─' ,
+	[0x7B] ='┐' ,
+	[0x7C] ='│' ,
+	[0x7D] ='└' ,
+	[0x7E] ='┘' ,
+	[0x80] ='A' ,
+	[0x81] ='B' ,
+	[0x82] ='C' ,
+	[0x83] ='D' ,
+	[0x84] ='E' ,
+	[0x85] ='F' ,
+	[0x86] ='G' ,
+	[0x87] ='H' ,
+	[0x88] ='I' ,
+	[0x89] ='J' ,
+	[0x8A] ='K' ,
+	[0x8B] ='L' ,
+	[0x8C] ='M' ,
+	[0x8D] ='N' ,
+	[0x8E] ='O' ,
+	[0x8F] ='P' ,
+	[0x90] ='Q' ,
+	[0x91] ='R' ,
+	[0x92] ='S' ,
+	[0x93] ='T' ,
+	[0x94] ='U' ,
+	[0x95] ='V' ,
+	[0x96] ='W' ,
+	[0x97] ='X' ,
+	[0x98] ='Y' ,
+	[0x99] ='Z' ,
+	[0x9A] ='(' ,
+	[0x9B] =')' ,
+	[0x9C] =':' ,
+	[0x9D] =';' ,
+	[0x9E] ='[' ,
+	[0x9F] =']' ,
+	[0xA0] ='a' ,
+	[0xA1] ='b' ,
+	[0xA2] ='c' ,
+	[0xA3] ='d' ,
+	[0xA4] ='e' ,
+	[0xA5] ='f' ,
+	[0xA6] ='g' ,
+	[0xA7] ='h' ,
+	[0xA8] ='i' ,
+	[0xA9] ='j' ,
+	[0xAA] ='k' ,
+	[0xAB] ='l' ,
+	[0xAC] ='m' ,
+	[0xAD] ='n' ,
+	[0xAE] ='o' ,
+	[0xAF] ='p' ,
+	[0xB0] ='q' ,
+	[0xB1] ='r' ,
+	[0xB2] ='s' ,
+	[0xB3] ='t' ,
+	[0xB4] ='u' ,
+	[0xB5] ='v' ,
+	[0xB6] ='w' ,
+	[0xB7] ='x' ,
+	[0xB8] ='y' ,
+	[0xB9] ='z' ,
+	[0xBA] ='é' ,
+	[0xBB] ='d' ,
+	[0xBC] ='l' ,
+	[0xBD] ='s' ,
+	[0xBE] ='t' ,
+	[0xBF] ='v' ,
+	[0xE0] ='"' ,
+	[0xE1] ='[PK]' ,
+	[0xE2] ='[MN]' ,
+	[0xE3] ='-' ,
+	[0xE4] ='r' ,
+	[0xE5] ='m' ,
+	[0xE6] ='?' ,
+	[0xE7] ='!' ,
+	[0xE8] ='.' ,
+	[0xF0] ='$' ,
+	[0xF2] ='[.]' ,
+	[0xF4] =',' ,
+
 }
 
 function GameSettings.initialize()
-	local gamecode = Utils.reverseEndian32(Memory.read32(0x080000AC))
+	local gamecode = Utils.reverseEndian32(Memory.read32(0x0800013C))
 	GameSettings.setGameInfo(gamecode)
 
 	-- Skip rest of setup if game not supported
@@ -200,17 +132,15 @@ function GameSettings.initialize()
 		return
 	end
 
-	local gameversion = Utils.reverseEndian32(Memory.read32(0x080000BC))
-	local gameIndex, versionIndex = GameSettings.setGameVersion(gameversion)
+	--local gameversion = Utils.reverseEndian32(Memory.read16(0x080000BC))
+	local gameIndex, versionIndex = 1 ,1
 
-	-- 0x02...
-	GameSettings.setEwramAddresses()
-	-- 0x03...
-	GameSettings.setIwramAddresses()
+	-- 0x04...
+	GameSettings.setWramAddresses()
 	-- 0x08...
 	GameSettings.setRomAddresses(gameIndex, versionIndex)
 	-- Ability auto-tracking scripts
-	GameSettings.setAbilityTrackingAddresses(gameIndex, versionIndex)
+	--GameSettings.setAbilityTrackingAddresses(gameIndex, versionIndex)
 end
 
 function GameSettings.getRomName()
@@ -235,87 +165,15 @@ end
 function GameSettings.setGameInfo(gamecode)
 	-- Mapped by key=gamecode
 	local games = {
-		[0x41585645] = {
+		[0x52454400] = {
 			GAME_NUMBER = 1,
-			GAME_NAME = "Pokemon Ruby (U)",
+			GAME_NAME = "Pokemon RED (U)",
 			VERSION_GROUP = 1,
-			VERSION_COLOR = "Ruby",
+			VERSION_COLOR = "RED",
 			LANGUAGE = "English",
 			BADGE_PREFIX = "RSE",
 			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
-		},
-		[0x41585045] = {
-			GAME_NUMBER = 1,
-			GAME_NAME = "Pokemon Sapphire (U)",
-			VERSION_GROUP = 1,
-			VERSION_COLOR = "Sapphire",
-			LANGUAGE = "English",
-			BADGE_PREFIX = "RSE",
-			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
-		},
-		[0x42504545] = {
-			GAME_NUMBER = 2,
-			GAME_NAME = "Pokemon Emerald (U)",
-			VERSION_GROUP = 1,
-			VERSION_COLOR = "Emerald",
-			LANGUAGE = "English",
-			BADGE_PREFIX = "RSE",
-			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
-		},
-		[0x42505245] = {
-			GAME_NUMBER = 3,
-			GAME_NAME = "Pokemon FireRed (U)",
-			VERSION_GROUP = 2,
-			VERSION_COLOR = "FireRed",
-			LANGUAGE = "English",
-			BADGE_PREFIX = "FRLG",
-			BADGE_XOFFSETS = { 0, -2, -2, 0, 1, 1, 0, 1 },
-		},
-		[0x42505253] = {
-			GAME_NUMBER = 3,
-			GAME_NAME = "Pokemon Rojo Fuego (Spain)",
-			VERSION_GROUP = 2,
-			VERSION_COLOR = "FireRed",
-			LANGUAGE = "Spanish",
-			BADGE_PREFIX = "FRLG",
-			BADGE_XOFFSETS = { 0, -2, -2, 0, 1, 1, 0, 1 },
-		},
-		[0x42505249] = {
-			GAME_NUMBER = 3,
-			GAME_NAME = "Pokemon Rosso Fuoco (Italy)",
-			VERSION_GROUP = 2,
-			VERSION_COLOR = "FireRed",
-			LANGUAGE = "Italian",
-			BADGE_PREFIX = "FRLG",
-			BADGE_XOFFSETS = { 0, -2, -2, 0, 1, 1, 0, 1 },
-		},
-		[0x42505246] = {
-			GAME_NUMBER = 3,
-			GAME_NAME = "Pokemon Rouge Feu (France)",
-			VERSION_GROUP = 2,
-			VERSION_COLOR = "FireRed",
-			LANGUAGE = "French",
-			BADGE_PREFIX = "FRLG",
-			BADGE_XOFFSETS = { 0, -2, -2, 0, 1, 1, 0, 1 },
-		},
-		[0x42505244] = {
-			GAME_NUMBER = 3,
-			GAME_NAME = "Pokemon Feuerrote (Germany)",
-			VERSION_GROUP = 2,
-			VERSION_COLOR = "FireRed",
-			LANGUAGE = "German",
-			BADGE_PREFIX = "FRLG",
-			BADGE_XOFFSETS = { 0, -2, -2, 0, 1, 1, 0, 1 },
-		},
-		[0x42504745] = {
-			GAME_NUMBER = 3,
-			GAME_NAME = "Pokemon LeafGreen (U)",
-			VERSION_GROUP = 2,
-			VERSION_COLOR = "LeafGreen",
-			LANGUAGE = "English",
-			BADGE_PREFIX = "FRLG",
-			BADGE_XOFFSETS = { 0, -2, -2, 0, 1, 1, 0, 1 },
-		},
+		}
 	}
 
 	local game = games[gamecode]
@@ -327,9 +185,11 @@ function GameSettings.setGameInfo(gamecode)
 		GameSettings.language = game.LANGUAGE
 		GameSettings.badgePrefix = game.BADGE_PREFIX
 		GameSettings.badgeXOffsets = game.BADGE_XOFFSETS
+
+
 	else
 		GameSettings.gamename = "Unsupported Game"
-		Main.DisplayError("This game is unsupported by the Ironmon Tracker.\n\nCheck the tracker's README.txt file for currently supported games.")
+		Main.DisplayError("This game is unsupported by the Ironmon Tracker.\n\nCheck the tracker's README.txt file for currently supported games."  .. gamecode)
 	end
 end
 
@@ -517,6 +377,53 @@ function GameSettings.setEwramAddresses()
 	end
 end
 
+
+
+
+
+
+
+
+function GameSettings.setWramAddresses()
+	-- Use nil values for non-existant / deliberately omitted addresses, and 0x00000000 for placeholder unknowns
+	-- Format: Address = { Red }
+	local addresses = {
+
+		pstats = {0x0200116B},
+		-- Enemy Stats, exists in IWRAM instead in RS
+		estats = {0x02000FE5 },
+		gTurn={0x02000cd5},
+		eMove={0x02000FB3},
+		eType={0x02000fea},
+
+
+
+		gBattlerPartyIndexes={0x02001163},
+
+		gBattleTypeFlags = { 0x02001057},
+		gMapHeader = { 0x0200135E},
+
+		gPlayerPartyCount={0x0200189C},
+
+		badgeOffset = { 0x02001356 },
+		bagPocket_Items_offset = {   0x0200131E },
+		bagPocket_Berries_offset = { 0x0200131E },
+		bagPocket_Items_Size = {0x0200131D},
+
+	}
+
+	for key, address in pairs(addresses) do
+		local value = address[GameSettings.game]
+		if value ~= nil then
+			GameSettings[key] = value
+		end
+	end
+end
+
+
+
+
+
 -- IWRAM (03xxxxxx) addresses are the same between all english versions of a game, and between all non-english versions.
 -- However the addresses are different between english and non-english versions of a game, so need to set them separately.
 function GameSettings.setIwramAddresses()
@@ -560,162 +467,26 @@ end
 -- ROM (08xxxxxx) addresses are not necessarily the same between different versions of a game, so set those individually
 function GameSettings.setRomAddresses(gameIndex, versionIndex)
 	if gameIndex == nil or versionIndex == nil then return end
-	-- Only have non-english FireRed at the moment
-	-- When adding new non-english games, follow a similar formatting and edit the below format note accordingly
-	-- Format:
-	-- Address = {
-	-- 		Ruby { English 1.0, English 1.1, English 1.2 },
-	-- 		Sapphire { English 1.0, English 1.1, English 1.2 },
-	-- 		Emerald { English },
-	-- 		FireRed { English 1.0, English 1.1, Spanish, Italian, French, German },
-	-- 		LeafGreen { English 1.0, English 1.1 },
-	-- }
+
 	local addresses = {
 		gBattleMoves = {
-			{ 0x081fb12c, 0x081fb144, 0x081fb144 },
-			{ 0x081fb0bc, 0x081fb0d4, 0x081fb0d4 },
-			{ 0x0831c898 },
-			{ 0x08250c04, 0x08250c74, 0x0824c3cc, 0x08249ce4, 0x0824b054, 0x08250b28 },
-			{ 0x08250be0, 0x08250c50 },
+			{ 0x08038000}
+
 		},
 		gBaseStats = {
-			{ 0x081fec18, 0x081fec30, 0x081fec30 },
-			{ 0x081feba8, 0x081febc0, 0x081febc0 },
-			{ 0x083203cc },
-			{ 0x08254784, 0x082547f4, 0x0824ff4c, 0x0824d864, 0x0824ebd4, 0x082546a8 },
-			{ 0x08254760, 0x082547d0 },
+			{ 0x080383DE}
 		},
-		gExperienceTables = {
-			{ 0x081fdf78, 0x081fdf90, 0x081fdf90 },
-			{ 0x081fdf08, 0x081fdf20, 0x081fdf20 },
-			{ 0x0831f72c },
-			{ 0x08253ae4, 0x08253b54, 0x0824f2ac, 0x0824cbc4, 0x0824df34, 0x08253a08 },
-			{ 0x08253ac0, 0x08253b30 },
+		gEvo_move = {
+			{ 0x0803B1D8}
 		},
-		-- GetEvolutionTargetSpecies + 0x13E
-		FriendshipRequiredToEvo = {
-			{ 0x0803F5CA, 0x0803F5CA, 0x0803F5CA },
-			{ 0x0803F5CA, 0x0803F5CA, 0x0803F5CA },
-			{ 0x0806D1D6 },
-			{ 0x08043002, 0x08043016, 0x08042EEE, 0x08042EEE, 0x08042EDA, 0x08042F02 },
-			{ 0x08043002, 0x08043016 },
+		trainnerpoke = {
+			{ 0x08039D99}
 		},
-		--Task_EvolutionScene + 0x1
-		Task_EvolutionScene = {
-			{ 0x0811240d, 0x0811244d, 0x0811242d },
-			{ 0x0811240d, 0x0811242d, 0x0811242d },
-			{ 0x0813e571 },
-			{ 0x080ce8dd, 0x080ce8f1, 0x080CEB45, 0x080CEA5D, 0x080CEB3D, 0x080CEA7D },
-			{ 0x080ce8b1, 0x080ce8c5 },
-		},
-		-- BattleScript_RanAwayUsingMonAbility + 0x3
-		BattleScript_RanAwayUsingMonAbility = {
-			{ 0x081d8e25, 0x081d8e3d, 0x081d8e3d },
-			{ 0x081d8db5, 0x081d8dcd, 0x081d8dcd },
-			{ 0x082daaec },
-			{ 0x081d8912, 0x081d8982, 0x081D8444, 0x081D5D7C, 0x081D70E4, 0x081DCBA8 },
-			{ 0x081d88ee, 0x081d895e },
-		},
-		-- BattleScript_FocusPunchSetUp + 0x10
-		BattleScript_FocusPunchSetUp = {
-			{ 0x081d94ea, 0x081d9502, 0x081d9502 },
-			{ 0x081d947a, 0x081d9492, 0x081d9492 },
-			{ 0x082db20f },
-			{ 0x081d9025, 0x081d9095, 0x081d8b57, 0x081d648f, 0x081d77f7, 0x081DD2BB },
-			{ 0x081d9001, 0x081d9071 },
-		},
-		-- BattleScript_TryLearnMoveLoop
-		BattleScript_LearnMoveLoop = {
-			{ 0x081d8f0f, 0x081d8f27, 0x081d8f27 },
-			{ 0x081d8e9f, 0x081d8eb7, 0x081d8eb7 },
-			{ 0x082dabd9 },
-			{ 0x081d8a11, 0x081d8a81, 0x081D8543, 0x081d5e7B, 0x0081D71E3, 0x081DCCA7 },
-			{ 0x081d89ed, 0x081d8a5d },
-		},
-		BattleScript_LearnMoveReturn = {
-			{ 0x081d8f61, 0x081d8f79, 0x081d8f79 },
-			{ 0x081d8ef1, 0x081d8f09, 0x081d8f09 },
-			{ 0x082dac2b },
-			{ 0x081d8a63, 0x081d8ad3, 0x081D8595, 0x081D5ECD, 0x081D7235, 0x081DCC55 },
-			{ 0x081d8a3f, 0x081d8aaf },
-		},
-		BattleScript_MoveUsedIsFrozen = {
-			{ 0x081d9548, 0x081d9560, 0x081d9560 },
-			{ 0x081d94d8, 0x081d94f0, 0x081d94f0 },
-			{ 0x082db26d },
-			{ 0x081d9083, 0x081D90F3, 0x081D8BB5, 0x081D64ED, 0x081D7855, 0x081D4ECD },
-			{ 0x081d905f, 0x081d90cf },
-		},
-		BattleScript_MoveUsedIsFrozen2 = {
-			{ 0x081d954b, 0x081d9563, 0x081d9563 },
-			{ 0x081d94db, 0x081d94f3, 0x081d94f3 },
-			{ 0x082db270 },
-			{ 0x081d9086, 0x081D90F6, 0x081D8BB8, 0x081D64F0, 0x081D7858, 0x081D4ED0 },
-			{ 0x081d9062, 0x081d90d2 },
-		},
-		BattleScript_MoveUsedIsFrozen3 = {
-			{ 0x081d954d, 0x081d9565, 0x081d9565 },
-			{ 0x081d94dd, 0x081d94f5, 0x081d94f5 },
-			{ 0x082db272 },
-			{ 0x081d9088, 0x081D90F8, 0x081D8BBA, 0x081D64F2, 0x081D785A, 0x081D4ED2 },
-			{ 0x081d9064, 0x081d90d4 },
-		},
-		BattleScript_MoveUsedUnfroze = {
-			{ 0x081d9557, 0x081d956f, 0x081d956f },
-			{ 0x081d94e7, 0x081d94ff, 0x081d94ff },
-			{ 0x082db27c },
-			{ 0x081d9092, 0x081D9102, 0x081D8BC4, 0x081D64FC, 0x081D7864, 0x081D4EDC },
-			{ 0x081d906e, 0x081d90de },
-		},
-		BattleScript_MoveUsedUnfroze2 = {
-			{ 0x081d955c, 0x081d9574, 0x081d9574 },
-			{ 0x081d94ec, 0x081d9504, 0x081d9504 },
-			{ 0x082db281 },
-			{ 0x081d9097, 0x081D9107, 0x081D8BC9, 0x081D6501, 0x081D7869, 0x081D4EE1 },
-			{ 0x081d9073, 0x081d90e3 },
-		},
-		BattleScript_MoveUsedIsConfused = {
-			{ 0x081d9598, 0x081d95b0, 0x081d95b0 },
-			{ 0x081d9528, 0x081d9540, 0x081d9540 },
-			{ 0x082db2c0 },
-			{ 0x081d90d6, 0x081d9146, 0x081D8C08, 0x081D6540, 0x081D78A8, 0x081DD36C },
-			{ 0x081d90b2, 0x081d9122 },
-		},
-		BattleScript_MoveUsedIsConfused2 = {
-			{ 0x081d95a1, 0x081d95b9, 0x081d95b9 },
-			{ 0x081d9531, 0x081d9549, 0x081d9549 },
-			{ 0x082db2c9 },
-			{ 0x081d90df, 0x081d914f, 0x081D8C11, 0x081D6549, 0x081D78B1, 0x081DD375 },
-			{ 0x081d90bb, 0x081d912b },
-		},
-		BattleScript_MoveUsedIsConfusedNoMore = {
-			{ 0x081d95d7, 0x081d95ef, 0x081d95ef },
-			{ 0x081d9567, 0x081d957f, 0x081d957f },
-			{ 0x082db303 },
-			{ 0x081d9119, 0x081d9189, 0x081D8C4B, 0x081D6583, 0x081D78EB, 0x081DD3AF },
-			{ 0x081d90f5, 0x081d9165 },
-		},
-		BattleScript_MoveUsedIsInLove = {
-			{ 0x081d95fe, 0x081d9616, 0x081d9616 },
-			{ 0x081d958e, 0x081d95a6, 0x081d95a6 },
-			{ 0x082db32a },
-			{ 0x081d9140, 0x081D91B0, 0x081D8C72, 0x081D65AA, 0x081D7912, 0x081DD3D6 },
-			{ 0x081d911c, 0x081d918c },
-		},
-		BattleScript_MoveUsedIsInLove2 = {
-			{ 0x081d9607, 0x081d961f, 0x081d961f },
-			{ 0x081d9597, 0x081d95af, 0x081d95af },
-			{ 0x082db333 },
-			{ 0x081d9149, 0x081D91B9, 0x081D8C7B, 0x081D65B3, 0x081D791B, 0x081DD3DF },
-			{ 0x081d9125, 0x081d9195 },
-		},
-		BattleScript_SnatchedMove = {
-			{ 0x81d9491, 0x81d94a9, 0x81d94a9,},
-			{ 0x81d9421, 0x81d9439, 0x81d9439,},
-			{ 0x82db1b6,},
-			{ 0x81d8fcc, 0x81d903c, 0x81d8afe, 0x81d6436, 0x81d779e, 0x81dd262,},
-			{ 0x81d8fa8, 0x81d9018,}
-		},
+		mex_Stats = {
+			{ 0x0800159C}
+		}
+
+
 	}
 
 	for key, address in pairs(addresses) do
