@@ -144,11 +144,10 @@ function MoveData.readMoveInfoFromMemory(moveId)
 	local moveData = Memory.readdword(GameSettings.gBattleMoves +(moveId-1)*0x06 +0x02)
 
 
-	local movePP = Utils.getbits(moveData, 0, 8)
+	local  movePower= Utils.getbits(moveData, 0, 8)
 	local moveType= Utils.getbits(moveData, 8, 8)
 	local moveAccuracy = math.ceil(Utils.getbits(moveData, 16, 8)*100 /255)
-	local movePower = Utils.getbits(moveData, 24, 8)
-
+	local  movePP = Utils.getbits(moveData, 24, 8)
 
 	return {
 		power = tostring(movePower),

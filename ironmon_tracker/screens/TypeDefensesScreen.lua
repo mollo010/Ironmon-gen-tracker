@@ -164,6 +164,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function TypeDefensesScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, TypeDefensesScreen.Buttons)
 end
 

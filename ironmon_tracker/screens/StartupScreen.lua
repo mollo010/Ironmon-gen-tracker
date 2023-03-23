@@ -264,6 +264,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function StartupScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, StartupScreen.Buttons)
 end
 

@@ -628,6 +628,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function Theme.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, Theme.Buttons)
 end
 

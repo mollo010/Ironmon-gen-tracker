@@ -187,6 +187,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function MoveHistoryScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, MoveHistoryScreen.Buttons)
 	Input.checkButtonsClicked(xmouse, ymouse, MoveHistoryScreen.TemporaryButtons)
 end

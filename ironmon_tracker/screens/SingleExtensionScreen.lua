@@ -168,6 +168,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function SingleExtensionScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, SingleExtensionScreen.Buttons)
 end
 

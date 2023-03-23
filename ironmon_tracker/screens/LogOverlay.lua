@@ -889,31 +889,6 @@ function LogOverlay.buildPokemonZoomButtons(data)
 	end
 
 	-- ABILITIES
-	offsetY = 0
-	for i, abilityId in ipairs(data.p.abilities) do
-		local btnText
-		if AbilityData.isValid(abilityId) then
-			btnText = string.format("%s: %s", i, AbilityData.Abilities[abilityId].name)
-		else
-			btnText = Constants.BLANKLINE
-		end
-		local abilityBtn = {
-			type = Constants.ButtonTypes.NO_BORDER,
-			text = btnText,
-			textColor = "Lower box text",
-			abilityId = abilityId,
-			tab = LogOverlay.Tabs.POKEMON_ZOOM,
-			box = { LogOverlay.margin + 1, LogOverlay.tabHeight + offsetY + 13, 60, 11 },
-			isVisible = function(self) return LogOverlay.currentTab == self.tab end,
-			onClick = function(self)
-				if AbilityData.isValid(abilityId) then
-					InfoScreen.changeScreenView(InfoScreen.Screens.ABILITY_INFO, self.abilityId) -- implied redraw
-				end
-			end,
-		}
-		table.insert(LogOverlay.TemporaryButtons, abilityBtn)
-		offsetY = offsetY + Constants.SCREEN.LINESPACING
-	end
 
 	-- POKEMON ICON
 	local offsetEvoY = Utils.inlineIf(#data.p.evos > 0, -3, 0)
@@ -1398,6 +1373,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function LogOverlay.checkInput(xmouse, ymouse)
+
 	if not LogOverlay.isDisplayed then return end
 
 	-- Order here matters

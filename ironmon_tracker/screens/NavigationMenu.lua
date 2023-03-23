@@ -217,6 +217,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function NavigationMenu.checkInput(xmouse, ymouse)
+	print(2)
 	Input.checkButtonsClicked(xmouse, ymouse, NavigationMenu.Buttons)
 end
 

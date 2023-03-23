@@ -216,6 +216,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function StreamerScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, StreamerScreen.Buttons)
 end
 

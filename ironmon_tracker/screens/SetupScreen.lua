@@ -178,6 +178,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function SetupScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, SetupScreen.Buttons)
 end
 

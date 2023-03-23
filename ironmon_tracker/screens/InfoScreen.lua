@@ -511,6 +511,8 @@ end
 
 -- USER INPUT FUNCTIONS
 function InfoScreen.checkInput(xmouse, ymouse)
+
+
 	Input.checkButtonsClicked(xmouse, ymouse, InfoScreen.Buttons)
 	Input.checkButtonsClicked(xmouse, ymouse, InfoScreen.TemporaryButtons)
 

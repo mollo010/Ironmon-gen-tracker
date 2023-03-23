@@ -309,6 +309,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function TimeMachineScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, TimeMachineScreen.Buttons)
 	Input.checkButtonsClicked(xmouse, ymouse, TimeMachineScreen.Pager.Buttons)
 end

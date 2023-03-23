@@ -144,6 +144,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function ExtrasScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, ExtrasScreen.Buttons)
 end
 

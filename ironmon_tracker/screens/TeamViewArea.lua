@@ -243,6 +243,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function TeamViewArea.checkInput(xmouse, ymouse)
+
 	if not TeamViewArea.isDisplayed() then return end
 
 	for _, partyMember in ipairs(TeamViewArea.PartyPokemon) do

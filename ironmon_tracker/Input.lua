@@ -169,7 +169,9 @@ function Input.togglePokemonViewed()
 end
 
 function Input.checkMouseInput(xmouse, ymouse)
+
 	if Program.currentScreen ~= nil and type(Program.currentScreen.checkInput) == "function" then
+
 		Program.currentScreen.checkInput(xmouse, ymouse)
 	end
 
@@ -177,9 +179,11 @@ function Input.checkMouseInput(xmouse, ymouse)
 	if TeamViewArea.isDisplayed() then
 		TeamViewArea.checkInput(xmouse, ymouse)
 	end
+
 	if LogOverlay.isDisplayed then
 		LogOverlay.checkInput(xmouse, ymouse)
 	end
+
 end
 
 function Input.isMouseInArea(xmouse, ymouse, x, y, width, height)
