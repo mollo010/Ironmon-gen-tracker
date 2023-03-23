@@ -5,7 +5,7 @@ Main.Version = { major = "7", minor = "4", patch = "2" }
 
 Main.CreditsList = { -- based on the PokemonBizhawkLua project by MKDasher
 	CreatedBy = "Besteon",
-	Contributors = { "UTDZac", "Fellshadow", "ninjafriend", "OnlySpaghettiCode", "bdjeffyp", "Amber Cyprian", "thisisatest", "kittenchilly", "Kurumas", "davidhouweling", "AKD", "rcj001", "GB127", },
+	Contributors = { "Sannji","UTDZac", "Fellshadow", "ninjafriend", "OnlySpaghettiCode", "bdjeffyp", "Amber Cyprian", "thisisatest", "kittenchilly", "Kurumas", "davidhouweling", "AKD", "rcj001", "GB127", },
 }
 
 Main.EMU = {
@@ -76,7 +76,7 @@ function Main.Initialize()
 	-- Get the quickload files just once to be used in several places during start-up, removed later
 	Main.tempQuickloadFiles = Main.GetQuickloadFiles()
 	Main.ReadAttemptsCount()
-	Main.CheckForVersionUpdate()
+	-- Main.CheckForVersionUpdate()
 
 	return true
 end
@@ -134,6 +134,7 @@ function Main.Run()
 	-- After a game is successfully loaded, then initialize the remaining Tracker files
 	Main.ReadAttemptsCount() -- re-check attempts count if different game is loaded
 	Main.InitializeAllTrackerFiles()
+
 	Main.tempQuickloadFiles = nil -- From now on, quickload files should be re-checked
 
 	-- Final garbage collection prior to game loops beginning
@@ -260,10 +261,13 @@ function Main.InitializeAllTrackerFiles()
 	for _, luafile in ipairs(FileManager.LuaCode) do
 		local luaObject = globalRef[luafile.name or ""]
 		if type(luaObject.initialize) == "function" then
+
 			luaObject.initialize()
 		end
+
 	end
 
+	return
 	CustomCode.startup()
 end
 
@@ -503,7 +507,8 @@ function Main.GenerateNextRom()
 
 	local jarPath = (files.quickloadPath or "") .. files.jarList[1]
 	local settingsPath = (files.quickloadPath or "") .. files.settingsList[1]
-	local romPath = (files.quickloadPath or "") .. files.romList[1]
+	print(files.romList)
+	local romPath = ( "") .. files.romList[1]
 
 	-- Filename of the AutoRandomized ROM is based on the settings file (for cases of playing Kaizo + Survival + Others)
 	local settingsFileName = FileManager.extractFileNameFromPath(files.settingsList[1])
@@ -525,6 +530,7 @@ function Main.GenerateNextRom()
 		romPath,
 		nextRomPath
 	)
+
 
 	local success, fileLines = FileManager.tryOsExecute(javacommand, FileManager.prependDir(FileManager.Files.RANDOMIZER_ERROR_LOG))
 	if success then

@@ -4,11 +4,11 @@ Constants.BLANKLINE = "---"
 Constants.HIDDEN_INFO = "?"
 
 Constants.SCREEN = {
-	HEIGHT = 160,
-	WIDTH = 240,
+	HEIGHT = 144,
+	WIDTH = 160,
 	UP_GAP = 0,
-	DOWN_GAP = 0,
-	RIGHT_GAP = 150,
+	DOWN_GAP = 15,
+	RIGHT_GAP = 180,
 	BOTTOM_AREA = 70,
 	MARGIN = 5,
 	LINESPACING = 11,

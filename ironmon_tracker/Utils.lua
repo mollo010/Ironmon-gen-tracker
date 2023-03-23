@@ -54,6 +54,13 @@ function Utils.reverseEndian32(value)
 	local d = Utils.bit_and(value, 0x000000FF)
 	return Utils.bit_lshift(d, 24) + Utils.bit_lshift(c, 8) + Utils.bit_rshift(b, 8) + Utils.bit_rshift(a, 24)
 end
+function Utils.reverseEndian16(value)
+	local a = Utils.bit_and(value, 0x0000FF00)
+	local b = Utils.bit_and(value, 0x000000FF)
+	return Utils.bit_lshift(b, 8) + Utils.bit_rshift(a, 8)
+end
+
+
 
 -- If the `condition` is true, the value in `T` is returned, else the value in `F` is returned
 function Utils.inlineIf(condition, T, F)

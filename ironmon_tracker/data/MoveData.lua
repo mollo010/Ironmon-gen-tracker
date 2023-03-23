@@ -1,5 +1,5 @@
 MoveData = {
-	totalMoves = 354,
+	totalMoves = 165,
 }
 
 MoveData.IsRand = {
@@ -136,15 +136,19 @@ function MoveData.initialize()
 		end
 		-- print(datalog:sub(1, -3)) -- Remove trailing ", "
 	end
+
 end
 
 function MoveData.readMoveInfoFromMemory(moveId)
-	local moveData = Memory.readdword(GameSettings.gBattleMoves + (moveId * 0x0C) + 0x01)
 
-	local movePower = Utils.getbits(moveData, 0, 8)
-	local moveType = Utils.getbits(moveData, 8, 8)
-	local moveAccuracy = Utils.getbits(moveData, 16, 8)
-	local movePP = Utils.getbits(moveData, 24, 8)
+	local moveData = Memory.readdword(GameSettings.gBattleMoves +(moveId-1)*0x06 +0x02)
+
+
+	local movePP = Utils.getbits(moveData, 0, 8)
+	local moveType= Utils.getbits(moveData, 8, 8)
+	local moveAccuracy = math.ceil(Utils.getbits(moveData, 16, 8)*100 /255)
+	local movePower = Utils.getbits(moveData, 24, 8)
+
 
 	return {
 		power = tostring(movePower),
@@ -162,6 +166,7 @@ function MoveData.checkIfDataIsRandomized()
 
 	-- Check once if any data was randomized
 	local moveInfo = MoveData.readMoveInfoFromMemory(33) -- Tackle
+
 	if moveInfo ~= nil then
 		areTypesRandomized = moveInfo.type ~= PokemonData.Types.NORMAL
 		arePowersRandomized = moveInfo.power ~= "35"

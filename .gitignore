@@ -1,9 +1,12 @@
 Settings.ini
 *.tdat
 *.gba
+*.gbc
+*.gb
 *.sav
 *.State
 *.log
+*.py
 *Attempts.txt
 quickload/*.jar
 quickload/*.rnqs

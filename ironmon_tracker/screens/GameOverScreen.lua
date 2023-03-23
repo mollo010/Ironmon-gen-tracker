@@ -96,6 +96,7 @@ GameOverScreen.Buttons = {
 			else
 				GameOverScreen.trainerBattlesLost = GameOverScreen.trainerBattlesLost - 1
 				LogOverlay.isDisplayed = false
+				DataHelper.Gameover=false
 				GameOverScreen.refreshButtons()
 				Program.changeScreenView(TrackerScreen)
 				GameOverScreen.loadTempSaveState()

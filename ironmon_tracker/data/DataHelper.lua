@@ -1,5 +1,5 @@
 DataHelper = {}
-
+Gameover = false
 -- Searches for a Pokémon by name, finds the best match
 function DataHelper.findPokemonId(name)
 	if name == nil or name == "" then
@@ -86,23 +86,27 @@ end
 -- Returns a table with all of the important display data safely formatted to draw on screen.
 -- forceView: optional, if true forces view as viewingOwn, otherwise forces enemy view
 function DataHelper.buildTrackerScreenDisplay(forceView)
+
 	local data = {}
 	data.p = {} -- data about the Pokemon itself
 	data.m = {} -- data about the Moves of the Pokemon
 	data.x = {} -- misc data to display, such as heals, encounters, badges
 
 	data.x.viewingOwn = Tracker.Data.isViewingOwn
+
 	if forceView ~= nil then
 		data.x.viewingOwn = forceView
 	end
 
-	local targetInfo = Battle.getDoublesCursorTargetInfo()
+	--local targetInfo = Battle.getDoublesCursorTargetInfo()
 	local viewedPokemon = Battle.getViewedPokemon(data.x.viewingOwn)
-	local opposingPokemon = Tracker.getPokemon(targetInfo.slot, targetInfo.isOwner) -- currently used exclusively for Low Kick weight calcs
+	local opposingPokemon = Tracker.getPokemon(1, false) -- currently used exclusively for Low Kick weight calcs
 
 	if viewedPokemon == nil or viewedPokemon.pokemonID == 0 or not Program.isValidMapLocation() then
+
 		viewedPokemon = Tracker.getDefaultPokemon()
 	elseif not Tracker.Data.hasCheckedSummary then
+
 		-- Don't display any spoilers about the stats/moves, but still show the pokemon icon, name, and level
 		local defaultPokemon = Tracker.getDefaultPokemon()
 		defaultPokemon.pokemonID = viewedPokemon.pokemonID
@@ -112,6 +116,7 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 
 	-- Add in Pokedex information about the Pokemon
 	if PokemonData.isValid(viewedPokemon.pokemonID) then
+
 		for key, value in pairs(PokemonData.Pokemon[viewedPokemon.pokemonID]) do
 			viewedPokemon[key] = value
 		end
@@ -151,7 +156,7 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 	-- Update: Pokemon Types
 	if Battle.inBattle and (data.x.viewingOwn or not Battle.isGhost) then
 		-- Update displayed types as typing changes (i.e. Color Change)
-		data.p.types = Program.getPokemonTypes(data.x.viewingOwn, Battle.isViewingLeft)
+		data.p.types = { viewedPokemon.types[1], viewedPokemon.types[2], }
 	else
 		data.p.types = { viewedPokemon.types[1], viewedPokemon.types[2], }
 	end
@@ -184,7 +189,7 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 		end
 	end
 
-	-- Add: Move Header
+	-- Add: Move Header wip not sure if works correctly
 	data.m.nextmoveheader, data.m.nextmovelevel, data.m.nextmovespacing = Utils.getMovesLearnedHeader(viewedPokemon.pokemonID, viewedPokemon.level)
 
 	-- MOVES OF POKEMON (data.m)
@@ -252,7 +257,7 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 		end
 
 		-- Update: If STAB
-		if Battle.inBattle then
+		if Battle.inBattle and false then
 			local ownTypes = Program.getPokemonTypes(data.x.viewingOwn, Battle.isViewingLeft)
 			move.isstab = Utils.isSTAB(move, move.type, ownTypes)
 		end
@@ -311,8 +316,10 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 
 		-- Update: Calculate move effectiveness
 		if move.showeffective then
-			local enemyTypes = Program.getPokemonTypes(targetInfo.isOwner, targetInfo.isLeft)
+
+			local enemyTypes = Program.getePokemonTypes(1, 1)
 			move.effectiveness = Utils.netEffectiveness(move, move.type, enemyTypes)
+
 		else
 			move.effectiveness = 1
 		end
@@ -341,6 +348,7 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 end
 
 function DataHelper.buildPokemonInfoDisplay(pokemonID)
+	print(6)
 	local data = {}
 	data.p = {} -- data about the Pokemon itself
 	data.e = {} -- data about the Type Effectiveness of the Pokemon
@@ -388,7 +396,7 @@ function DataHelper.buildPokemonInfoDisplay(pokemonID)
 	else
 		data.x.viewedPokemonLevel = 0
 	end
-
+	print(data)
 	return data
 end
 

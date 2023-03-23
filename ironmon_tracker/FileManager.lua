@@ -46,7 +46,7 @@ FileManager.PostFixes = {
 }
 
 FileManager.Extensions = {
-	GBA_ROM = ".gba",
+	GBA_ROM = ".gbc",
 	RANDOMIZER_LOGFILE = ".log",
 	TRACKED_DATA = ".tdat",
 	ATTEMPTS = ".txt",
@@ -76,7 +76,7 @@ FileManager.LuaCode = {
 	-- Data files
 	{ name = "PokemonData", filepath = FileManager.Folders.DataCode .. FileManager.slash .. "PokemonData.lua", },
 	{ name = "MoveData", filepath = FileManager.Folders.DataCode .. FileManager.slash .. "MoveData.lua", },
-	{ name = "AbilityData", filepath = FileManager.Folders.DataCode .. FileManager.slash .. "AbilityData.lua", },
+	--{ name = "AbilityData", filepath = FileManager.Folders.DataCode .. FileManager.slash .. "AbilityData.lua", },
 	{ name = "MiscData", filepath = FileManager.Folders.DataCode .. FileManager.slash .. "MiscData.lua", },
 	{ name = "RouteData", filepath = FileManager.Folders.DataCode .. FileManager.slash .. "RouteData.lua", },
 	{ name = "DataHelper", filepath = FileManager.Folders.DataCode .. FileManager.slash .. "DataHelper.lua", },
