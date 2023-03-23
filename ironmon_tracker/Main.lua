@@ -507,7 +507,8 @@ function Main.GenerateNextRom()
 
 	local jarPath = (files.quickloadPath or "") .. files.jarList[1]
 	local settingsPath = (files.quickloadPath or "") .. files.settingsList[1]
-	local romPath = (files.quickloadPath or "") .. files.romList[1]
+	print(files.romList)
+	local romPath = ( "") .. files.romList[1]
 
 	-- Filename of the AutoRandomized ROM is based on the settings file (for cases of playing Kaizo + Survival + Others)
 	local settingsFileName = FileManager.extractFileNameFromPath(files.settingsList[1])
@@ -529,6 +530,7 @@ function Main.GenerateNextRom()
 		romPath,
 		nextRomPath
 	)
+
 
 	local success, fileLines = FileManager.tryOsExecute(javacommand, FileManager.prependDir(FileManager.Files.RANDOMIZER_ERROR_LOG))
 	if success then
