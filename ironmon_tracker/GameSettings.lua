@@ -393,7 +393,7 @@ function GameSettings.setWramAddresses()
 		-- Enemy Stats, exists in IWRAM instead in RS
 		estats = {0x02000FE5 },
 		gTurn={0x02000cd5},
-		eMove={0x02000FB3},
+		eMove={0x02000Fcc},
 		eType={0x02000fea},
 
 

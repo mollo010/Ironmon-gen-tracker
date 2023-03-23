@@ -46,7 +46,7 @@ FileManager.PostFixes = {
 }
 
 FileManager.Extensions = {
-	GBA_ROM = ".gba",
+	GBA_ROM = ".gbc",
 	RANDOMIZER_LOGFILE = ".log",
 	TRACKED_DATA = ".tdat",
 	ATTEMPTS = ".txt",

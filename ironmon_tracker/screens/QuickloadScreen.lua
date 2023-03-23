@@ -178,7 +178,7 @@ end
 
 function QuickloadScreen.handleSetRomFolder(button)
 	local path = Options.FILES[button.labelText]
-	local filterOptions = "ROM File (*.GBA)|*.gba|All files (*.*)|*.*"
+	local filterOptions = "ROM File (*.GBC)|*.gbc|All files (*.*)|*.*"
 
 	Utils.tempDisableBizhawkSound()
 
@@ -228,14 +228,14 @@ end
 
 function QuickloadScreen.handleSetSourceRom(button)
 	local path = Options.FILES[button.labelText]
-	local filterOptions = "GBA File (*.GBA)|*.gba|All files (*.*)|*.*"
+	local filterOptions = "GBA File (*.GBC)|*.gbc|All files (*.*)|*.*"
 
 	Utils.tempDisableBizhawkSound()
 
 	local file = forms.openfile("SELECT A ROM", path, filterOptions)
 	if file ~= "" then
 		local extension = FileManager.extractFileExtensionFromPath(file)
-		if extension == "gba" then
+		if extension == "gbc" then
 			Options.FILES[button.labelText] = file
 			button.isSet = true
 			button.text = "Clear"

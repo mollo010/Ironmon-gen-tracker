@@ -1,5 +1,5 @@
 DataHelper = {}
-
+Gameover = false
 -- Searches for a Pokémon by name, finds the best match
 function DataHelper.findPokemonId(name)
 	if name == nil or name == "" then
@@ -93,6 +93,7 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 	data.x = {} -- misc data to display, such as heals, encounters, badges
 
 	data.x.viewingOwn = Tracker.Data.isViewingOwn
+
 	if forceView ~= nil then
 		data.x.viewingOwn = forceView
 	end
