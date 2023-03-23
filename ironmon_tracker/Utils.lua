@@ -32,7 +32,10 @@ end
 
 -- Shifts bits of 'value', 'n' bits to the right
 function Utils.bit_rshift(value, n)
-	return math.floor(value / (2 ^ n))
+	if value ~= nil then
+		return math.floor(value / (2 ^ n))
+	end
+	return
 end
 
 -- gets bits from least significant to most
@@ -811,17 +814,17 @@ end
 -- Reads the game stat stored at statIndex in memory
 -- https://github.com/pret/pokefirered/blob/master/include/constants/game_stat.h
 function Utils.getGameStat(statIndex)
-	local saveBlock1Addr = Utils.getSaveBlock1Addr()
-	local gameStatsAddr = saveBlock1Addr + GameSettings.gameStatsOffset
+	--local saveBlock1Addr = Utils.getSaveBlock1Addr()
+	--local gameStatsAddr = saveBlock1Addr + GameSettings.gameStatsOffset
 
-	local gameStatValue = Memory.readdword(gameStatsAddr + statIndex * 0x4)
+	--local gameStatValue = Memory.readdword(gameStatsAddr + statIndex * 0x4)
 
-	local key = Utils.getEncryptionKey(4) -- Want a 32-bit key
-	if key ~= nil then
-		gameStatValue = Utils.bit_xor(gameStatValue, key)
-	end
+	--local key = Utils.getEncryptionKey(4) -- Want a 32-bit key
+	--if key ~= nil then
+	--	gameStatValue = nil
+	--end
 
-	return math.floor(gameStatValue)
+	return nil
 end
 
 -- Organizes a list of buttons in a row by column fashion based on (x,y,w,h) and what page they should display on.

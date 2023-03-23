@@ -13,6 +13,7 @@ function Memory.initialize()
 			return memory.read_u16_le(a, m)
 		end
 		Memory.read32 = function(addr)
+			if addr==nil then return nil end
 			local m, a = Memory.splitDomainAndAddress(addr)
 			return memory.read_u32_le(a, m)
 		end
@@ -67,7 +68,7 @@ end
 
 -- Splits the address into [Memory Domain], [Remaining Addr]
 function Memory.splitDomainAndAddress(addr)
-
+	if addr == nil then return nil end
 	local memdomain = Utils.bit_rshift(addr, 24)
 	local splitaddr = Utils.bit_and(addr, 0xFFFFFF)
 	if memdomain == 0 then

@@ -518,12 +518,7 @@ function InfoScreen.checkInput(xmouse, ymouse)
 
 	-- Check if mouse clicked on the game screen: on a new move learned, show info
 	local gameFooterHeight = 45
-	if Input.isMouseInArea(xmouse, ymouse, 0, Constants.SCREEN.HEIGHT - gameFooterHeight, Constants.SCREEN.WIDTH, gameFooterHeight) then
-		local learnedInfoTable = Program.getLearnedMoveInfoTable()
-		if learnedInfoTable.moveId ~= nil then
-			InfoScreen.changeScreenView(InfoScreen.Screens.MOVE_INFO, learnedInfoTable.moveId)
-		end
-	end
+
 end
 
 -- DRAWING FUNCTIONS

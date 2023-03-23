@@ -26,7 +26,7 @@ RandomizerLog.Sectors = {
 	BaseStatsItems = {
 		HeaderPattern = RandomizerLog.Patterns.getSectorHeaderPattern("Pokemon Base Stats & Types"),
 		-- Matches: pokemon, hp, atk, def, spatk, spdef, spd, helditems
-		PokemonBSTPattern = "^.*|" .. RandomizerLog.Patterns.PokemonName .. "%s*|.*|%s*(%d*)|%s*(%d*)|%s*(%d*)|%s*(%d*)|%s*(%d*)|%s*(%d*)|.*|.*|(.*)",
+		PokemonBSTPattern = "^.*|" .. RandomizerLog.Patterns.PokemonName .. "%s*|.*|%s*(%d*)|%s*(%d*)|%s*(%d*)|%s*(%d*)|%s*(%d*)|%s*(%d*)",
 	},
 	MoveSets = {
 		HeaderPattern = RandomizerLog.Patterns.getSectorHeaderPattern("Pokemon Movesets"),
@@ -212,6 +212,20 @@ function RandomizerLog.parseEvolutions(logLines)
 	end
 end
 
+function RandomizerLog.mysplit(inputstr, sep)
+	if sep == nil then
+			sep = "%s"
+	end
+	local t={}
+	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+			table.insert(t, str)
+	end
+	return t
+end
+function  RandomizerLog.all_trim(s)
+	return s:match"^%s*(.*)":match"(.-)%s*$"
+  end
+
 function RandomizerLog.parseBaseStatsItems(logLines)
 	if RandomizerLog.Sectors.BaseStatsItems.LineNumber == nil then
 		return
@@ -220,12 +234,18 @@ function RandomizerLog.parseBaseStatsItems(logLines)
 	-- Parse the sector
 	local index = RandomizerLog.Sectors.BaseStatsItems.LineNumber + 1 -- remove the first line to skip the table header
 	while index <= #logLines do
-		local pokemon, hp, atk, def, spa, spd, spe, helditems = string.match(logLines[index] or "", RandomizerLog.Sectors.BaseStatsItems.PokemonBSTPattern)
-		pokemon = RandomizerLog.formatInput(pokemon)
+
+		local pokemon
+		local t = RandomizerLog.mysplit(logLines[index],"|")
+		if t[2] ~=nil then
+		pokemon = RandomizerLog.all_trim(RandomizerLog.formatInput(t[2]))
 		pokemon = RandomizerLog.alternateNidorans(pokemon)
+		end
+		local helditems=nil
 
 		-- If nothing matches, end of sector
-		if pokemon == nil or spe == nil or RandomizerLog.PokemonNameToIdMap[pokemon] == nil then
+		if pokemon == nil or t[8] == nil or RandomizerLog.PokemonNameToIdMap[pokemon] == nil then
+
 			return
 		end
 
@@ -233,12 +253,12 @@ function RandomizerLog.parseBaseStatsItems(logLines)
 		local pokemonData = RandomizerLog.Data.Pokemon[pokemonId]
 		if pokemonData ~= nil then
 			pokemonData.BaseStats = {
-				hp = tonumber(hp) or 0,
-				atk = tonumber(atk) or 0,
-				def = tonumber(def) or 0,
-				spa = tonumber(spa) or 0,
-				spd = tonumber(spd) or 0,
-				spe = tonumber(spe) or 0,
+				hp = tonumber(t[4]) or 0,
+				atk = tonumber(t[5]) or 0,
+				def = tonumber(t[6]) or 0,
+				spa = tonumber(t[8]) or 0,
+				spd = tonumber(t[6]) or 0,
+				spe = tonumber(t[7]) or 0,
 			}
 			if helditems ~= nil and helditems ~= "" then
 				pokemonData.BaseStats.helditems = RandomizerLog.formatInput(helditems)
@@ -573,7 +593,7 @@ function RandomizerLog.setupMappings()
 		["seaking"] = 119,
 		["staryu"] = 120,
 		["starmie"] = 121,
-		["mr. mime"] = 122,
+		["mr.mime"] = 122,
 		["scyther"] = 123,
 		["jynx"] = 124,
 		["electabuzz"] = 125,
