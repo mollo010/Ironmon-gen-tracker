@@ -559,33 +559,17 @@ function TrackerScreen.openNotePadWindow(pokemonId)
 	local noteTextBox = forms.textbox(noteForm, Tracker.getNote(pokemonId), 430, 20, nil, 10, 30)
 
 	local abilityList = {}
-	table.insert(abilityList, Constants.BLANKLINE)
-	abilityList = AbilityData.populateAbilityDropdown(abilityList)
+	--table.insert(abilityList, Constants.BLANKLINE)
+	--abilityList = AbilityData.populateAbilityDropdown(abilityList)
 
-	local trackedAbilities = Tracker.getAbilities(pokemonId)
+	--local trackedAbilities = Tracker.getAbilities(pokemonId)
 
-	forms.label(noteForm, "Select one or both abilities for " .. PokemonData.Pokemon[pokemonId].name .. ":", 9, 60, 220, 20)
-	local abilityOneDropdown = forms.dropdown(noteForm, {["Init"]="Loading Ability1"}, 10, 80, 145, 30)
-	forms.setdropdownitems(abilityOneDropdown, abilityList, true) -- true = alphabetize list
-	forms.setproperty(abilityOneDropdown, "AutoCompleteSource", "ListItems")
-	forms.setproperty(abilityOneDropdown, "AutoCompleteMode", "Append")
-	local abilityTwoDropdown = forms.dropdown(noteForm, {["Init"]="Loading Ability2"}, 10, 110, 145, 30)
-	forms.setdropdownitems(abilityTwoDropdown, abilityList, true) -- true = alphabetize list
-	forms.setproperty(abilityTwoDropdown, "AutoCompleteSource", "ListItems")
-	forms.setproperty(abilityTwoDropdown, "AutoCompleteMode", "Append")
 
-	if trackedAbilities[1].id ~= 0 then
-		forms.settext(abilityOneDropdown, AbilityData.Abilities[trackedAbilities[1].id].name)
-	end
-	if trackedAbilities[2].id ~= 0 then
-		forms.settext(abilityTwoDropdown, AbilityData.Abilities[trackedAbilities[2].id].name)
-	end
+
 
 	forms.button(noteForm, "Save && Close", function()
 
-		local formInput = forms.gettext(noteTextBox)
-		local abilityOneText = forms.gettext(abilityOneDropdown)
-		local abilityTwoText = forms.gettext(abilityTwoDropdown)
+		local formInput
 		--local pokemonViewed = Tracker.getViewedPokemon()
 		if formInput ~= nil then
 			Tracker.TrackNote(pokemonId, formInput)
@@ -598,8 +582,7 @@ function TrackerScreen.openNotePadWindow(pokemonId)
 		forms.destroy(noteForm)
 	end, 85, 145, 85, 25)
 	forms.button(noteForm, "Clear Abilities", function()
-		forms.settext(abilityOneDropdown, Constants.BLANKLINE)
-		forms.settext(abilityTwoDropdown, Constants.BLANKLINE)
+
 	end, 180, 145, 105, 25)
 	forms.button(noteForm, "Cancel", function()
 		client.unpause()

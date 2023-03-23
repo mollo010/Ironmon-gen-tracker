@@ -715,35 +715,6 @@ end
 
 -- Returns a table that contains {pokemonID, level, and moveId} of the player's Pokemon that is currently learning a new move via experience level-up.
 function Program.getLearnedMoveInfoTable()
-	local battleMsg = Memory.readdword(GameSettings.gBattlescriptCurrInstr)
-
-	-- If the battle message relates to learning a new move, read in that move id
-	if GameSettings.BattleScript_LearnMoveLoop <= battleMsg and battleMsg <= GameSettings.BattleScript_LearnMoveReturn then
-		local moveToLearnId = Memory.readword(GameSettings.gMoveToLearn)
-
-		local battleStructAddress
-		if GameSettings.gBattleStructPtr ~= nil then -- Pointer unavailable in RS
-			battleStructAddress = Memory.readdword(GameSettings.gBattleStructPtr)
-		else
-			battleStructAddress = 0x02000000 -- gSharedMem
-		end
-
-		local partyIndex = Memory.readbyte(battleStructAddress + 0x10) + 1 -- expGetterMonId: Party index of player (1-6)
-		local pokemon = Tracker.getPokemon(partyIndex, true)
-		if pokemon ~= nil then
-			return {
-				pokemonID = pokemon.pokemonID,
-				level = pokemon.level,
-				moveId = moveToLearnId,
-			}
-		end
-
-		return {
-			pokemonID = nil,
-			level = nil,
-			moveId = moveToLearnId,
-		}
-	end
 
 	return {
 		pokemonID = nil,

@@ -1376,6 +1376,7 @@ function LogOverlay.checkInput(xmouse, ymouse)
 
 	if not LogOverlay.isDisplayed then return end
 
+
 	-- Order here matters
 	Input.checkButtonsClicked(xmouse, ymouse, LogOverlay.TemporaryButtons)
 	Input.checkButtonsClicked(xmouse, ymouse, LogOverlay.Buttons)
