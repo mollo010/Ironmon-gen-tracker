@@ -75,6 +75,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function GameOptionsScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, GameOptionsScreen.Buttons)
 end
 

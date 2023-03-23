@@ -286,6 +286,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function QuickloadScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, QuickloadScreen.Buttons)
 end
 

@@ -84,6 +84,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function StatsScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, StatsScreen.Buttons)
 end
 

@@ -376,6 +376,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function GameOverScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, GameOverScreen.Buttons)
 end
 

@@ -348,7 +348,7 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 end
 
 function DataHelper.buildPokemonInfoDisplay(pokemonID)
-	print(6)
+
 	local data = {}
 	data.p = {} -- data about the Pokemon itself
 	data.e = {} -- data about the Type Effectiveness of the Pokemon
@@ -396,7 +396,7 @@ function DataHelper.buildPokemonInfoDisplay(pokemonID)
 	else
 		data.x.viewedPokemonLevel = 0
 	end
-	print(data)
+
 	return data
 end
 

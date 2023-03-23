@@ -234,6 +234,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function CustomExtensionsScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, CustomExtensionsScreen.Buttons)
 	Input.checkButtonsClicked(xmouse, ymouse, CustomExtensionsScreen.Pager.Buttons)
 end

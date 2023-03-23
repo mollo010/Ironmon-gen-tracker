@@ -148,6 +148,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function TrackedDataScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, TrackedDataScreen.Buttons)
 end
 

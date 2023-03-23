@@ -270,6 +270,7 @@ end
 
 -- USER INPUT FUNCTIONS
 function UpdateScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, UpdateScreen.Buttons)
 end
 

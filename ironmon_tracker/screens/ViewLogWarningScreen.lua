@@ -84,6 +84,7 @@ end
 
 -- Check if any buttons were clicked
 function ViewLogWarningScreen.checkInput(xmouse, ymouse)
+
 	Input.checkButtonsClicked(xmouse, ymouse, ViewLogWarningScreen.Buttons)
 end
 
