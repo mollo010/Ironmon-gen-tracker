@@ -6,7 +6,7 @@ UpdateOrInstall = {
 	thisFileName = "UpdateOrInstall.lua",
 	trackerFileName = "Ironmon-Tracker.lua",
 	slash = package.config:sub(1,1) or "\\", -- Windows is \ and Linux is /
-	TAR_URL = "https://github.com/mollo010/Ironmon-Tracker/archive/main.tar.gz",
+	TAR_URL = "https://github.com/mollo010/Ironmon-gen-tracker/archive/main.tar.gz",
 	archiveName = "Ironmon-Tracker-main.tar.gz",
 	archiveFolder = "Ironmon-Tracker-main",
 }
