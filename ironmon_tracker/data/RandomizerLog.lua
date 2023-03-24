@@ -1,6 +1,11 @@
 -- A collection of tools for viewing a Randomized Pokémon game log
 RandomizerLog = {}
 
+
+
+
+
+
 RandomizerLog.Patterns = {
 	RandomizerVersion = "Randomizer Version:%s*([%d%.]+)%s*$", -- Note: log file line 1 does NOT start with "Rando..."
 	RandomizerSeed = "^Random Seed:%s*(%d+)%s*$",

@@ -834,6 +834,27 @@ function TrackerScreen.drawPokemonInfoArea(data)
 	end
 end
 
+
+StatConvert={
+			[0xd]=6,
+			[0xc]=5,
+			[0xb]=4,
+			[0xa]=3,
+			[0x9]=2,
+			[0x8]=1,
+			[0x7]=0,
+			[0x6]=-1,
+			[0x5]=-2,
+			[0x4]=-3,
+			[0x3]=-4,
+			[0x2]=-5,
+			[0x1]=-6,
+
+
+
+}
+
+
 function TrackerScreen.drawStatsArea(data)
 	local shadowcolor = Utils.calcShadowColor(Theme.COLORS["Upper box background"])
 	local statBoxWidth = 101
@@ -864,7 +885,7 @@ function TrackerScreen.drawStatsArea(data)
 
 		-- Draw stat battle increases/decreases, stages range from -6 to +6
 		if Battle.inBattle then
-			local statStageIntensity = data.p.stages[statKey] - 6 -- between [0 and 12], convert to [-6 and 6]
+			local statStageIntensity =StatConvert[ data.p.stages[statKey]] -- between [0 and 12], convert to [-6 and 6]
 			Drawing.drawChevrons(statOffsetX + 20, statOffsetY + 4, statStageIntensity, 3)
 		end
 

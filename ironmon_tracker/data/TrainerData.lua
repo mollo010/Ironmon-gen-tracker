@@ -66,13 +66,9 @@ TrainerData.FileInfo = {
 }
 
 function TrainerData.initialize()
-	if GameSettings.game == 1 then
-		TrainerData.setupTrainersAsRubySapphire()
-	elseif GameSettings.game == 2 then
-		TrainerData.setupTrainersAsEmerald()
-	elseif GameSettings.game == 3 then
+
 		TrainerData.setupTrainersAsFRLG()
-	end
+
 end
 
 -- Returns a table with trainer info { name, filterGroup, filename, }

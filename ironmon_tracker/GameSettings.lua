@@ -394,7 +394,8 @@ function GameSettings.setWramAddresses()
 		estats = {0x02000FE5 },
 		gTurn={0x02000cd5},
 		eMove={0x02000Fcc},
-		eType={0x02000fea},
+		eType=		{0x02000fea},
+		StatChange= {0x02000D1A},
 
 
 
