@@ -256,6 +256,33 @@ function Battle.processBattleTurn()
 	--Battle.trackTransformedMoves()
 end
 
+
+function Battle.updateStatStages(pokemon, isOwn)
+
+	local startAddress = GameSettings.StatChange + Utils.inlineIf(isOwn, 0x0, 0x14)
+	local isLeftOffset = 0
+	--local hp_atk_def_speed = Memory.readdword(startAddress + isLeftOffset )
+	--local spatk_spdef_acc_evasion = Memory.readdword(startAddress + isLeftOffset + 0x04)
+
+	pokemon.statStages.hp = 7
+	if pokemon.statStages.hp ~= 0 then
+		pokemon.statStages = {
+			hp = pokemon.statStages.hp,
+			atk = Memory.readbyte(startAddress)  ,
+			def =  Memory.readbyte(startAddress+1),
+			spa =  Memory.readbyte(startAddress+3),
+			spd = 6,
+			spe =  Memory.readbyte(startAddress+2),
+			acc =  Memory.readbyte(startAddress+4)  ,
+			eva =  Memory.readbyte(startAddress+5)  ,
+		}
+	else
+		-- Unsure if this reset is necessary, or what the if condition is checking for
+		pokemon.statStages = { hp = 6, atk = 6, def = 6, spa = 6, spd = 6, spe = 6, acc = 6, eva = 6 }
+	end
+end
+
+
 function Battle.updateTrackedInfo()
 	--Ghost battle info is immediately loaded. If we wait until after the delay ends, the user can toggle views in that window and still see the 'Actual' Pokemon.
 	--local battleFlags = Memory.readdword(GameSettings.gBattleTypeFlags)
@@ -304,8 +331,10 @@ function Battle.updateTrackedInfo()
 	if ownLeftPokemon ~= nil and Battle.Combatants.LeftOwn <= Battle.partySize then
 		local ownLeftAbilityId = PokemonData.getAbilityId(ownLeftPokemon.pokemonID, ownLeftPokemon.abilityNum)
 		--Tracker.TrackAbility(ownLeftPokemon.pokemonID, ownLeftAbilityId)
-		--Battle.updateStatStages(ownLeftPokemon, true, true)
+
+		Battle.updateStatStages(ownLeftPokemon, true)
 	end
+
 
 
 
@@ -314,7 +343,7 @@ function Battle.updateTrackedInfo()
 		local otherLeftPokemon = Tracker.getPokemon(transformData.slot,false)
 
 		if otherLeftPokemon ~= nil then
-			--Battle.updateStatStages(otherLeftPokemon, false, true)
+			Battle.updateStatStages(otherLeftPokemon, false)
 
 			--Battle.checkEnemyEncounter(otherLeftPokemon)
 
@@ -325,30 +354,6 @@ function Battle.readBattleValues()
 	Battle.battleMsg = Memory.readdword(GameSettings.gBattlescriptCurrInstr)
 	Battle.battler = Memory.readbyte(GameSettings.gBattleScriptingBattler) % Battle.numBattlers
 	Battle.battlerTarget = Memory.readbyte(GameSettings.gBattlerTarget) % Battle.numBattlers
-end
-
-function Battle.updateStatStages(pokemon, isOwn, isLeft)
-	local startAddress = GameSettings.gBattleMons + Utils.inlineIf(isOwn, 0x0, 0x58)
-	local isLeftOffset = Utils.inlineIf(isLeft, 0x0, 0xB0)
-	local hp_atk_def_speed = Memory.readdword(startAddress + isLeftOffset + 0x18)
-	local spatk_spdef_acc_evasion = Memory.readdword(startAddress + isLeftOffset + 0x1C)
-
-	pokemon.statStages.hp = Utils.getbits(hp_atk_def_speed, 0, 8)
-	if pokemon.statStages.hp ~= 0 then
-		pokemon.statStages = {
-			hp = pokemon.statStages.hp,
-			atk = Utils.getbits(hp_atk_def_speed, 8, 8),
-			def = Utils.getbits(hp_atk_def_speed, 16, 8),
-			spa = Utils.getbits(spatk_spdef_acc_evasion, 0, 8),
-			spd = Utils.getbits(spatk_spdef_acc_evasion, 8, 8),
-			spe = Utils.getbits(hp_atk_def_speed, 24, 8),
-			acc = Utils.getbits(spatk_spdef_acc_evasion, 16, 8),
-			eva = Utils.getbits(spatk_spdef_acc_evasion, 24, 8),
-		}
-	else
-		-- Unsure if this reset is necessary, or what the if condition is checking for
-		pokemon.statStages = { hp = 6, atk = 6, def = 6, spa = 6, spd = 6, spe = 6, acc = 6, eva = 6 }
-	end
 end
 
 -- If the pokemon doesn't belong to the player, and hasn't been encountered yet, increment
