@@ -120,6 +120,7 @@ PokemonData.BlankPokemon = {
 function PokemonData.initialize()
 	-- Reads the types and abilities for each Pokemon in the Pokedex
 	-- If any data at all was randomized, read in full Pokemon data from memory
+	PokemonData.UpdateBST()
 	if PokemonData.checkIfDataIsRandomized() then
 		-- print("Randomized " .. Constants.Words.POKEMON .. " data detected, reading from game memory...")
 		for pokemonID=1, PokemonData.totalPokemon, 1 do
@@ -178,13 +179,50 @@ function PokemonData.readPokemonAbilitiesFromMemory(pokemonID)
 	}
 end
 
+
+function PokemonData.UpdateBST()
+	for pokemonID=1, PokemonData.totalPokemon -1, 1 do
+		local bst= 0
+		for i=0, 4,1 do
+			bst= bst+ Memory.readbyte(GameSettings.gBaseStats +1 +i +(pokemonID-1)* 0x1C)
+		end
+
+
+		PokemonData.Pokemon[pokemonID]["bst"]=tostring(bst)
+
+	end
+	if GameSettings.game ==2 then
+		local bst= 0
+		for i=0, 4,1 do
+			bst= bst+ Memory.readbyte(GameSettings.gBaseStats +1 +i +(151-1)* 0x1C)
+		end
+
+
+		PokemonData.Pokemon[151]["bst"]=tostring(bst)
+
+	else
+		local bst= 0
+		for i=0, 4,1 do
+			bst= bst+ Memory.readbyte(GameSettings.MEw +1 +i )
+		end
+
+
+		PokemonData.Pokemon[151]["bst"]=tostring(bst)
+
+
+	end
+end
+
+
 function PokemonData.checkIfDataIsRandomized()
 	local areTypesRandomized = false
 	local areAbilitiesRandomized = false
+	local checkBST=false
 
 	-- Check once if any data was randomized
 	local types = PokemonData.readPokemonTypesFromMemory(1) -- Bulbasaur
 	--local abilities = PokemonData.readPokemonAbilitiesFromMemory(1) -- Bulbasaur
+
 
 	if types ~= nil then
 		areTypesRandomized = types[1] ~= PokemonData.Types.GRASS or types[2] ~= PokemonData.Types.POISON
