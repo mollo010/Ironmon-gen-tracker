@@ -121,6 +121,8 @@ function PokemonData.initialize()
 	-- Reads the types and abilities for each Pokemon in the Pokedex
 	-- If any data at all was randomized, read in full Pokemon data from memory
 	PokemonData.UpdateBST()
+
+
 	if PokemonData.checkIfDataIsRandomized() then
 		-- print("Randomized " .. Constants.Words.POKEMON .. " data detected, reading from game memory...")
 		for pokemonID=1, PokemonData.totalPokemon, 1 do
@@ -212,6 +214,9 @@ function PokemonData.UpdateBST()
 
 	end
 end
+
+
+
 
 
 function PokemonData.checkIfDataIsRandomized()
@@ -354,7 +359,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.POISON },
 		evolution = "16",
 		bst = "318",
-		movelvls = { {7,13,20,27,34,41,48}, {7,13,20,27,34,41,48}  },
+		movelvls = { {7,13,20,27,34,41,48} , {7 ,7 ,13 ,13 ,20 ,20 ,27 ,27 ,34 ,34 ,41 ,41 ,48 ,48 } } ,
 		weight = 6.9
 	},
 	{
@@ -362,7 +367,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.POISON },
 		evolution = "32",
 		bst = "405",
-		movelvls = { {7,13,22,30,38,46,54}  , { 4, 7, 10, 15, 15, 22, 29, 38, 47, 56 } },
+		movelvls = { {7,13,22,30,38,46,54} , {7 ,13 ,22 ,30 ,38 ,46 ,54 } } ,
 		weight = 13.0
 	},
 	{
@@ -370,7 +375,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.POISON },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "525",
-		movelvls = { {7,13,22,30,43,55,65} , { 4, 7, 10, 15, 15, 22, 29, 41, 53, 65 } },
+		movelvls = { {7,13,22,30,43,55,65} , {7 ,13 ,22 ,30 ,43 ,55 ,65 } } ,
 		weight = 100.0
 	},
 	{
@@ -378,7 +383,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = "16",
 		bst = "309",
-		movelvls = {{9,15,22,30,38,46}   , {9,15,22,30,38,46}  },
+		movelvls = {{9,15,22,30,38,46} , {9 ,15 ,22 ,30 ,38 ,46 } } ,
 		weight = 8.5
 	},
 	{
@@ -386,7 +391,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = "36",
 		bst = "405",
-		movelvls = { {9,15,24,33,42,56} , {9,15,22,30,38,46} },
+		movelvls = { {9,15,24,33,42,56} , {9 ,15 ,24 ,33 ,42 ,56 } } ,
 		weight = 19.0
 	},
 	{
@@ -394,7 +399,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "534",
-		movelvls = {   {9,15,24,36,46,55} , { 7, 13, 20, 27, 34, 36, 44, 54, 64 } },
+		movelvls = {   {9,15,24,36,46,55} , {9 ,15 ,24 ,36 ,46 ,55 } } ,
 		weight = 90.5
 	},
 	{
@@ -402,7 +407,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "16",
 		bst = "314",
-		movelvls = {  {8,15,22,28,35,42} , { 4, 7, 10, 13, 18, 23, 28, 33, 40, 47 } },
+		movelvls = {  {8,15,22,28,35,42} , {8 ,15 ,22 ,28 ,35 ,42 } } ,
 		weight = 9.0
 	},
 	{
@@ -410,7 +415,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "36",
 		bst = "405",
-		movelvls = {  {8,15,24,31,39,47}   , { 4, 7, 10, 13, 19, 25, 31, 37, 45, 53 } },
+		movelvls = {  {8,15,24,31,39,47} , {8 ,15 ,24 ,31 ,39 ,47 } } ,
 		weight = 22.5
 	},
 	{
@@ -418,7 +423,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "530",
-		movelvls = {  {8,15,24,31,42,52} , { 4, 7, 10, 13, 19, 25, 31, 42, 55, 68 } },
+		movelvls = {  {8,15,24,31,42,52} , {8 ,15 ,24 ,31 ,42 ,52 } } ,
 		weight = 85.5
 	},
 	{
@@ -426,7 +431,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.EMPTY },
 		evolution = "7",
 		bst = "195",
-		movelvls = { {}, {} },
+		movelvls = { {} , { } } ,
 		weight = 2.9
 	},
 	{
@@ -434,7 +439,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.EMPTY },
 		evolution = "10",
 		bst = "205",
-		movelvls = { {  }, {  } },
+		movelvls = { {  } , {7 } } ,
 		weight = 9.9
 	},
 	{
@@ -442,7 +447,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "385",
-		movelvls = {  {12,15,16,21,26,32}, { 10, 13, 14, 15, 18, 23, 28, 34, 40, 47 } },
+		movelvls = {  {12,15,16,21,26,32} , {10 ,13 ,14 ,15 ,18 ,23 ,28 ,34 } } ,
 		weight = 32.0
 	},
 	{
@@ -450,7 +455,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.POISON },
 		evolution = "7",
 		bst = "195",
-		movelvls = { {}, {} },
+		movelvls = { {} , { } } ,
 		weight = 3.2
 	},
 	{
@@ -458,7 +463,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.POISON },
 		evolution = "10",
 		bst = "205",
-		movelvls = { {  }, {  } },
+		movelvls = { {  } , { } } ,
 		weight = 10.0
 	},
 	{
@@ -466,7 +471,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.POISON },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "385",
-		movelvls = {  {12,16,20,25,30,35}  , { 10, 15, 20, 25, 30, 35, 40, 45 } },
+		movelvls = {  {12,16,20,25,30,35} , {12 ,16 ,20 ,25 ,30 ,35 } } ,
 		weight = 29.5
 	},
 	{
@@ -474,7 +479,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
 		evolution = "18",
 		bst = "251",
-		movelvls = {  {12,19,28,36,44}  , { 5, 9, 13, 19, 25, 31, 39, 47 } },
+		movelvls = {  {12,19,28,36,44} , {5 ,12 ,19 ,28 ,36 ,44 } } ,
 		weight = 1.8
 	},
 	{
@@ -482,7 +487,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
 		evolution = "36",
 		bst = "349",
-		movelvls = {   {12,21,31,40,49}  , { 5, 9, 13, 20, 27, 34, 43, 52 } },
+		movelvls = {   {12,21,31,40,49} , {5 ,12 ,21 ,31 ,40 ,49 } } ,
 		weight = 30.0
 	},
 	{
@@ -490,7 +495,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "469",
-		movelvls = {  {12,21,31,44,54}   , { 5, 9, 13, 20, 27, 34, 48, 62 } },
+		movelvls = {  {12,21,31,44,54} , {5 ,12 ,21 ,31 ,44 ,54 } } ,
 		weight = 39.5
 	},
 	{
@@ -498,7 +503,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = "20",
 		bst = "253",
-		movelvls = { { 7, 14,23,34 }  , { 7, 13, 20, 27, 34, 41 } },
+		movelvls = { { 7, 14,23,34 } , {7 ,14 ,23 ,34 } } ,
 		weight = 3.5
 	},
 	{
@@ -506,7 +511,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "413",
-		movelvls = { { 7, 14,27,41 }  , { 7, 13, 20, 30, 40, 50 } },
+		movelvls = { { 7, 14,27,41 } , {7 ,14 ,27 ,41 } } ,
 		weight = 18.5
 	},
 	{
@@ -514,7 +519,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
 		evolution = "20",
 		bst = "262",
-		movelvls = { { 9, 15,22,29,36 }  , { 7, 13, 19, 25, 31, 37, 43 } },
+		movelvls = { { 9, 15,22,29,36 } , {9 ,15 ,22 ,29 ,36 } } ,
 		weight = 2.0
 	},
 	{
@@ -522,7 +527,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "442",
-		movelvls = { { 9, 15,25,34,43 }  , { 7, 13, 26, 32, 40, 47 } },
+		movelvls = { { 9, 15,25,34,43 } , {9 ,15 ,25 ,34 ,43 } } ,
 		weight = 38.0
 	},
 	{
@@ -530,7 +535,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = "22",
 		bst = "288",
-		movelvls = { { 10, 17,24,31,38 } , { 8, 13, 20, 25, 32, 37, 37, 37, 44 } },
+		movelvls = { { 10, 17,24,31,38 } , {10 ,17 ,24 ,31 ,38 } } ,
 		weight = 6.9
 	},
 	{
@@ -538,7 +543,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "438",
-		movelvls = { { 10,17,27,36,47 }, { 8, 13, 20, 28, 38, 46, 46, 46, 56 } },
+		movelvls = { { 10,17,27,36,47 } , {10 ,17 ,27 ,36 ,47 } } ,
 		weight = 65.0
 	},
 	{
@@ -546,7 +551,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.THUNDER,
 		bst = "300",
-		movelvls = {  { 9, 16,26,33,43 }  , { 6, 8, 11, 15, 20, 26, 33, 41, 50 } },
+		movelvls = {  { 9, 16,26,33,43 } , {6 ,8 ,11 ,15 ,20 ,26 ,33 ,41 ,50 } } ,
 		weight = 6.0
 	},
 	{
@@ -554,7 +559,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "475",
-		movelvls = { {}, {} },
+		movelvls = { {} , { } } ,
 		weight = 30.0
 	},
 	{
@@ -562,7 +567,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GROUND, PokemonData.Types.EMPTY },
 		evolution = "22",
 		bst = "300",
-		movelvls = { {10,17,24,31,38}, { 6, 11, 17, 23, 30, 37, 45, 53 } },
+		movelvls = { {10,17,24,31,38} , {10 ,17 ,24 ,31 ,38 } } ,
 		weight = 12.0
 	},
 	{
@@ -570,7 +575,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GROUND, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "450",
-		movelvls = { {10,17,27,36,47  }     , { 6, 11, 17, 24, 33, 42, 52, 62 } },
+		movelvls = { {10,17,27,36,47  } , {10 ,17 ,27 ,36 ,47 } } ,
 		weight = 29.5
 	},
 	{
@@ -578,7 +583,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = "16",
 		bst = "275",
-		movelvls = { {14,21,29,36,43 }  , { 8, 12, 17, 20, 23, 30, 38, 47 } },
+		movelvls = { {14,21,29,36,43 } , {8 ,12 ,17 ,23 ,30 ,38 } } ,
 		weight = 7.0
 	},
 	{
@@ -586,7 +591,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.MOON,
 		bst = "365",
-		movelvls = { {14,23,32,41,50 } , { 8, 12, 18, 22, 26, 34, 43, 53 } },
+		movelvls = { {14,23,32,41,50 } , {8 ,12 ,19 ,27 ,36 ,46 } } ,
 		weight = 20.0
 	},
 	{
@@ -594,7 +599,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.GROUND },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "495",
-		movelvls = { {14, 23 }, { 22, 43 } },
+		movelvls = { {14, 23 } , {8 ,12 ,23 } } ,
 		weight = 60.0
 	},
 	{
@@ -602,7 +607,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = "16",
 		bst = "273",
-		movelvls = { {14,21,29,36,43 } , { 8, 12, 17, 20, 23, 30, 38, 47 } },
+		movelvls = { {14,21,29,36,43 } , {8 ,12 ,17 ,23 ,30 ,38 } } ,
 		weight = 9.0
 	},
 	{
@@ -610,7 +615,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.MOON,
 		bst = "365",
-		movelvls = { {14,23,32,41,50 } , { 8, 12, 18, 22, 26, 34, 43, 53 } },
+		movelvls = { {14,23,32,41,50 } , {8 ,12 ,19 ,27 ,36 ,46 } } ,
 		weight = 19.5
 	},
 	{
@@ -618,7 +623,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.GROUND },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "495",
-		movelvls = { { 14,23 }, { 22, 43 } },
+		movelvls = { { 14,23 } , {8 ,12 ,23 } } ,
 		weight = 62.0
 	},
 	{
@@ -626,7 +631,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.MOON,
 		bst = "323",
-		movelvls = { { 13,18,24,31,39,48 }, { 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45 } },
+		movelvls = { { 13,18,24,31,39,48 } , {13 ,18 ,24 ,31 ,39 ,48 } } ,
 		weight = 7.5
 	},
 	{
@@ -634,7 +639,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "473",
-		movelvls = { {}, {} },
+		movelvls = { {} , { } } ,
 		weight = 40.0
 	},
 	{
@@ -642,7 +647,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.FIRE,
 		bst = "299",
-		movelvls = { { 16,21,28,35,42}, { 5, 9, 13, 17, 21, 25, 29, 33, 37, 41 } },
+		movelvls = { { 16,21,28,35,42} , {16 ,21 ,28 ,35 ,42 } } ,
 		weight = 9.9
 	},
 	{
@@ -650,7 +655,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "505",
-		movelvls = { {  }, { 45 } },
+		movelvls = { {  } , { } } ,
 		weight = 19.9
 	},
 	{
@@ -658,7 +663,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.MOON,
 		bst = "270",
-		movelvls = { { 14,19,24,29,34,39 }, { 4, 9, 14, 19, 24, 29, 34, 39, 44, 49 } },
+		movelvls = { { 14,19,24,29,34,39 } , {9 ,14 ,19 ,24 ,29 ,34 ,39 } } ,
 		weight = 5.5
 	},
 	{
@@ -666,7 +671,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "425",
-		movelvls = { {}, {} },
+		movelvls = { {} , { } } ,
 		weight = 12.0
 	},
 	{
@@ -674,7 +679,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.FLYING },
 		evolution = "22",
 		bst = "245",
-		movelvls = { { 10,15,21,29,36 }, { 6, 11, 16, 21, 26, 31, 36, 41, 46 } },
+		movelvls = { { 10,15,21,29,36 } , {10 ,15 ,21 ,28 ,36 } } ,
 		weight = 7.5
 	},
 	{
@@ -682,7 +687,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.FRIEND,
 		bst = "455",
-		movelvls = { { 10,15,21,32,43}, { 6, 11, 16, 21, 28, 35, 42, 49, 56 } },
+		movelvls = { { 10,15,21,32,43} , {10 ,15 ,21 ,32 ,43 } } ,
 		weight = 55.0
 	},
 	{
@@ -690,7 +695,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.POISON },
 		evolution = "21",
 		bst = "320",
-		movelvls = { { 15,17,19,24,33,46 }, { 7, 14, 16, 18, 23, 32, 39 } },
+		movelvls = { { 15,17,19,24,33,46 } , {15 ,17 ,19 ,24 ,33 ,46 } } ,
 		weight = 5.4
 	},
 	{
@@ -698,7 +703,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.POISON },
 		evolution = PokemonData.Evolutions.LEAF,
 		bst = "395",
-		movelvls = { { 15,17,19,28,38,52}, { 7, 14, 16, 18, 24, 35, 44 } },
+		movelvls = { { 15,17,19,28,38,52} , {15 ,17 ,19 ,28 ,38 ,52 } } ,
 		weight = 8.6
 	},
 	{
@@ -706,7 +711,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.POISON },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "480",
-		movelvls = { { 15,17,19 }, { 44 } },
+		movelvls = { { 15,17,19 } , {15 ,17 ,19 } } ,
 		weight = 18.6
 	},
 	{
@@ -714,7 +719,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.GRASS },
 		evolution = "24",
 		bst = "285",
-		movelvls = { { 13,20,27,34,41 }, { 7, 13, 19, 25, 31, 37, 43, 49 } },
+		movelvls = { { 13,20,27,34,41 } , {13 ,20 ,27 ,34 ,41 } } ,
 		weight = 5.4
 	},
 	{
@@ -722,7 +727,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.GRASS },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "405",
-		movelvls = { { 13,20,30,39,48}, { 7, 13, 19, 27, 35, 43, 51, 59 } },
+		movelvls = { { 13,20,30,39,48} , {13 ,20 ,30 ,39 ,48 } } ,
 		weight = 29.5
 	},
 	{
@@ -730,7 +735,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.POISON },
 		evolution = "31",
 		bst = "305",
-		movelvls = { { 24,27,30,35,38,43 }, { 9, 17, 20, 25, 28, 33, 36, 41 } },
+		movelvls = { { 24,27,30,35,38,43 } , {11 ,19 ,22 ,27 ,30 ,35 ,38 ,43 } } ,
 		weight = 30.0
 	},
 	{
@@ -738,7 +743,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.POISON },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "450",
-		movelvls = { {24,27,30,38,43,50 }, { 9, 17, 20, 25, 28, 31, 36, 42, 52 } },
+		movelvls = { {24,27,30,38,43,50 } , {22 ,27 ,30 ,38 ,43 ,50 } } ,
 		weight = 12.5
 	},
 	{
@@ -746,7 +751,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GROUND, PokemonData.Types.EMPTY },
 		evolution = "26",
 		bst = "265",
-		movelvls = { { 15,19,24,31,40 }, { 5, 9, 17, 21, 25, 33, 41, 49 } },
+		movelvls = { { 15,19,24,31,40 } , {15 ,19 ,24 ,31 ,40 } } ,
 		weight = 0.8
 	},
 	{
@@ -754,7 +759,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GROUND, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "405",
-		movelvls = { { 15,19,42,35,47 }, { 5, 9, 17, 21, 25, 26, 38, 51, 64 } },
+		movelvls = { { 15,19,42,35,47 } , {15 ,19 ,24 ,35 ,47 } } ,
 		weight = 33.3
 	},
 	{
@@ -762,7 +767,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = "28",
 		bst = "290",
-		movelvls = { { 12,17,24,33,44}, { 10, 18, 25, 31, 36, 40, 43, 45 } },
+		movelvls = { { 12,17,24,33,44} , {12 ,17 ,24 ,33 ,44 } } ,
 		weight = 4.2
 	},
 	{
@@ -770,7 +775,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "440",
-		movelvls = { { 12,17,24,37,51 }, { 10, 18, 25, 34, 42, 49, 55, 61 } },
+		movelvls = { { 12,17,24,37,51 } , {12 ,17 ,24 ,37 ,51 } } ,
 		weight = 32.0
 	},
 	{
@@ -778,7 +783,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "33",
 		bst = "320",
-		movelvls = { {28,31,36,43,52 }, { 5, 10, 16, 23, 31, 40, 50 } },
+		movelvls = { {28,31,36,43,52 } , {28 ,31 ,36 ,43 ,52 } } ,
 		weight = 19.6
 	},
 	{
@@ -786,7 +791,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "500",
-		movelvls = { { 28,31,39,48,59 }, { 5, 10, 16, 23, 31, 44, 58 } },
+		movelvls = { { 28,31,39,48,59 } , {28 ,31 ,39 ,48 ,59 } } ,
 		weight = 76.6
 	},
 	{
@@ -794,7 +799,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
 		evolution = "28",
 		bst = "305",
-		movelvls = { { 15,21,27,33,39 }, { 6, 11, 16, 21, 26, 31, 36, 41, 46 } },
+		movelvls = { { 15,21,27,33,39 } , {9 ,15 ,21 ,27 ,33 ,39 ,45 } } ,
 		weight = 28.0
 	},
 	{
@@ -802,7 +807,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "455",
-		movelvls = { { 15,21,27,37,46 }, { 6, 11, 16, 21, 26, 28, 35, 44, 53, 62 } },
+		movelvls = { { 15,21,27,37,46 } , {9 ,15 ,21 ,27 ,28 ,37 ,45 ,46 } } ,
 		weight = 32.0
 	},
 	{
@@ -810,7 +815,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.FIRE,
 		bst = "350",
-		movelvls = { {18,23,30,39,50 }, { 7, 13, 19, 25, 31, 37, 43, 49 } },
+		movelvls = { {18,23,30,39,50 } , {18 ,23 ,30 ,39 ,50 } } ,
 		weight = 19.0
 	},
 	{
@@ -818,7 +823,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "555",
-		movelvls = { {  }, { 49 } },
+		movelvls = { {  } , { } } ,
 		weight = 155.0
 	},
 	{
@@ -826,7 +831,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "25",
 		bst = "300",
-		movelvls = { {16,19,25,31,38,45}, { 7, 13, 19, 25, 31, 37, 43 } },
+		movelvls = { {16,19,25,31,38,45} , {16 ,19 ,25 ,31 ,38 ,45 } } ,
 		weight = 12.4
 	},
 	{
@@ -834,7 +839,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.WATER37, -- Level 37 replaces trade evolution for Politoed
 		bst = "385",
-		movelvls = { { 7, 13, 19, 27, 35, 43, 51 }, { 7, 13, 19, 27, 35, 43, 51 } },
+		movelvls = { { 7, 13, 19, 27, 35, 43, 51 } , {16 ,19 ,26 ,33 ,41 ,49 } } ,
 		weight = 20.0
 	},
 	{
@@ -842,7 +847,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.FIGHTING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "500",
-		movelvls = { {16,19 }, { 35, 51 } },
+		movelvls = { {16,19 } , {16 ,19 } } ,
 		weight = 54.0
 	},
 	{
@@ -850,7 +855,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
 		evolution = "16",
 		bst = "310",
-		movelvls = { {}, {} },
+		movelvls = { {} , { } } ,
 		weight = 19.5
 	},
 	{
@@ -858,7 +863,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
 		evolution = "37", -- Level 37 replaces trade evolution
 		bst = "400",
-		movelvls = { { 16,20,27,31,38,42 }, { 16, 18, 21, 23, 25, 30, 33, 36, 43 } },
+		movelvls = { { 16,20,27,31,38,42 } , {16 ,20 ,27 ,31 ,38 ,42 } } ,
 		weight = 56.5
 	},
 	{
@@ -866,7 +871,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "490",
-		movelvls = { { 16,20,27,31,38,42 }, { 16, 18, 21, 23, 25, 30, 33, 36, 43 } },
+		movelvls = { { 16,20,27,31,38,42 } , {16 ,20 ,27 ,31 ,38 ,42 } } ,
 		weight = 48.0
 	},
 	{
@@ -874,7 +879,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
 		evolution = "28",
 		bst = "305",
-		movelvls = { { 20,25,32,39,46}, { 7, 13, 19, 22, 25, 31, 37, 40, 43, 49 } },
+		movelvls = { { 20,25,32,39,46} , {20 ,25 ,32 ,39 ,46 } } ,
 		weight = 19.5
 	},
 	{
@@ -882,7 +887,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
 		evolution = "37", -- Level 37 replaces trade evolution
 		bst = "405",
-		movelvls = { { 20,25,36,44,52}, { 7, 13, 19, 22, 25, 33, 41, 46, 51, 59 } },
+		movelvls = { { 20,25,36,44,52} , {20 ,25 ,36 ,44 ,52 } } ,
 		weight = 70.5
 	},
 	{
@@ -890,7 +895,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "505",
-		movelvls = { { 20,25,36,44,52 }, { 7, 13, 19, 22, 25, 33, 41, 46, 51, 59 } },
+		movelvls = { { 20,25,36,44,52 } , {20 ,25 ,36 ,44 ,52 } } ,
 		weight = 130.0
 	},
 	{
@@ -898,7 +903,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.POISON },
 		evolution = "21",
 		bst = "300",
-		movelvls = { { 13,15,18,21,26,33,42}, { 6, 11, 15, 17, 19, 23, 30, 37, 45 } },
+		movelvls = { { 13,15,18,21,26,33,42} , {13 ,15 ,18 ,21 ,26 ,33 ,42 } } ,
 		weight = 4.0
 	},
 	{
@@ -906,7 +911,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.POISON },
 		evolution = PokemonData.Evolutions.LEAF,
 		bst = "390",
-		movelvls = { { 13,15,18,23,29,38,49 }, { 6, 11, 15, 17, 19, 24, 33, 42, 54 } },
+		movelvls = { { 13,15,18,23,29,38,49 } , {13 ,15 ,18 ,23 ,29 ,38 ,49 } } ,
 		weight = 6.4
 	},
 	{
@@ -914,7 +919,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.POISON },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "480",
-		movelvls = { {13,15,18}, {} },
+		movelvls = { {13,15,18} , {13 ,15 ,18 } } ,
 		weight = 15.5
 	},
 	{
@@ -922,7 +927,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.POISON },
 		evolution = "30",
 		bst = "335",
-		movelvls = { { 7,13,18,22,27,33,40,48 }, { 6, 12, 19, 25, 30, 36, 43, 49 } },
+		movelvls = { { 7,13,18,22,27,33,40,48 } , {7 ,13 ,18 ,22 ,27 ,33 ,40 ,48 } } ,
 		weight = 45.5
 	},
 	{
@@ -930,7 +935,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.POISON },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "515",
-		movelvls = { { 13,18,22,27,35,43,50}, { 6, 12, 19, 25, 30, 38, 47, 55 } },
+		movelvls = { { 13,18,22,27,35,43,50} , {7 ,13 ,18 ,22 ,27 ,35 ,43 ,50 } } ,
 		weight = 55.0
 	},
 	{
@@ -938,7 +943,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ROCK, PokemonData.Types.GROUND },
 		evolution = "25",
 		bst = "300",
-		movelvls = { { 11,16,21,26,31,36}, { 6, 11, 16, 21, 26, 31, 36, 41, 46 } },
+		movelvls = { { 11,16,21,26,31,36} , {11 ,16 ,21 ,26 ,31 ,36 } } ,
 		weight = 20.0
 	},
 	{
@@ -946,7 +951,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ROCK, PokemonData.Types.GROUND },
 		evolution = "37", -- Level 37 replaces trade evolution
 		bst = "390",
-		movelvls = { { 11,16,21,29,36,43 }, { 6, 11, 16, 21, 29, 37, 45, 53, 62 } },
+		movelvls = { { 11,16,21,29,36,43 } , {11 ,16 ,21 ,29 ,36 ,43 } } ,
 		weight = 105.0
 	},
 	{
@@ -954,7 +959,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ROCK, PokemonData.Types.GROUND },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "485",
-		movelvls = { { 11,16,21,29,36,43 }, { 6, 11, 16, 21, 29, 37, 45, 53, 62 } },
+		movelvls = { { 11,16,21,29,36,43 } , {11 ,16 ,21 ,29 ,36 ,43 } } ,
 		weight = 300.0
 	},
 	{
@@ -962,7 +967,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = "40",
 		bst = "410",
-		movelvls = { { 30,32,35,39,43,48 }, { 5, 9, 14, 19, 25, 31, 38, 45, 53 } },
+		movelvls = { { 30,32,35,39,43,48 } , {30 ,32 ,35 ,39 ,43 ,48 } } ,
 		weight = 30.0
 	},
 	{
@@ -970,7 +975,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "500",
-		movelvls = { { 30,32,35,39,47,55 }, { 5, 9, 14, 19, 25, 31, 38, 40, 50, 63 } },
+		movelvls = { { 30,32,35,39,47,55 } , {30 ,32 ,35 ,39 ,47 ,55 } } ,
 		weight = 95.0
 	},
 	{
@@ -978,7 +983,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.PSYCHIC },
 		evolution = PokemonData.Evolutions.WATER37, -- Water stone replaces trade evolution to Slowking
 		bst = "315",
-		movelvls = { { 18,22,27,33,40,48}, { 6, 13, 17, 24, 29, 36, 40, 47 } },
+		movelvls = { { 18,22,27,33,40,48} , {18 ,22 ,27 ,33 ,40 ,48 } } ,
 		weight = 36.0
 	},
 	{
@@ -986,7 +991,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.PSYCHIC },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "490",
-		movelvls = { { 19,22,27,33,37,44,55 }, { 6, 13, 17, 24, 29, 36, 37, 44, 55 } },
+		movelvls = { { 19,22,27,33,37,44,55 } , {18 ,22 ,27 ,33 ,37 ,44 ,55 } } ,
 		weight = 78.5
 	},
 	{
@@ -994,7 +999,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.STEEL },
 		evolution = "30",
 		bst = "325",
-		movelvls = { {21,25,29,35,41,47}, { 6, 11, 16, 21, 26, 32, 38, 44, 50 } },
+		movelvls = { {21,25,29,35,41,47} , {21 ,25 ,29 ,35 ,41 ,47 } } ,
 		weight = 6.0
 	},
 	{
@@ -1002,7 +1007,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.STEEL },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "465",
-		movelvls = { { 21,25,29,38,46,54 }, { 6, 11, 16, 21, 26, 35, 44, 53, 62 } },
+		movelvls = { { 21,25,29,38,46,54 } , {21 ,25 ,29 ,38 ,46 ,54 } } ,
 		weight = 60.0
 	},
 	{
@@ -1010,7 +1015,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "352",
-		movelvls = { { 7,15,23,31,39 },{ 6, 11, 16, 21, 26, 31, 36, 41, 46 } },
+		movelvls = { { 7,15,23,31,39 } , {7 ,15 ,23 ,31 ,39 } } ,
 		weight = 15.0
 	},
 	{
@@ -1018,7 +1023,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
 		evolution = "31",
 		bst = "310",
-		movelvls = { { 20,24,30,36,40,44 }, { 9, 13, 21, 25, 33, 37, 45 } },
+		movelvls = { { 20,24,30,36,40,44 } , {20 ,24 ,30 ,36 ,40 ,44 } } ,
 		weight = 39.2
 	},
 	{
@@ -1026,7 +1031,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "460",
-		movelvls = { { 20,24,30,39,45,51}, { 9, 13, 21, 25, 38, 47, 60 } },
+		movelvls = { { 20,24,30,39,45,51} , {20 ,24 ,30 ,39 ,45 ,51 } } ,
 		weight = 85.2
 	},
 	{
@@ -1034,7 +1039,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "34",
 		bst = "325",
-		movelvls = { { 30,35,40,45,50 }, { 9, 17, 21, 29, 37, 41, 49 } },
+		movelvls = { { 30,35,40,45,50 } , {30 ,35 ,40 ,45 ,50 } } ,
 		weight = 90.0
 	},
 	{
@@ -1042,7 +1047,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.ICE },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "475",
-		movelvls = { { 30,35,44,50,56}, { 9, 17, 21, 29, 34, 42, 51, 64 } },
+		movelvls = { { 30,35,44,50,56} , {30 ,35 ,44 ,50 ,56 } } ,
 		weight = 120.0
 	},
 	{
@@ -1050,7 +1055,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = "38",
 		bst = "325",
-		movelvls = { { 30,33,37,42,48,55 }, { 4, 8, 13, 19, 26, 34, 43, 53 } },
+		movelvls = { { 30,33,37,42,48,55 } , {30 ,33 ,37 ,42 ,48 ,55 } } ,
 		weight = 30.0
 	},
 	{
@@ -1058,7 +1063,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "500",
-		movelvls = { {30,33,37,45,53,60}, { 4, 8, 13, 19, 26, 34, 47, 61 } },
+		movelvls = { {30,33,37,45,53,60} , {30 ,33 ,37 ,45 ,53 ,60 } } ,
 		weight = 30.0
 	},
 	{
@@ -1066,7 +1071,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.WATER,
 		bst = "305",
-		movelvls = { { 18,23,30,39,50 }, { 8, 15, 22, 29, 36, 43, 50 } },
+		movelvls = { { 18,23,30,39,50 } , {18 ,23 ,30 ,39 ,50 } } ,
 		weight = 4.0
 	},
 	{
@@ -1074,7 +1079,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.ICE },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "525",
-		movelvls = { { 50 }, { 36, 43 } },
+		movelvls = { { 50 } , {50 } } ,
 		weight = 132.5
 	},
 	{
@@ -1082,7 +1087,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GHOST, PokemonData.Types.POISON },
 		evolution = "25",
 		bst = "310",
-		movelvls = { { 27,35 }, { 8, 13, 16, 21, 28, 33, 36, 41, 48 } },
+		movelvls = { { 27,35 } , {27 ,35 } } ,
 		weight = 0.1
 	},
 	{
@@ -1090,7 +1095,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GHOST, PokemonData.Types.POISON },
 		evolution = "37", -- Level 37 replaces trade evolution
 		bst = "405",
-		movelvls = { { 29,38}, { 8, 13, 16, 21, 25, 31, 39, 45, 53, 64 } },
+		movelvls = { { 29,38} , {29 ,38 } } ,
 		weight = 0.1
 	},
 	{
@@ -1098,7 +1103,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GHOST, PokemonData.Types.POISON },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "500",
-		movelvls = { { 29,38 }, { 8, 13, 16, 21, 25, 31, 39, 45, 53, 64 } },
+		movelvls = { { 29,38 } , {29 ,38 } } ,
 		weight = 40.5
 	},
 	{
@@ -1106,7 +1111,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ROCK, PokemonData.Types.GROUND },
 		evolution = "30", -- Level 30 replaces trade evolution
 		bst = "385",
-		movelvls = { { 15,19,25,33,43 }, { 8, 12, 19, 23, 30, 34, 41, 45, 52, 56 } },
+		movelvls = { { 15,19,25,33,43 } , {15 ,19 ,25 ,33 ,43 } } ,
 		weight = 210.0
 	},
 	{
@@ -1114,7 +1119,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
 		evolution = "26",
 		bst = "328",
-		movelvls = { { 12,17,24,29,32,37 }, { 7, 11, 17, 21, 27, 31, 37, 41, 47 } },
+		movelvls = { { 12,17,24,29,32,37 } , {12 ,17 ,24 ,29 ,32 ,37 } } ,
 		weight = 32.4
 	},
 	{
@@ -1122,7 +1127,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "483",
-		movelvls = { { 12,17,24,33,37,43}, { 7, 11, 17, 21, 29, 35, 43, 49, 57 } },
+		movelvls = { { 12,17,24,33,37,43} , {12 ,17 ,24 ,33 ,37 ,43 } } ,
 		weight = 75.6
 	},
 	{
@@ -1130,7 +1135,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "28",
 		bst = "325",
-		movelvls = { {20,25,30,35,40 }, { 5, 12, 16, 23, 27, 34, 38, 45, 49 } },
+		movelvls = { {20,25,30,35,40 } , {20 ,25 ,30 ,35 ,40 } } ,
 		weight = 6.5
 	},
 	{
@@ -1138,7 +1143,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "475",
-		movelvls = { {20,25,34,42,49 }, { 5, 12, 16, 23, 27, 38, 42, 57, 65 } },
+		movelvls = { {20,25,34,42,49 } , {20 ,25 ,34 ,42 ,49 } } ,
 		weight = 60.0
 	},
 	{
@@ -1146,7 +1151,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
 		evolution = "30",
 		bst = "330",
-		movelvls = { { 17,22,29,36,43}, { 8, 15, 21, 27, 32, 37, 42, 46, 49 } },
+		movelvls = { { 17,22,29,36,43} , {17 ,22 ,29 ,36 ,43 } } ,
 		weight = 10.4
 	},
 	{
@@ -1154,7 +1159,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "480",
-		movelvls = { { 17,22,29,40,50 }, { 8, 15, 21, 27, 34, 41, 48, 54, 59 } },
+		movelvls = { { 17,22,29,40,50 } , {17 ,22 ,29 ,40 ,50 } } ,
 		weight = 66.6
 	},
 	{
@@ -1162,7 +1167,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.PSYCHIC },
 		evolution = PokemonData.Evolutions.LEAF,
 		bst = "325",
-		movelvls = { { 25,28,32,37,42,48 }, { 7, 13, 19, 25, 31, 37, 43 } },
+		movelvls = { { 25,28,32,37,42,48 } , {25 ,28 ,32 ,37 ,42 ,48 } } ,
 		weight = 2.5
 	},
 	{
@@ -1170,7 +1175,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.PSYCHIC },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "520",
-		movelvls = { { 28}, { 19, 31 } },
+		movelvls = { { 28} , {28 } } ,
 		weight = 120.0
 	},
 	{
@@ -1178,7 +1183,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GROUND, PokemonData.Types.EMPTY },
 		evolution = "28",
 		bst = "320",
-		movelvls = { { 25,31,38,43,46 }, { 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45 } },
+		movelvls = { { 25,31,38,43,46 } , {10 ,13 ,18 ,25 ,31 ,38 ,43 ,46 } } ,
 		weight = 6.5
 	},
 	{
@@ -1186,7 +1191,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GROUND, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "425",
-		movelvls = { { 25,33,41,48,55 }, { 5, 9, 13, 17, 21, 25, 32, 39, 46, 53, 61 } },
+		movelvls = { { 25,33,41,48,55 } , {10 ,13 ,18 ,25 ,33 ,41 ,48 ,55 } } ,
 		weight = 45.0
 	},
 	{
@@ -1194,7 +1199,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "455",
-		movelvls = { { 333,38,43,48,53 }, { 6, 11, 16, 20, 21, 26, 31, 36, 41, 46, 51 } },
+		movelvls = { { 333,38,43,48,53 } , {33 ,38 ,43 ,48 ,53 } } ,
 		weight = 49.8
 	},
 	{
@@ -1202,7 +1207,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "455",
-		movelvls = { {33,38,43,48,53 }, { 7, 13, 20, 26, 26, 26, 32, 38, 44, 50 } },
+		movelvls = { {33,38,43,48,53 } , {33 ,38 ,43 ,48 ,53 } } ,
 		weight = 50.2
 	},
 	{
@@ -1210,7 +1215,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "385",
-		movelvls = { { 7,15,23,31,39 }, { 7, 12, 18, 23, 29, 34, 40, 45, 51 } },
+		movelvls = { { 7,15,23,31,39 } , {7 ,15 ,23 ,31 ,39 } } ,
 		weight = 65.5
 	},
 	{
@@ -1218,7 +1223,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = "35",
 		bst = "340",
-		movelvls = { { 32,37,40,45,48 }, { 9, 17, 21, 25, 33, 41, 45, 49 } },
+		movelvls = { { 32,37,40,45,48 } , {32 ,37 ,40 ,45 ,48 } } ,
 		weight = 1.0
 	},
 	{
@@ -1226,7 +1231,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.POISON, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "490",
-		movelvls = { { 32,39,43,49,53}, { 9, 17, 21, 25, 33, 44, 51, 58 } },
+		movelvls = { { 32,39,43,49,53} , {32 ,39 ,43 ,49 ,53 } } ,
 		weight = 9.5
 	},
 	{
@@ -1234,7 +1239,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GROUND, PokemonData.Types.ROCK },
 		evolution = "42",
 		bst = "345",
-		movelvls = { { 30,35,40,45,50,55 }, { 10, 15, 24, 29, 38, 43, 52, 57 } },
+		movelvls = { { 30,35,40,45,50,55 } , {30 ,35 ,40 ,45 ,50 ,55 } } ,
 		weight = 115.0
 	},
 	{
@@ -1242,7 +1247,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GROUND, PokemonData.Types.ROCK },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "485",
-		movelvls = { { 30,35,40,45,50,55}, { 10, 15, 24, 29, 38, 46, 58, 66 } },
+		movelvls = { { 30,35,40,45,50,55} , {30 ,35 ,40 ,48 ,55 ,64 } } ,
 		weight = 120.0
 	},
 	{
@@ -1250,7 +1255,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "450",
-		movelvls = { { 24,30,38,44,48,54 }, { 5, 9, 13, 17, 23, 29, 35, 41, 49, 57 } },
+		movelvls = { { 24,30,38,44,48,54 } , {12 ,24 ,30 ,38 ,44 ,48 ,54 } } ,
 		weight = 34.6
 	},
 	{
@@ -1258,7 +1263,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.GRASS, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "435",
-		movelvls = { { 29,32,36,39,45,49 }, { 4, 10, 13, 19, 22, 28, 31, 37, 40, 46 } },
+		movelvls = { { 29,32,36,39,45,49 } , {24 ,27 ,29 ,32 ,36 ,39 ,45 ,48 } } ,
 		weight = 35.0
 	},
 	{
@@ -1266,7 +1271,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "490",
-		movelvls = { { 26,31,36,41,46 }, { 7, 13, 19, 25, 31, 37, 43, 49 } },
+		movelvls = { { 26,31,36,41,46 } , {26 ,31 ,36 ,41 ,46 } } ,
 		weight = 80.0
 	},
 	{
@@ -1274,7 +1279,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "32",
 		bst = "295",
-		movelvls = { { 19,24,30,37,45 }, { 8, 15, 22, 29, 36, 43, 50 } },
+		movelvls = { { 19,24,30,37,45 } , {19 ,24 ,30 ,37 ,45 } } ,
 		weight = 8.0
 	},
 	{
@@ -1282,7 +1287,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "40", -- Level 40 replaces trade evolution
 		bst = "440",
-		movelvls = { {19,224,30,41,52 }, { 8, 15, 22, 29, 40, 51, 62 } },
+		movelvls = { {19,224,30,41,52 } , {19 ,24 ,30 ,41 ,52 } } ,
 		weight = 25.0
 	},
 	{
@@ -1290,7 +1295,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "33",
 		bst = "320",
-		movelvls = { { 19,24,30,37,45,54 }, { 10, 15, 24, 29, 38, 43, 52, 57 } },
+		movelvls = { { 19,24,30,37,45,54 } , {19 ,24 ,30 ,37 ,45 ,54 } } ,
 		weight = 15.0
 	},
 	{
@@ -1298,7 +1303,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "450",
-		movelvls = { { 19,24,30,39,48,54 }, { 10, 15, 24, 29, 41, 49, 61, 69 } },
+		movelvls = { { 19,24,30,39,48,54 } , {19 ,24 ,30 ,39 ,48 ,54 } } ,
 		weight = 39.0
 	},
 	{
@@ -1306,7 +1311,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.WATER,
 		bst = "340",
-		movelvls = { {17,22,27,32,37,42,47 }, { 6, 10, 15, 19, 24, 28, 33, 37, 42, 46 } },
+		movelvls = { {17,22,27,32,37,42,47 } , {17 ,22 ,27 ,32 ,37 ,42 ,47 } } ,
 		weight = 34.5
 	},
 	{
@@ -1314,7 +1319,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.PSYCHIC },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "520",
-		movelvls = { {  }, { 33 } },
+		movelvls = { {  } , { } } ,
 		weight = 80.0
 	},
 	{
@@ -1322,7 +1327,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "460",
-		movelvls = { { 15,23,31,39,47 }, { 5, 8, 12, 15, 19, 19, 22, 26, 29, 33, 36, 40, 43, 47, 50 } },
+		movelvls = { { 15,23,31,39,47 } , {15 ,23 ,31 ,39 ,47 } } ,
 		weight = 54.5
 	},
 	{
@@ -1330,7 +1335,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.FLYING },
 		evolution = "30", -- Level 30 replaces trade evolution
 		bst = "500",
-		movelvls = { { 17,20,24,29,35,42 }, { 6, 11, 16, 21, 26, 31, 36, 41, 46 } },
+		movelvls = { { 17,20,24,29,35,42 } , {17 ,20 ,24 ,29 ,35 ,42 ,50 } } ,
 		weight = 56.0
 	},
 	{
@@ -1338,7 +1343,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ICE, PokemonData.Types.PSYCHIC },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "455",
-		movelvls = { { 18,23,31,39,47,58 }, { 9, 13, 21, 25, 35, 41, 51, 57, 67 } },
+		movelvls = { { 18,23,31,39,47,58 } , {18 ,23 ,31 ,39 ,47 ,58 } } ,
 		weight = 40.6
 	},
 	{
@@ -1346,7 +1351,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "490",
-		movelvls = { { 34,37,42,49,54 }, { 9, 17, 25, 36, 47, 58 } },
+		movelvls = { { 34,37,42,49,54 } , {34 ,37 ,42 ,49 ,54 } } ,
 		weight = 30.0
 	},
 	{
@@ -1354,7 +1359,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "495",
-		movelvls = { { 36,39,43,48,52,55 }, { 7, 13, 19, 25, 33, 41, 49, 57 } },
+		movelvls = { { 36,39,43,48,52,55 } , {36 ,39 ,43 ,48 ,52 ,55 } } ,
 		weight = 44.5
 	},
 	{
@@ -1362,7 +1367,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.BUG, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "500",
-		movelvls = { { 25,30,36,43,49,54 }, { 7, 13, 19, 25, 31, 37, 43, 49 } },
+		movelvls = { { 25,30,36,43,49,54 } , {21 ,25 ,30 ,36 ,43 ,49 ,54 } } ,
 		weight = 55.0
 	},
 	{
@@ -1370,7 +1375,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "490",
-		movelvls = { { 21,28,35,44,51 }, { 4, 8, 13, 19, 26, 34, 43, 53 } },
+		movelvls = { { 21,28,35,44,51 } , {21 ,28 ,35 ,44 ,51 } } ,
 		weight = 88.4
 	},
 	{
@@ -1378,7 +1383,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = "20",
 		bst = "200",
-		movelvls = { { 15 }, { 15, 30 } },
+		movelvls = { { 15 } , {15 } } ,
 		weight = 10.0
 	},
 	{
@@ -1386,7 +1391,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "540",
-		movelvls = { { 220,25,32,41,52}, { 20, 25, 30, 35, 40, 45, 50, 55 } },
+		movelvls = { { 22,25,32,41,52} , {20 ,25 ,32 ,41 ,52 } } ,
 		weight = 235.0
 	},
 	{
@@ -1394,7 +1399,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.ICE },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "535",
-		movelvls = { { 16,20,25,31,38,46 }, { 7, 13, 19, 25, 31, 37, 43, 49, 55 } },
+		movelvls = { { 16,20,25,31,38,46 } , {16 ,20 ,25 ,31 ,38 ,46 } } ,
 		weight = 220.0
 	},
 	{
@@ -1402,7 +1407,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "288",
-		movelvls = { {}, {} },
+		movelvls = { {} , { } } ,
 		weight = 4.0
 	},
 	{
@@ -1410,7 +1415,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.STONES,
 		bst = "325",
-		movelvls = { { 27,31,37,45 }, { 8, 16, 23, 30, 36, 42 } },
+		movelvls = { { 27,31,37,45 } , {8 ,16 ,23 ,30 ,36 ,42 } } ,
 		weight = 6.5
 	},
 	{
@@ -1418,7 +1423,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "525",
-		movelvls = { { 27,31,37,40,42,44,48,54}  , { 8, 16, 23, 30, 36, 42, 47, 52 } },
+		movelvls = { { 27,31,37,40,42,44,48,54} , {8 ,16 ,23 ,30 ,36 ,42 ,42 ,47 ,52 } } ,
 		weight = 29.0
 	},
 	{
@@ -1426,7 +1431,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "525",
-		movelvls = { { 27,31,37,40,42,44,48,54}, { 8, 16, 23, 30, 36, 42, 47, 52 } },
+		movelvls = { { 27,31,37,40,42,44,48,54} , {8 ,16 ,23 ,30 ,36 ,42 ,47 ,52 } } ,
 		weight = 24.5
 	},
 	{
@@ -1434,7 +1439,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "525",
-		movelvls = { { 27,31,37,40,42,44,48,54}  , { 8, 16, 23, 30, 36, 42, 47, 52 } },
+		movelvls = { { 27,31,37,40,42,44,48,54} , {8 ,16 ,23 ,30 ,36 ,42 ,47 ,52 } } ,
 		weight = 25.0
 	},
 	{
@@ -1442,7 +1447,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE, -- Level 30 replaces trade evolution
 		bst = "395",
-		movelvls = { { 23,28,35,42}, { 9, 12, 20, 24, 32, 36, 44, 48 } },
+		movelvls = { { 23,28,35,42} , {23 ,28 ,35 ,42 } } ,
 		weight = 36.5
 	},
 	{
@@ -1450,7 +1455,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ROCK, PokemonData.Types.WATER },
 		evolution = "40",
 		bst = "355",
-		movelvls = { { 34,39,46,53 }, { 13, 19, 25, 31, 37, 43, 49, 55 } },
+		movelvls = { { 34,39,46,53 } , {34 ,39 ,46 ,53 } } ,
 		weight = 7.5
 	},
 	{
@@ -1458,7 +1463,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ROCK, PokemonData.Types.WATER },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "495",
-		movelvls = { { 34,39,44,49 }, { 13, 19, 25, 31, 37, 40, 46, 55, 65 } },
+		movelvls = { { 34,39,44,49 } , {34 ,39 ,44 ,49 } } ,
 		weight = 35.0
 	},
 	{
@@ -1466,7 +1471,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ROCK, PokemonData.Types.WATER },
 		evolution = "40",
 		bst = "355",
-		movelvls = { { 34,39,44,49 }, { 13, 19, 25, 31, 37, 43, 49, 55 } },
+		movelvls = { { 34,39,44,49 } , {34 ,39 ,44 ,49 } } ,
 		weight = 11.5
 	},
 	{
@@ -1474,7 +1479,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ROCK, PokemonData.Types.WATER },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "495",
-		movelvls = { { 34,39,46,53 }, { 13, 19, 25, 31, 37, 40, 46, 55, 65 } },
+		movelvls = { { 34,39,46,53 } , {34 ,39 ,46 ,53 } } ,
 		weight = 40.5
 	},
 	{
@@ -1482,7 +1487,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ROCK, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "515",
-		movelvls = { { 33,38,45,54 }, { 8, 15, 22, 29, 36, 43, 50 } },
+		movelvls = { { 33,38,45,54 } , {33 ,38 ,45 ,54 } } ,
 		weight = 59.0
 	},
 	{
@@ -1490,7 +1495,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "540",
-		movelvls = { { 35,41,48,56 }, { 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53 } },
+		movelvls = { { 35,41,48,56 } , {35 ,41 ,48 ,56 } } ,
 		weight = 460.0
 	},
 	{
@@ -1498,7 +1503,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ICE, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "580",
-		movelvls = { { 51,55,60 }, { 13, 25, 37, 49, 61, 73, 85 } },
+		movelvls = { { 51,55,60 } , {51 ,55 ,60 } } ,
 		weight = 55.4
 	},
 	{
@@ -1506,7 +1511,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "580",
-		movelvls = {  { 51,55,60 }, { 13, 25, 37, 49, 61, 73, 85 } },
+		movelvls = {  { 51,55,60 } , {51 ,55 ,60 } } ,
 		weight = 52.6
 	},
 	{
@@ -1514,7 +1519,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIRE, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "580",
-		movelvls = {  { 51,55,60 }, { 13, 25, 37, 49, 61, 73, 85 } },
+		movelvls = {  { 51,55,60 } , {51 ,55 ,60 } } ,
 		weight = 60.0
 	},
 	{
@@ -1522,7 +1527,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.DRAGON, PokemonData.Types.EMPTY },
 		evolution = "30",
 		bst = "300",
-		movelvls = { { 10,20,30,40,50 }, { 8, 15, 22, 29, 36, 43, 50, 57 } },
+		movelvls = { { 10,20,30,40,50 } , {10 ,20 ,30 ,40 ,50 } } ,
 		weight = 3.3
 	},
 	{
@@ -1530,7 +1535,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.DRAGON, PokemonData.Types.EMPTY },
 		evolution = "55",
 		bst = "420",
-		movelvls = { { 10,20,35,45,55}, { 8, 15, 22, 29, 38, 47, 56, 65 } },
+		movelvls = { { 10,20,35,45,55} , {10 ,20 ,35 ,45 ,55 } } ,
 		weight = 16.5
 	},
 	{
@@ -1538,7 +1543,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.DRAGON, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "600",
-		movelvls = { { 810,20,35,45,60 }, { 8, 15, 22, 29, 38, 47, 55, 61, 75 } },
+		movelvls = { { 810,20,35,45,60 } , {10 ,20 ,35 ,45 ,60 } } ,
 		weight = 210.0
 	},
 	{
@@ -1546,7 +1551,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "680",
-		movelvls = { { 63,66,70,75,81}, { 11, 22, 33, 44, 55, 66, 77, 88, 99 } },
+		movelvls = { { 63,66,70,75,81} , {63 ,66 ,70 ,75 ,81 } } ,
 		weight = 122.0
 	},
 	{
@@ -1554,7 +1559,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "600",
-		movelvls = { { 10,20,30,40 }, { 10, 20, 30, 40, 50 } },
+		movelvls = { { 10,20,30,40 }, { 10 ,20 ,30 ,40   } },
 		weight = 4.0
 	}
 }

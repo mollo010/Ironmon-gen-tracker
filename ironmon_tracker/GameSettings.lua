@@ -188,7 +188,7 @@ function GameSettings.setGameInfo(gamecode)
 		[0x59454c4c] = {
 			GAME_NUMBER = 2,
 			GAME_NAME = "Pokemon Yellow(U)",
-			VERSION_GROUP = 1,
+			VERSION_GROUP = 2,
 			VERSION_COLOR = "Yellow",
 			LANGUAGE = "English",
 			BADGE_PREFIX = "FRLG",
@@ -502,7 +502,7 @@ function GameSettings.setRomAddresses(gameIndex, versionIndex)
 			{ 0x080383DE}
 		},
 		MEw = {
-			{ 0x080425B}
+			{ 0x0800425B}
 		},
 		gEvo_move = {
 			{ 0x0803B1D8}
