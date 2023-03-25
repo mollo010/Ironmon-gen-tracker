@@ -501,6 +501,9 @@ function GameSettings.setRomAddresses(gameIndex, versionIndex)
 		gBaseStats = {
 			{ 0x080383DE}
 		},
+		MEw = {
+			{ 0x080425B}
+		},
 		gEvo_move = {
 			{ 0x0803B1D8}
 		},
