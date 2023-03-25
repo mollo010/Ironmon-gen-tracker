@@ -1,5 +1,5 @@
 # Ironmon-Tracker
-This is a in developement fork of the https://github.com/besteon/Ironmon-Tracker that aims to adept the tracker to work for gen1 and gen2 games 
+This is a in developement fork of the https://github.com/besteon/Ironmon-Tracker that aims to adept the tracker to work for gen1  games 
 
 This project is based on [MKDasher's PokemonBizhawkLua project](https://github.com/besteon/Ironmon-Tracker).
 
@@ -7,7 +7,8 @@ This is a WIP bugs and instability can be expected
 
 Currently supported Pokémon games / languages:
 Red US/Eu version
-
+BLue UE version
+Yellow UE version
 
 There are a couple of VS Code extensions which we recommend, which should automatically be recommended to you in your VS Code:
 
