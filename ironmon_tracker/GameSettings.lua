@@ -171,7 +171,27 @@ function GameSettings.setGameInfo(gamecode)
 			VERSION_GROUP = 1,
 			VERSION_COLOR = "RED",
 			LANGUAGE = "English",
-			BADGE_PREFIX = "RSE",
+			BADGE_PREFIX = "FRLG",
+			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
+		}
+		,
+		[0x424c5545] = {
+			GAME_NUMBER = 1,
+			GAME_NAME = "Pokemon Blue (U)",
+			VERSION_GROUP = 1,
+			VERSION_COLOR = "BLUE",
+			LANGUAGE = "English",
+			BADGE_PREFIX = "FRLG",
+			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
+		}
+		,
+		[0x59454c4c] = {
+			GAME_NUMBER = 2,
+			GAME_NAME = "Pokemon Yellow(U)",
+			VERSION_GROUP = 1,
+			VERSION_COLOR = "Yellow",
+			LANGUAGE = "English",
+			BADGE_PREFIX = "FRLG",
 			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
 		}
 	}
@@ -414,9 +434,13 @@ function GameSettings.setWramAddresses()
 	}
 
 	for key, address in pairs(addresses) do
-		local value = address[GameSettings.game]
+		local value = address[1]
 		if value ~= nil then
-			GameSettings[key] = value
+			if GameSettings.game == 2 and key ~="StatChange" then
+				GameSettings[key] = value-1
+			else
+				GameSettings[key] = value
+			end
 		end
 	end
 end

@@ -703,222 +703,222 @@ function TrainerData.setupTrainersAsFRLG()
 	}
 
 	TrainerData.Trainers = {
-		[410] = {
+		[365] = {
 			name = "Lorelei",
 			group = TrainerData.TrainerGroups.Elite4,
 			filename = "frlg-elitefour-1",
 		},
-		[411] = {
+		[337] = {
 			name = "Bruno",
 			group = TrainerData.TrainerGroups.Elite4,
 			filename = "frlg-elitefour-2",
 		},
-		[412] = {
+		[390] = {
 			name = "Agatha",
 			group = TrainerData.TrainerGroups.Elite4,
 			filename = "frlg-elitefour-3",
 		},
-		[413] = {
+		[391] = {
 			name = "Lance",
 			group = TrainerData.TrainerGroups.Elite4,
 			filename = "frlg-elitefour-4",
 		},
-		[414] = {
+		[338] = {
 			name = "Brock",
 			group = TrainerData.TrainerGroups.Gym,
 			filename = "frlg-gymleader-1",
 		},
-		[415] = {
+		[339] = {
 			name = "Misty",
 			group = TrainerData.TrainerGroups.Gym,
 			filename = "frlg-gymleader-2",
 		},
-		[416] = {
+		[340] = {
 			name = "Lt. Surge",
 			group = TrainerData.TrainerGroups.Gym,
 			filename = "frlg-gymleader-3",
 		},
-		[417] = {
+		[341] = {
 			name = "Erika",
 			group = TrainerData.TrainerGroups.Gym,
 			filename = "frlg-gymleader-4",
 		},
-		[418] = {
+		[342] = {
 			name = "Koga",
 			group = TrainerData.TrainerGroups.Gym,
 			filename = "frlg-gymleader-5",
 		},
-		[420] = {
+		[344] = {
 			name = "Sabrina",
 			group = TrainerData.TrainerGroups.Gym,
 			filename = "frlg-gymleader-6",
 		},
-		[419] = {
+		[343] = {
 			name = "Blaine",
 			group = TrainerData.TrainerGroups.Gym,
 			filename = "frlg-gymleader-7",
 		},
-		[350] = {
+		[277] = {
 			name = "Giovanni",
 			group = TrainerData.TrainerGroups.Gym,
 			filename = "frlg-gymleader-8",
 		},
 		-- The follow rivals are shown three times each, in order of starter located in the Middle ball, then Left, then Right
-		[326] = {
+		[250] = {
 			name = "Rival 1", -- Rival chose the Middle Ball
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-a",
 			whichRival = "Middle",
 		},
-		[327] = {
+		[251] = {
 			name = "Rival 1", -- Rival chose the Left Ball
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-a",
 			whichRival = "Left",
 		},
-		[328] = {
+		[252] = {
 			name = "Rival 1", -- Rival chose the Right Ball
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-a",
 			whichRival = "Right",
 		},
-		[329] = {
+		[253] = {
 			name = "Rival 2",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-b",
 			whichRival = "Middle",
 		},
-		[330] = {
+		[254] = {
 			name = "Rival 2",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-b",
 			whichRival = "Left",
 		},
-		[331] = {
+		[255] = {
 			name = "Rival 2",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-b",
 			whichRival = "Right",
 		},
-		[332] = {
+		[256] = {
 			name = "Rival 3",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-c",
 			whichRival = "Middle",
 		},
-		[333] = {
+		[257] = {
 			name = "Rival 3",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-c",
 			whichRival = "Left",
 		},
-		[334] = {
+		[258] = {
 			name = "Rival 3",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-c",
 			whichRival = "Right",
 		},
-		[426] = {
+		[350] = {
 			name = "Rival 4",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-a",
 			whichRival = "Middle",
 		},
-		[427] = {
+		[351] = {
 			name = "Rival 4",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-a",
 			whichRival = "Left",
 		},
-		[428] = {
+		[352] = {
 			name = "Rival 4",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-a",
 			whichRival = "Right",
 		},
-		[429] = {
+		[353] = {
 			name = "Rival 5",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-b",
 			whichRival = "Middle",
 		},
-		[430] = {
+		[354] = {
 			name = "Rival 5",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-b",
 			whichRival = "Left",
 		},
-		[431] = {
+		[355] = {
 			name = "Rival 5",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-b",
 			whichRival = "Right",
 		},
-		[432] = {
+		[356] = {
 			name = "Rival 6",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-c",
 			whichRival = "Middle",
 		},
-		[433] = {
+		[357] = {
 			name = "Rival 6",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-c",
 			whichRival = "Left",
 		},
-		[434] = {
+		[358] = {
 			name = "Rival 6",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-c",
 			whichRival = "Right",
 		},
-		[435] = {
+		[359] = {
 			name = "Rival 7",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-a",
 			whichRival = "Middle",
 		},
-		[436] = {
+		[360] = {
 			name = "Rival 7",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-a",
 			whichRival = "Left",
 		},
-		[437] = {
+		[361] = {
 			name = "Rival 7",
 			group = TrainerData.TrainerGroups.Rival,
 			filename = "frlg-rival-a",
 			whichRival = "Right",
 		},
-		[438] = {
+		[362] = {
 			name = "Champion",
 			group = TrainerData.TrainerGroups.Elite4,
 			filename = "frlg-rival-c",
 			whichRival = "Middle",
 		},
-		[439] = {
+		[363] = {
 			name = "Champion",
 			group = TrainerData.TrainerGroups.Elite4,
 			filename = "frlg-rival-c",
 			whichRival = "Left",
 		},
-		[440] = {
+		[364] = {
 			name = "Champion",
 			group = TrainerData.TrainerGroups.Elite4,
 			filename = "frlg-rival-c",
 			whichRival = "Right",
 		},
-		[348] = {
+		[275] = {
 			name = "Giovanni 1",
 			group = TrainerData.TrainerGroups.Boss,
 			filename = "frlg-gymleader-8",
 		},
-		[349] = {
+		[276] = {
 			name = "Giovanni 2",
 			group = TrainerData.TrainerGroups.Boss,
 			filename = "frlg-gymleader-8",
 		},
-		[317] = {
+		[400] = {
 			name = "Dojo Leader",
 			group = TrainerData.TrainerGroups.Boss,
 			filename = "frlg-blackbelt",

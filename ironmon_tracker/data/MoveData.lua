@@ -164,13 +164,15 @@ function MoveData.checkIfDataIsRandomized()
 	local arePPsRandomized = false
 
 	-- Check once if any data was randomized
-	local moveInfo = MoveData.readMoveInfoFromMemory(33) -- Tackle
+	local moveInfo = MoveData.readMoveInfoFromMemory(59) -- Tackle
+
+
 
 	if moveInfo ~= nil then
-		areTypesRandomized = moveInfo.type ~= PokemonData.Types.NORMAL
-		arePowersRandomized = moveInfo.power ~= "35"
-		areAccuraciesRandomized = moveInfo.accuracy ~= "95"
-		arePPsRandomized = moveInfo.pp ~= "35"
+		areTypesRandomized = moveInfo.type ~=  PokemonData.Types.ICE
+		arePowersRandomized = moveInfo.power ~= "120"
+		areAccuraciesRandomized = moveInfo.accuracy ~= "70"
+		arePPsRandomized = moveInfo.pp ~= "5"
 	end
 
 	-- Check twice if any data was randomized (Randomizer does *not* force a change)
