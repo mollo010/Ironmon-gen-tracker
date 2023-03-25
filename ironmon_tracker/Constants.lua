@@ -101,7 +101,7 @@ Constants.OrderedLists = {
 		"atk",
 		"def",
 		"spa",
-		"spd",
+
 		"spe",
 	},
 	OPTIONS = {

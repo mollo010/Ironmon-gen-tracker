@@ -1222,7 +1222,7 @@ function LogOverlay.buildPokemonZoomButtons(data)
 		type = Constants.ButtonTypes.PIXELIMAGE,
 		image = Constants.PixelImages.UP_ARROW,
 		textColor = "Lower box text",
-		box = { movesColX + 122, movesRowY + 13 , 10, 10 },
+		box = { movesColX + 110, movesRowY + 13 , 10, 10 },
 		isVisible = function() return LogOverlay.currentTab == LogOverlay.Tabs.POKEMON_ZOOM and LogOverlay.PokemonMovesPagination.totalPages > 1 end,
 		onClick = function(self)
 			LogOverlay.PokemonMovesPagination:prevPage()
@@ -1233,7 +1233,7 @@ function LogOverlay.buildPokemonZoomButtons(data)
 		type = Constants.ButtonTypes.PIXELIMAGE,
 		image = Constants.PixelImages.DOWN_ARROW,
 		textColor = "Lower box text",
-		box = { movesColX + 122, movesRowY + 33 , 10, 10 },
+		box = { movesColX + 110, movesRowY + 33 , 10, 10 },
 		isVisible = function() return LogOverlay.currentTab == LogOverlay.Tabs.POKEMON_ZOOM and LogOverlay.PokemonMovesPagination.totalPages > 1 end,
 		onClick = function(self)
 			LogOverlay.PokemonMovesPagination:nextPage()
@@ -1251,15 +1251,15 @@ end
 function LogOverlay.buildTrainerZoomButtons(data)
 	LogOverlay.TemporaryButtons = {}
 
-	local partyListX, partyListY = LogOverlay.margin + 1, LogOverlay.tabHeight + 76
-	local startX, startY = LogOverlay.margin + 60, LogOverlay.tabHeight + 2
+	local partyListX, partyListY = LogOverlay.margin + 10, LogOverlay.tabHeight + 30
+	local startX, startY = LogOverlay.margin , LogOverlay.tabHeight + 30
 	local offsetX, offsetY = 0, 0
 	local colOffset, rowOffset = 86, 49 -- 2nd column, and 2nd/3rd rows
 	for i, partyPokemon in ipairs(data.p or {}) do
 		-- PARTY POKEMON
 		local pokemonNameButton = {
 			type = Constants.ButtonTypes.NO_BORDER,
-			text = string.format("%s. %s", i, partyPokemon.name), -- e.g. "1. Shuckle"
+			text = string.format("%s. %s  Level %s ", i, partyPokemon.name , partyPokemon.level), -- e.g. "1. Shuckle"
 			textColor = "Lower box text",
 			pokemonID = partyPokemon.id,
 			tab = LogOverlay.Tabs.TRAINER_ZOOM,
@@ -1293,13 +1293,13 @@ function LogOverlay.buildTrainerZoomButtons(data)
 			end,
 		}
 		table.insert(LogOverlay.TemporaryButtons, pokemonNameButton)
-		table.insert(LogOverlay.TemporaryButtons, pokemonIconButton)
+		--table.insert(LogOverlay.TemporaryButtons, pokemonIconButton)
 
 		-- helditem = partyMon.helditem ???
 
 		-- PARTY POKEMON's MOVES
-		local moveOffsetX = startX + offsetX + 30
-		local moveOffsetY = startY + offsetY
+		local moveOffsetX = startX + offsetX
+		local moveOffsetY = startY + partyListY - Constants.SCREEN.LINESPACING*3
 		for _, moveInfo in ipairs(partyPokemon.moves or {}) do
 			local moveBtn = {
 				type = Constants.ButtonTypes.NO_BORDER,
@@ -1307,24 +1307,21 @@ function LogOverlay.buildTrainerZoomButtons(data)
 				textColor = "Lower box text",
 				moveId = moveInfo.moveId,
 				tab = LogOverlay.Tabs.TRAINER_ZOOM,
-				box = { moveOffsetX, moveOffsetY, 60, 11 },
+				box = { moveOffsetX, moveOffsetY, 14, 4 },
 				isVisible = function(self) return LogOverlay.currentTab == self.tab end,
 				onClick = function(self)
 					if MoveData.isValid(self.moveId) then
 						InfoScreen.changeScreenView(InfoScreen.Screens.MOVE_INFO, self.moveId) -- implied redraw
+
+
 					end
 				end,
 			}
-			table.insert(LogOverlay.TemporaryButtons, moveBtn)
-			moveOffsetY = moveOffsetY + Constants.SCREEN.LINESPACING - 1
+		--	table.insert(LogOverlay.TemporaryButtons, moveBtn)
+			moveOffsetX = moveOffsetX +  string.len(moveInfo.name)*5
 		end
 
-		if i % 2 == 1 then
-			offsetX = offsetX + colOffset
-		else
-			offsetX = 0
-			offsetY = offsetY + rowOffset
-		end
+
 	end
 end
 
@@ -1659,9 +1656,9 @@ function LogOverlay.drawPokemonZoomed(x, y, width, height)
 	local statBox = {
 		x = x + 6,
 		y = y + 73,
-		width = 103,
+		width = 85,
 		height = 34,
-		barW = 4,
+		barW = 6,
 		labelW = 17,
 	}
 	-- Draw header for stat box
@@ -1749,8 +1746,8 @@ function LogOverlay.drawTrainerZoomed(x, y, width, height)
 	local trainerIcon = FileManager.buildImagePath(FileManager.Folders.Trainers, data.t.filename, FileManager.Extensions.TRAINER)
 	local iconWidth = TrainerData.FileInfo[data.t.filename].width
 	local iconOffsetX = (TrainerData.FileInfo.maxWidth - iconWidth) / 2 -- center the trainer icon a bit
-	gui.drawImage(trainerIcon, x + iconOffsetX + 3, y + 16)
-	Utils.gridAlign(LogOverlay.TemporaryButtons,120,30,8,10,true,160,140)
+	--gui.drawImage(trainerIcon, x + iconOffsetX + 3, y + 16)
+	--Utils.gridAlign(LogOverlay.TemporaryButtons,40,30,8,10,false,160,140)
 	for _, button in pairs(LogOverlay.TemporaryButtons) do
 		Drawing.drawButton(button, shadowcolor)
 		-- Draw the Pokemon's level text below the icon

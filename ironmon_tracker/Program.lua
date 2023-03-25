@@ -701,7 +701,8 @@ end
 
 -- More or less used to determine if the player has begun playing the game, returns true if so.
 function Program.isValidMapLocation()
-	return Program.GameData.mapId ~= nil and Program.GameData.mapId ~= 0
+
+	return Program.GameData.mapId ~= nil --and Program.GameData.mapId ~= 0
 end
 
 function Program.HandleExit()
