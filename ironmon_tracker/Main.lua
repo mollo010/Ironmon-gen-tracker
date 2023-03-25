@@ -266,7 +266,13 @@ function Main.InitializeAllTrackerFiles()
 		end
 
 	end
+	if GameSettings.game==2 then
+		Memory.write8(0x0800233E,0x1e)
 
+	else
+		Memory.write8(0x08002445,0x1e)
+
+	end
 	return
 	CustomCode.startup()
 end
