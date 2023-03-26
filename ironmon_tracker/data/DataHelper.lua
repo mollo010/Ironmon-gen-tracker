@@ -378,7 +378,7 @@ function DataHelper.buildPokemonInfoDisplay(pokemonID)
 	end
 
 	data.p.movelvls = {}
-	local moveLevelsList = pokemon.movelvls[GameSettings.versiongroup]
+	local moveLevelsList = pokemon.movelvls[GameSettings.game]
 	if moveLevelsList ~= nil and #moveLevelsList ~= 0 then
 		for _, moveLv in ipairs(moveLevelsList) do
 			table.insert(data.p.movelvls, moveLv)

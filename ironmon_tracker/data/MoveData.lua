@@ -147,7 +147,7 @@ function MoveData.readMoveInfoFromMemory(moveId)
 	local  movePower= Utils.getbits(moveData, 0, 8)
 	local moveType= Utils.getbits(moveData, 8, 8)
 	local moveAccuracy = math.ceil(Utils.getbits(moveData, 16, 8)*100 /255)
-	local  movePP = Utils.getbits(moveData, 24, 8)
+	local  movePP = Utils.getbits(moveData, 24, 6)
 
 	return {
 		power = tostring(movePower),

@@ -479,10 +479,10 @@ function Program.readNewPokemon(startAddress, id)
 		},
 		statStages = { hp = 6, atk = 6, def = 6, spa = 6,  spe = 6, acc = 6, eva = 6 },
 		moves = {
-			{ id = Utils.getbits(attack, 0, 8), level = 1, pp = Utils.getbits(move_pp, 0, 8) },
-			{ id = Utils.getbits(attack, 8, 8), level = 1, pp = Utils.getbits(move_pp, 8, 8) },
-			{ id = Utils.getbits(attack, 16, 8), level = 1, pp = Utils.getbits(move_pp, 16, 8) },
-			{ id = Utils.getbits(attack, 24, 8), level = 1, pp = Utils.getbits(move_pp, 24, 8) },
+			{ id = Utils.getbits(attack, 0, 8), level = 1, pp = Utils.getbits(move_pp, 0, 6)   },
+			{ id = Utils.getbits(attack, 8, 8), level = 1, pp = Utils.getbits(move_pp, 8, 6) },
+			{ id = Utils.getbits(attack, 16, 8), level = 1, pp = Utils.getbits(move_pp, 16, 6) },
+			{ id = Utils.getbits(attack, 24, 8), level = 1, pp = Utils.getbits(move_pp, 24, 6) },
 		},
 
 		-- Unused data that can be added back in later
