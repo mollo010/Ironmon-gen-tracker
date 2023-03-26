@@ -118,7 +118,7 @@ end
 -- draws chevrons bottom-up, coloring them if 'intensity' is a value beyond 'max'
 -- 'intensity' ranges from -N to +N, where N is twice 'max'; negative intensity are drawn downward
 function Drawing.drawChevrons(x, y, intensity, max)
-	if intensity == 0 then return end
+	if intensity == 0 or intensity== nil then return end
 
 	local weight = math.abs(intensity)
 	local spacing = 2
