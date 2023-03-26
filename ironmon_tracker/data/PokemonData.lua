@@ -121,7 +121,15 @@ function PokemonData.initialize()
 	-- Reads the types and abilities for each Pokemon in the Pokedex
 	-- If any data at all was randomized, read in full Pokemon data from memory
 	PokemonData.UpdateBST()
+	for pokemonID=1, PokemonData.totalPokemon, 1 do
+		local pokemonData = PokemonData.Pokemon[pokemonID]
 
+
+			local types = PokemonData.readPokemonTypesFromMemory(pokemonID)
+			if types ~= nil then
+				pokemonData.types = types
+			end
+		end
 
 	if PokemonData.checkIfDataIsRandomized() then
 		-- print("Randomized " .. Constants.Words.POKEMON .. " data detected, reading from game memory...")
@@ -160,7 +168,18 @@ function PokemonData.initialize()
 end
 
 function PokemonData.readPokemonTypesFromMemory(pokemonID)
-	local typesData = Memory.readword(GameSettings.gBaseStats + ((pokemonID-1) * 0x1C) + 0x06)
+	local typesData=0
+	if GameSettings.game ==1 and pokemonID==151 then
+
+		 typesData = Memory.readword(GameSettings.MEw + 0x06)
+
+	else
+
+		 typesData = Memory.readword(GameSettings.gBaseStats + ((pokemonID-1) * 0x1C) + 0x06)
+	end
+	if typesData==0 then
+
+	end
 	local typeOne = Utils.getbits(typesData, 0, 8)
 	local typeTwo = Utils.getbits(typesData, 8, 8)
 

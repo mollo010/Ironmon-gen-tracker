@@ -58,9 +58,9 @@ FileManager.Extensions = {
 }
 
 FileManager.Urls = {
-	VERSION = "https://api.github.com/repos/besteon/Ironmon-Tracker/releases/latest",
-	DOWNLOAD = "https://github.com/besteon/Ironmon-Tracker/releases/latest",
-	WIKI = "https://github.com/besteon/Ironmon-Tracker/wiki",
+	VERSION = "https://api.github.com/repos/mollo010/Ironmon-gen-tracker/releases/latest",
+	DOWNLOAD = "https://api.github.com/repos/mollo010/Ironmon-gen-tracker/releases/latest",
+	WIKI = "https://api.github.com/repos/mollo010/Ironmon-gen-tracker/releases/latest",
 	EXTENSIONS = "https://github.com/besteon/Ironmon-Tracker/wiki/Tracker-Add-ons#custom-code-extensions",
 }
 
