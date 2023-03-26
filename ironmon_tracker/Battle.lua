@@ -307,11 +307,13 @@ function Battle.updateTrackedInfo()
 	local attackerSlot = Battle.Combatants[1]
 	local attacker = Battle.BattleParties[1][1]
 	local transformData = attacker.transformData
-	if not transformData.isOwn then
+	local trun =Memory.readbyte(GameSettings.gTurn)
+	if not transformData.isOwn  and trun ~=0 then
 
 	-- Only track moves which the pokemon knew at the start of battle (in case of Sketch/Mimic)
 		if lastMoveByAttacker == attacker.moves[1] or lastMoveByAttacker == attacker.moves[2] or lastMoveByAttacker == attacker.moves[3] or lastMoveByAttacker == attacker.moves[4] then
 		local attackingMon = Tracker.getPokemon(transformData.slot,transformData.isOwn)
+
 
 			if attackingMon ~= nil then
 				Tracker.TrackMove(attackingMon.pokemonID, lastMoveByAttacker, attackingMon.level)
