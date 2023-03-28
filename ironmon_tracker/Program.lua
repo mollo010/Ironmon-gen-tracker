@@ -205,9 +205,9 @@ function Program.update()
 	-- Get any "new" information from game memory for player's pokemon team every half second (60 frames/sec)
 	if Program.Frames.lowAccuracyUpdate == 0 then
 
-		Program.inCatchingTutorial = Program.isInCatchingTutorial()
+		--Program.inCatchingTutorial = Program.isInCatchingTutorial()
 
-		if not Program.inCatchingTutorial  then
+		if true  then
 
 			Program.updatePokemonTeams()
 
