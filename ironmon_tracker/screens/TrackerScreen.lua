@@ -836,6 +836,7 @@ end
 
 
 StatConvert={
+	[0xf]=7,
 			[0xd]=6,
 			[0xc]=5,
 			[0xb]=4,
@@ -885,7 +886,8 @@ function TrackerScreen.drawStatsArea(data)
 
 		-- Draw stat battle increases/decreases, stages range from -6 to +6
 		if Battle.inBattle then
-			local statStageIntensity =StatConvert[ data.p.stages[statKey]] -- between [0 and 12], convert to [-6 and 6]
+			local statStageIntensity =StatConvert[ data.p.stages[statKey]]
+
 			Drawing.drawChevrons(statOffsetX + 20, statOffsetY + 4, statStageIntensity, 3)
 		end
 
@@ -905,8 +907,8 @@ function TrackerScreen.drawStatsArea(data)
 	if useAccEvaInstead then
 		Drawing.drawText(statOffsetX - 1, statOffsetY + 1, "Acc", Theme.COLORS["Default text"], shadowcolor)
 		Drawing.drawText(statOffsetX + 27, statOffsetY + 1, "Eva", Theme.COLORS["Default text"], shadowcolor)
-		local accIntensity = data.p.stages.acc - 6
-		local evaIntensity = data.p.stages.eva - 6
+		local accIntensity =StatConvert[ data.p.stages.acc]
+		local evaIntensity = StatConvert[ data.p.stages.eva]
 		Drawing.drawChevrons(statOffsetX + 15, statOffsetY + 5, accIntensity, 3)
 		Drawing.drawChevrons(statOffsetX + 22, statOffsetY + 5, evaIntensity, 3)
 	else
