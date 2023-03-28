@@ -308,7 +308,7 @@ function Battle.updateTrackedInfo()
 	local attacker = Battle.BattleParties[1][1]
 	local transformData = attacker.transformData
 	local trun =Memory.readbyte(GameSettings.gTurn)
-	if not transformData.isOwn  and trun ~=0 then
+	if not transformData.isOwn  then
 
 	-- Only track moves which the pokemon knew at the start of battle (in case of Sketch/Mimic)
 		if lastMoveByAttacker == attacker.moves[1] or lastMoveByAttacker == attacker.moves[2] or lastMoveByAttacker == attacker.moves[3] or lastMoveByAttacker == attacker.moves[4] then
@@ -515,7 +515,7 @@ function Battle.beginNewBattle()
 
 	Program.updateBattleEncounterType()
 
-	Program.Frames.battleDataDelay = 60
+	Program.Frames.battleDataDelay = 65
 
 	-- If this is a new battle, reset views and other pokemon tracker info
 	Battle.inBattle = true

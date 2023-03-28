@@ -1562,7 +1562,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.DRAGON, PokemonData.Types.FLYING },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "600",
-		movelvls = { { 810,20,35,45,60 } , {10 ,20 ,35 ,45 ,60 } } ,
+		movelvls = { { 18,20,35,45,60 } , {10 ,20 ,35 ,45 ,60 } } ,
 		weight = 210.0
 	},
 	{
