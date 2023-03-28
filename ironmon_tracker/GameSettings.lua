@@ -436,7 +436,7 @@ function GameSettings.setWramAddresses()
 	for key, address in pairs(addresses) do
 		local value = address[1]
 		if value ~= nil then
-			if GameSettings.game == 2 and key ~="StatChange" and key ~="gTurn" then
+			if GameSettings.game == 2 and key ~="StatChange" and key ~="gTurn" and key ~="gBattleTypeFlags" then
 				GameSettings[key] = value-1
 			else
 				GameSettings[key] = value
