@@ -175,6 +175,16 @@ function GameSettings.setGameInfo(gamecode)
 			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
 		}
 		,
+		[0x41495A00] = {
+                        GAME_NUMBER = 1,
+                        GAME_NAME = "Pokemon RED (U)",
+                        VERSION_GROUP = 1,
+                        VERSION_COLOR = "RED",
+                        LANGUAGE = "English",
+                        BADGE_PREFIX = "FRLG",
+                        BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
+                }
+		,
 		[0x424c5545] = {
 			GAME_NUMBER = 1,
 			GAME_NAME = "Pokemon Blue (U)",
@@ -194,6 +204,17 @@ function GameSettings.setGameInfo(gamecode)
 			BADGE_PREFIX = "FRLG",
 			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
 		}
+		,
+		[0x4C574B41] = {
+                        GAME_NUMBER = 2,
+                        GAME_NAME = "Pokemon Yellow(U)",
+                        VERSION_GROUP = 2,
+                        VERSION_COLOR = "Yellow",
+                        LANGUAGE = "English",
+                        BADGE_PREFIX = "FRLG",
+                        BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
+                }
+                ,
 	}
 
 	local game = games[gamecode]
