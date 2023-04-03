@@ -135,12 +135,18 @@ function GameSettings.initialize()
 	--local gameversion = Utils.reverseEndian32(Memory.read16(0x080000BC))
 	local gameIndex, versionIndex = 1 ,1
 
-	-- 0x04...
-	GameSettings.setWramAddresses()
-	-- 0x08...
-	GameSettings.setRomAddresses(gameIndex, versionIndex)
-	-- Ability auto-tracking scripts
+	if GameSettings.GEN ==2 then
+
+
+
+	else
+		-- 0x04...
+		GameSettings.setWramAddresses()
+		-- 0x08...
+		GameSettings.setRomAddresses(gameIndex, versionIndex)
+		-- Ability auto-tracking scripts
 	--GameSettings.setAbilityTrackingAddresses(gameIndex, versionIndex)
+	end
 end
 
 function GameSettings.getRomName()
@@ -203,6 +209,16 @@ function GameSettings.setGameInfo(gamecode)
 			LANGUAGE = "English",
 			BADGE_PREFIX = "FRLG",
 			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
+		},
+		[0x474c4441] = {
+			GAME_NUMBER = 1,
+			GAME_NAME = "Pokemon Gold(U)",
+			VERSION_GROUP = 1,
+			VERSION_COLOR = "Gold",
+			LANGUAGE = "English",
+			BADGE_PREFIX = "GLD",
+			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
+			GEN=2,
 		}
 		,
 		[0x4C574B41] = {
@@ -226,6 +242,7 @@ function GameSettings.setGameInfo(gamecode)
 		GameSettings.language = game.LANGUAGE
 		GameSettings.badgePrefix = game.BADGE_PREFIX
 		GameSettings.badgeXOffsets = game.BADGE_XOFFSETS
+		GameSettings.GEN = game.GEN
 
 
 	else

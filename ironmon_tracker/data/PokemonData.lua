@@ -1218,7 +1218,7 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "455",
-		movelvls = { { 333,38,43,48,53 } , {33 ,38 ,43 ,48 ,53 } } ,
+		movelvls = { { 33,38,43,48,53 } , {33 ,38 ,43 ,48 ,53 } } ,
 		weight = 49.8
 	},
 	{
