@@ -123,7 +123,7 @@ function Battle.updateBattleStatus()
 	if not Battle.inBattle and lastBattleStatus ~= 0 and opposingPokemon ~= nil then
 		-- Battle.isWildEncounter = Tracker.Data.trainerID == opposingPokemon.trainerID -- NOTE: doesn't work well, temporarily removing
 		DataHelper.Gameover =false
-		print("Test")
+
 		Battle.beginNewBattle()
 
 	elseif Battle.inBattle and (lastBattleStatus == 0 or opposingPokemon==nil) then
@@ -310,16 +310,20 @@ function Battle.updateTrackedInfo()
 	local transformData = attacker.transformData
 	local trun =Memory.readbyte(GameSettings.gTurn)
 
+	if trun ==  0 then
+		Battle.populateBattlePartyObject()
+	end
 	if not transformData.isOwn and trun ~=0  then
 
 
 	-- Only track moves which the pokemon knew at the start of battle (in case of Sketch/Mimic)
 		if lastMoveByAttacker == attacker.moves[1] or lastMoveByAttacker == attacker.moves[2] or lastMoveByAttacker == attacker.moves[3] or lastMoveByAttacker == attacker.moves[4] then
-		local attackingMon = Tracker.getPokemon(transformData.slot,transformData.isOwn)
+
+			local attackingMon = Tracker.getPokemon(transformData.slot,transformData.isOwn)
 
 
 			if attackingMon ~= nil then
-				print(attackingMon)
+
 				Tracker.TrackMove(attackingMon.pokemonID, lastMoveByAttacker, attackingMon.level)
 			end
 	end
