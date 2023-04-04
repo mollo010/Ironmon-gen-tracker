@@ -162,11 +162,8 @@ end
 -- isOwn: true if it belongs to the player; false otherwise
 function Battle.getViewedPokemon(isOwn)
 	local viewSlot
-	if isOwn then
-		viewSlot = Utils.inlineIf(Battle.isViewingLeft or not Tracker.Data.isViewingOwn, Battle.Combatants.LeftOwn, Battle.Combatants.RightOwn)
-	else
+
 		viewSlot = 1
-	end
 
 	return Tracker.getPokemon(viewSlot, isOwn)
 end
@@ -178,7 +175,7 @@ function Battle.updateViewSlots()
 	local prevOwnPokemonRight = Battle.Combatants.RightOwn
 
 	--update all 2 (or 4)
-	Battle.Combatants.LeftOwn = Memory.readbyte(GameSettings.gBattlerPartyIndexes+1)
+	Battle.Combatants.LeftOwn = 1
 	Battle.Combatants.LeftOther = Memory.readbyte(GameSettings.gBattlerPartyIndexes + 2)
 
 	-- Verify the view slots are within bounds, and that for doubles, the pokemon is not fainted (data is not cleared if there are no remaining pokemon)
@@ -262,6 +259,7 @@ function Battle.updateStatStages(pokemon, isOwn)
 
 	local startAddress = GameSettings.StatChange + Utils.inlineIf(isOwn, 0x0, 0x14)
 	local isLeftOffset = 0
+
 	--local hp_atk_def_speed = Memory.readdword(startAddress + isLeftOffset )
 	--local spatk_spdef_acc_evasion = Memory.readdword(startAddress + isLeftOffset + 0x04)
 
@@ -278,6 +276,7 @@ function Battle.updateStatStages(pokemon, isOwn)
 			eva =  Memory.readbyte(startAddress+5)  ,
 		}
 	else
+
 		-- Unsure if this reset is necessary, or what the if condition is checking for
 		pokemon.statStages = { hp = 6, atk = 6, def = 6, spa = 6, spd = 6, spe = 6, acc = 6, eva = 6 }
 	end
@@ -698,6 +697,7 @@ function Battle.populateBattlePartyObject()
 	Battle.BattleParties[1] = {}
 	for i=1, 1, 1 do
 		local ownPokemon = Tracker.getPokemon(i, true)
+
 		if ownPokemon ~= nil then
 			local ownMoves = {
 				ownPokemon.moves[1].id,
@@ -720,6 +720,7 @@ function Battle.populateBattlePartyObject()
 				},
 				moves = ownMoves
 			}
+
 		end
 		local enemyPokemon = Tracker.getPokemon(i, false)
 		if enemyPokemon ~= nil then

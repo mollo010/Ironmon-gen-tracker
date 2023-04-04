@@ -100,6 +100,7 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 
 	--local targetInfo = Battle.getDoublesCursorTargetInfo()
 	local viewedPokemon = Battle.getViewedPokemon(data.x.viewingOwn)
+
 	local opposingPokemon = Tracker.getPokemon(1, false) -- currently used exclusively for Low Kick weight calcs
 
 	if viewedPokemon == nil or viewedPokemon.pokemonID == 0 or not Program.isValidMapLocation() then
