@@ -176,7 +176,12 @@ end
 
 function PokemonData.readPokemonTypesFromMemory(pokemonID)
 	local typesData=0
-	if GameSettings.game ==1 and pokemonID==151 and not (GameSettings.GEN ==2 )then
+	if (GameSettings.GEN ==2 )then
+
+		typesData = Memory.readword(GameSettings.gBaseStats + ((pokemonID-1) * 0x20) + 0x07)
+	else
+
+	if GameSettings.game ==1 and pokemonID==151 then
 
 		 typesData = Memory.readword(GameSettings.MEw + 0x06)
 
@@ -194,6 +199,7 @@ function PokemonData.readPokemonTypesFromMemory(pokemonID)
 		PokemonData.TypeIndexMap[typeOne],
 		PokemonData.TypeIndexMap[typeTwo],
 	}
+end
 end
 
 function PokemonData.readPokemonAbilitiesFromMemory(pokemonID)
@@ -384,6 +390,7 @@ PokemonData.TypeIndexMap = {
 	[0x18] = PokemonData.Types.PSYCHIC,
 	[0x19] = PokemonData.Types.ICE,
 	[0x1A] = PokemonData.Types.DRAGON,
+	[0x1B] = PokemonData.Types.DARK;
 }
 
 --[[
