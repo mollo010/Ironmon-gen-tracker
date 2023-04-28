@@ -108,6 +108,482 @@ function Battle.update()
 
 end
 
+
+
+
+
+
+
+
+
+function Battle.updateGen2()
+
+	if not Program.isValidMapLocation() then
+
+		return
+	end
+
+	if Program.Frames.highAccuracyUpdate == 0 and not Program.inCatchingTutorial then
+
+		Battle.updateBattleStatusGen2()
+	end
+
+	if not Battle.inBattle then
+		-- For cases when closing the Tracker mid battle and loading it after battle
+		if not Tracker.Data.isViewingOwn then
+			Tracker.Data.isViewingOwn = true
+		end
+		return
+	end
+
+	if Program.Frames.highAccuracyUpdate == 0 then
+
+		Battle.updateHighAccuracyGen2()
+
+	end
+	if Program.Frames.lowAccuracyUpdate == 0 then
+		-- wip will need changes
+
+		Battle.updateLowAccuracyGen2()
+
+		CustomCode.afterBattleDataUpdate()
+
+
+	end
+
+end
+
+
+
+function Battle.updateBattleStatusGen2()
+
+	-- BattleStatus [0 = In battle, 1 = Won the match, 2 = Lost the match, 4 = Fled, 7 = Caught]
+	local lastBattleStatus = Memory.readbyte(GameSettings.gBattleTypeFlags)
+	local opposingPokemon = Tracker.getPokemonGen2(1, false) -- get the lead pokemon on the enemy team
+	--local totalBattles = Utils.getGameStat(Constants.GAME_STATS.TOTAL_BATTLES)
+	--if Battle.totalBattles ~= 0 and (Battle.totalBattles < totalBattles) then
+	--	Battle.battleStarting = true
+	--end
+	--Battle.totalBattles = totalBattles
+
+	if not Battle.inBattle and lastBattleStatus ~= 0 and opposingPokemon ~= nil then
+		-- Battle.isWildEncounter = Tracker.Data.trainerID == opposingPokemon.trainerID -- NOTE: doesn't work well, temporarily removing
+		DataHelper.Gameover =false
+
+		Battle.beginNewBattleGen2()
+
+	elseif Battle.inBattle and (lastBattleStatus == 0 or opposingPokemon==nil) then
+
+		Battle.endCurrentBattleGen2()
+
+
+	end
+	local lead = Tracker.getPokemonGen2(1, true)
+	if lead ~=nil then
+		if lastBattleStatus == 0 and lead.curHP==0  and not DataHelper.Gameover then -- should occur exactly once per lost battle
+			DataHelper.Gameover=true
+			if not Battle.isWildEncounter then
+				GameOverScreen.incrementLosses()
+			end
+			GameOverScreen.randomizeAnnouncerQuote()
+			GameOverScreen.nextTeamPokemon()
+			Program.changeScreenView(GameOverScreen)
+		end
+	end
+end
+
+
+
+
+
+
+function Battle.beginNewBattleGen2()
+	if Battle.inBattle then return end
+
+	GameOverScreen.createTempSaveState()
+
+	Program.updateBattleEncounterType()
+
+	Program.Frames.battleDataDelay = 30
+
+	-- If this is a new battle, reset views and other pokemon tracker info
+	Battle.inBattle = true
+	Battle.battleStarting = false
+	Battle.turnCount = 0
+	Battle.prevDamageTotal = 0
+	Battle.damageReceived = 0
+	Battle.enemyHasAttacked = false
+	Battle.firstActionTaken = false
+	Battle.AbilityChangeData.prevAction = 4
+	Battle.AbilityChangeData.recordNextMove= false
+	Battle.Synchronize.turnCount = 0
+	Battle.Synchronize.attacker = -1
+	Battle.Synchronize.battlerTarget = -1
+	-- RS allocated a dword for the party size
+
+	Battle.partySize = Memory.readbyte(GameSettings.gPlayerPartyCount)
+
+
+	Battle.opposingTrainerId = Memory.readword(GameSettings.estats)
+
+	Tracker.Data.isViewingOwn = not Options["Auto swap to enemy"]
+	-- If the player hasn't fought the Rival yet, use this to determine their pokemon team based on starter ball selection
+	if Tracker.Data.whichRival == nil then
+		Tracker.tryTrackWhichRival(Battle.opposingTrainerId)
+	end
+
+	Battle.isViewingLeft = true
+	Battle.Combatants = {
+		LeftOwn = 1,
+		LeftOther = 1,
+		RightOwn = 2,
+		RightOther = 2,
+	}
+
+	Battle.populateBattlePartyObjectGen2()
+	Input.StatHighlighter:resetSelectedStat()
+
+	-- Handles a common case of looking up a move, then entering combat. As a battle begins, the move info screen should go away.
+	if Program.currentScreen == InfoScreen then
+		InfoScreen.clearScreenData()
+		Program.currentScreen = TrackerScreen
+	elseif Program.currentScreen == MoveHistoryScreen then
+		Program.currentScreen = TrackerScreen
+	elseif Program.currentScreen == TypeDefensesScreen then
+		Program.currentScreen = TrackerScreen
+	end
+
+	 -- Delay drawing the new pokemon (or effectiveness of your own), because of send out animation
+	Program.Frames.waitToDraw = Utils.inlineIf(Battle.isWildEncounter, 150, 250)
+
+	if not Main.IsOnBizhawk() then
+		MGBA.Screens.LookupPokemon.manuallySet = false
+	end
+
+	CustomCode.afterBattleBegins()
+end
+
+function Battle.endCurrentBattleGen2()
+	if not Battle.inBattle then return end
+
+	-- Only record Last Level Seen after the battle, so the info shown doesn't get overwritten by current level
+	Tracker.recordLastLevelsSeen()
+
+	--Most of the time, Run Away message is present only after the battle ends
+	--Battle.battleMsg = Memory.readdword(GameSettings.gBattlescriptCurrInstr)
+	--if Battle.battleMsg == GameSettings.BattleScript_RanAwayUsingMonAbility then
+	--	local battleMon = Battle.BattleParties[0][Battle.Combatants[Battle.IndexMap[0]]]
+	--	local abilityOwner = Tracker.getPokemon(battleMon.abilityOwner.slot,battleMon.abilityOwner.isOwn)
+	--	if abilityOwner ~= nil then
+	--		Tracker.TrackAbility(abilityOwner.pokemonID, battleMon.ability)
+	--	end
+	--end
+
+	Battle.numBattlers = 0
+	Battle.partySize = 6
+	Battle.inBattle = false
+	Battle.battleStarting = false
+	Battle.isWildEncounter = false -- default battle type is trainer battle
+	Battle.turnCount = -1
+	Battle.lastEnemyMoveId = 0
+	Battle.actualEnemyMoveId = 0
+	Battle.Synchronize.turnCount = 0
+	Battle.Synchronize.attacker = -1
+	Battle.Synchronize.battlerTarget = -1
+
+	Battle.isGhost = false
+
+	Battle.CurrentRoute.hasInfo = false
+
+	Tracker.Data.isViewingOwn = true
+	Battle.isViewingLeft = true
+	Battle.Combatants = {
+		LeftOwn = 1,
+		LeftOther = 1,
+		RightOwn = 2,
+		RightOther = 2,
+	}
+	Battle.BattleParties = {
+		[0] = {},
+		[1] = {},
+	}
+	-- While the below clears our currently stored enemy pokemon data, most gets read back in from memory anyway
+	Tracker.Data.otherPokemon = {}
+	Tracker.Data.otherTeam = { 0, 0, 0, 0, 0, 0 }
+
+	-- Reset stat stage changes for the owner's pokemon team
+	for i=1, 6, 1 do
+		local pokemon = Tracker.getPokemon(i, true)
+		if pokemon ~= nil then
+			pokemon.statStages = { hp = 7, atk = 7, def = 7, spa = 7, spd = 7, spe = 7, acc = 7, eva = 7 }
+		end
+	end
+
+	--local lastBattleStatus = Memory.readbyte(GameSettings.gBattleOutcome)
+
+	-- Handles a common case of looking up a move, then moving on with the current battle. As the battle ends, the move info screen should go away.
+	if Program.currentScreen == InfoScreen then
+		InfoScreen.clearScreenData()
+		Program.currentScreen = TrackerScreen
+	elseif Program.currentScreen == MoveHistoryScreen then
+		Program.currentScreen = TrackerScreen
+	elseif Program.currentScreen == TypeDefensesScreen then
+		Program.currentScreen = TrackerScreen
+	--elseif GameSettings.game == 2 and Battle.opposingTrainerId == 804 and lastBattleStatus == 1 then -- Emerald only, 804 = Steven, status(1) = Win
+	--	Battle.defeatedSteven = true
+	--	Program.currentScreen = GameOverScreen
+	end
+
+	Battle.opposingTrainerId = 0
+
+	-- Delay drawing the return to viewing your pokemon screen
+	Program.Frames.waitToDraw = Utils.inlineIf(Battle.isWildEncounter, 70, 150)
+	Program.Frames.saveData = Utils.inlineIf(Battle.isWildEncounter, 70, 150) -- Save data after every battle
+
+	CustomCode.afterBattleEnds()
+end
+
+
+
+
+
+function Battle.populateBattlePartyObjectGen2()
+	--populate BattleParties for all Pokemon with their starting Abilities and pokemonIDs
+	Battle.BattleParties[0] = {}
+	Battle.BattleParties[1] = {}
+	for i=1, 1, 1 do
+		local ownPokemon = Tracker.getPokemonGen2(i, true)
+
+		if ownPokemon ~= nil then
+			local ownMoves = {
+				ownPokemon.moves[1].id,
+				ownPokemon.moves[2].id,
+				ownPokemon.moves[3].id,
+				ownPokemon.moves[4].id
+
+			}
+			local ability = ""
+			Battle.BattleParties[0][i] = {
+				abilityOwner = {
+					isOwn = true,
+					slot = i
+				},
+				["originalAbility"] = ability,
+				["ability"] = ability,
+				transformData = {
+					isOwn = true,
+					slot = i,
+				},
+				moves = ownMoves
+			}
+
+		end
+		local enemyPokemon = Tracker.getPokemonGen2(i, false)
+		if enemyPokemon ~= nil then
+			local enemyMoves = {
+				enemyPokemon.moves[1].id,
+				enemyPokemon.moves[2].id,
+				enemyPokemon.moves[3].id,
+				enemyPokemon.moves[4].id
+
+			}
+			local ability = ""
+			Battle.BattleParties[1][i] = {
+				abilityOwner = {
+					isOwn = false,
+					slot = i
+				},
+				["originalAbility"] = ability,
+				["ability"] = ability,
+				transformData = {
+					isOwn = false,
+					slot = i,
+				},
+				moves = enemyMoves
+			}
+		end
+	end
+end
+
+
+function Battle.updateHighAccuracyGen2()
+	Battle.processBattleTurnGen2()
+end
+
+-- Updates once every [30] frames.
+function Battle.updateLowAccuracyGen2()
+	Battle.updateViewSlots()
+	Battle.updateTrackedInfoGen2()
+
+	Battle.updateLookupInfo()
+end
+function Battle.processBattleTurnGen2()
+	-- attackerValue = 0 or 2 for player mons and 1 or 3 for enemy mons (2,3 are doubles partners)
+
+
+	local currentTurn = Memory.readbyte(GameSettings.gTurn)
+
+
+	-- As a new turn starts, note the previous amount of total damage, reset turn counters
+	if currentTurn ~= Battle.turnCount then
+
+		Battle.turnCount = currentTurn
+		Battle.prevDamageTotal = 0
+		Battle.enemyHasAttacked = false
+		Battle.isNewTurn = true
+	end
+
+
+
+		-- Check current and previous attackers to see if enemy attacked within the last 30 frames
+
+			local enemyMoveId = Memory.readbyte(GameSettings.eMove)
+			if enemyMoveId ~= 0 then
+				-- If a new move is being used, reset the damage from the last move
+				if not Battle.enemyHasAttacked then
+					Battle.damageReceived = 0
+					Battle.enemyHasAttacked = true
+				end
+
+				Battle.lastEnemyMoveId = enemyMoveId
+				Battle.actualEnemyMoveId = enemyMoveId
+
+			end
+
+
+
+	-- Track moves for transformed mons if applicable; need high accuracy checking since moves window can be opened an closed in < .5 second
+	--Battle.trackTransformedMoves()
+end
+
+
+function Battle.updateTrackedInfoGen2()
+	--Ghost battle info is immediately loaded. If we wait until after the delay ends, the user can toggle views in that window and still see the 'Actual' Pokemon.
+	--local battleFlags = Memory.readdword(GameSettings.gBattleTypeFlags)
+	--If this is a Ghost battle (bit 15), and the Silph Scope has not been obtained (bit 13). Also, game must be FR/LG
+	--Battle.isGhost = GameSettings.game == 3 and (Utils.getbits(battleFlags, 15, 1) == 1 and Utils.getbits(battleFlags, 13, 1) == 0)
+
+	-- Required delay between reading Pokemon data from battle, as it takes ~N frames for old battle values to be cleared out
+	if Program.Frames.battleDataDelay > 0 then
+		Program.Frames.battleDataDelay = Program.Frames.battleDataDelay - 30 -- 30 for low accuracy updates
+		return
+	end
+
+	-- Update useful battle values, will expand/rework this later
+	--Battle.readBattleValues()
+	--if Battle.isNewTurn then
+	--	Battle.handleNewTurn()
+	--end
+
+
+	--handles this value not being cleared from the previous battle
+	local lastMoveByAttacker = Memory.readbyte(GameSettings.eMove)
+	local attackerSlot = Battle.Combatants[1]
+	local attacker = Battle.BattleParties[1][1]
+	local transformData = attacker.transformData
+	local trun =Memory.readbyte(GameSettings.gTurn)
+
+	if trun ==  0 then
+		Battle.populateBattlePartyObjectGen2()
+	end
+	if not transformData.isOwn and trun ~=0  then
+
+
+	-- Only track moves which the pokemon knew at the start of battle (in case of Sketch/Mimic)
+		if lastMoveByAttacker == attacker.moves[1] or lastMoveByAttacker == attacker.moves[2] or lastMoveByAttacker == attacker.moves[3] or lastMoveByAttacker == attacker.moves[4] then
+
+			local attackingMon = Tracker.getPokemon(transformData.slot,transformData.isOwn)
+
+
+			if attackingMon ~= nil then
+
+				Tracker.TrackMove(attackingMon.pokemonID, lastMoveByAttacker, attackingMon.level)
+			end
+	end
+	end
+
+
+
+	--only get one chance to record
+	Battle.AbilityChangeData.recordNextMove = false
+
+
+
+	-- Always track your own Pokemons' abilities, unless you are in a half-double battle alongside an NPC (3 + 3 vs 3 + 3)
+	local ownLeftPokemon = Tracker.getPokemon(Battle.Combatants.LeftOwn,true)
+	if ownLeftPokemon ~= nil and Battle.Combatants.LeftOwn <= Battle.partySize then
+		local ownLeftAbilityId = PokemonData.getAbilityId(ownLeftPokemon.pokemonID, ownLeftPokemon.abilityNum)
+		--Tracker.TrackAbility(ownLeftPokemon.pokemonID, ownLeftAbilityId)
+
+		Battle.updateStatStagesGen2(ownLeftPokemon, true)
+	end
+
+
+
+
+	--Don't track anything for Ghost opponents
+
+		local otherLeftPokemon = Tracker.getPokemon(transformData.slot,false)
+
+		if otherLeftPokemon ~= nil then
+			Battle.updateStatStagesGen2(otherLeftPokemon, false)
+
+			--Battle.checkEnemyEncounter(otherLeftPokemon)
+
+end
+
+function Battle.readBattleValues()
+	Battle.numBattlers = Memory.readbyte(GameSettings.gBattlersCount)
+	Battle.battleMsg = Memory.readdword(GameSettings.gBattlescriptCurrInstr)
+	Battle.battler = Memory.readbyte(GameSettings.gBattleScriptingBattler) % Battle.numBattlers
+	Battle.battlerTarget = Memory.readbyte(GameSettings.gBattlerTarget) % Battle.numBattlers
+end
+
+-- If the pokemon doesn't belong to the player, and hasn't been encountered yet, increment
+function Battle.checkEnemyEncounter(opposingPokemon)
+	if opposingPokemon.hasBeenEncountered then return end
+
+	opposingPokemon.hasBeenEncountered = true
+	Tracker.TrackEncounter(opposingPokemon.pokemonID, Battle.isWildEncounter)
+
+	--local battleTerrain = Memory.readword(GameSettings.gBattleTerrain)
+	--local battleFlags = Memory.readdword(GameSettings.gBattleTypeFlags)
+
+	--Battle.CurrentRoute.encounterArea = RouteData.getEncounterAreaByTerrain(battleTerrain, battleFlags)
+
+	-- Check if fishing encounter, if so then get the rod that was used
+	--local gameStat_FishingCaptures = Utils.getGameStat(Constants.GAME_STATS.FISHING_CAPTURES)
+	--if gameStat_FishingCaptures ~= Tracker.Data.gameStatsFishing then
+	--	Tracker.Data.gameStatsFishing = gameStat_FishingCaptures
+
+	--	local fishingRod = Memory.readword(GameSettings.gSpecialVar_ItemId)
+	--	if RouteData.Rods[fishingRod] ~= nil then
+--			Battle.CurrentRoute.encounterArea = RouteData.Rods[fishingRod]
+--		end
+	end
+
+	-- Check if rock smash encounter, if so then check encounter happened
+--	local gameStat_UsedRockSmash = Utils.getGameStat(Constants.GAME_STATS.USED_ROCK_SMASH)
+--	if gameStat_UsedRockSmash > Tracker.Data.gameStatsRockSmash then
+	---	Tracker.Data.gameStatsRockSmash = gameStat_UsedRockSmash
+---
+--		local rockSmashResult = Memory.readword(GameSettings.gSpecialVar_Result)
+--		if rockSmashResult == 1 then
+--			Battle.CurrentRoute.encounterArea = RouteData.EncounterArea.ROCKSMASH
+--		end
+--	end
+
+--	Battle.CurrentRoute.hasInfo = RouteData.hasRouteEncounterArea(Program.GameData.mapId, Battle.CurrentRoute.encounterArea)
+
+--	if Battle.isWildEncounter and Battle.CurrentRoute.hasInfo then
+--		Tracker.TrackRouteEncounter(Program.GameData.mapId, Battle.CurrentRoute.encounterArea, opposingPokemon.pokemonID)
+	--end
+end
+
+
+
+
+
 -- Check if we can enter battle (opposingPokemon check required for lab fight), or if a battle has just finished
 function Battle.updateBattleStatus()
 
@@ -274,6 +750,34 @@ function Battle.updateStatStages(pokemon, isOwn)
 			spe =  Memory.readbyte(startAddress+2),
 			acc =  Memory.readbyte(startAddress+4)  ,
 			eva =  Memory.readbyte(startAddress+5)  ,
+		}
+	else
+
+		-- Unsure if this reset is necessary, or what the if condition is checking for
+		pokemon.statStages = { hp = 6, atk = 6, def = 6, spa = 6, spd = 6, spe = 6, acc = 6, eva = 6 }
+	end
+end
+
+
+function Battle.updateStatStagesGen2(pokemon, isOwn)
+
+	local startAddress = GameSettings.StatChange + Utils.inlineIf(isOwn, 0x0, 12)
+	local isLeftOffset = 0
+
+	--local hp_atk_def_speed = Memory.readdword(startAddress + isLeftOffset )
+	--local spatk_spdef_acc_evasion = Memory.readdword(startAddress + isLeftOffset + 0x04)
+
+	pokemon.statStages.hp = 7
+	if pokemon.statStages.hp ~= 0 then
+		pokemon.statStages = {
+			hp = pokemon.statStages.hp,
+			atk = Memory.readbyte(startAddress)  ,
+			def =  Memory.readbyte(startAddress+1),
+			spa =  Memory.readbyte(startAddress+3),
+			spd = Memory.readbyte(startAddress+4),
+			spe =  Memory.readbyte(startAddress+2),
+			acc =  Memory.readbyte(startAddress+5)  ,
+			eva =  Memory.readbyte(startAddress+6)  ,
 		}
 	else
 

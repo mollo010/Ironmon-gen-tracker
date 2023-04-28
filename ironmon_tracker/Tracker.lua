@@ -110,8 +110,66 @@ function Tracker.getPokemon(slotNumber, isOwn)
 		retPokemon.level = Tracker.Data.otherPokemon[personality].level
 		return retPokemon
 	end
+
 	return Tracker.Data.otherPokemon[personality]
 end
+
+
+
+
+
+
+
+
+
+
+function Tracker.getPokemonGen2(slotNumber, isOwn)
+	if slotNumber == nil then return nil end
+	if isOwn == nil then isOwn = true end
+
+	local personality = Utils.inlineIf(isOwn, Tracker.Data.ownTeam[slotNumber], Tracker.Data.otherTeam[slotNumber])
+	if personality == nil then
+		return nil
+	end
+
+	-- Personality of 0 is okay for some real trainers, usually occurs in Battle
+	local pokemonInSlot = Utils.inlineIf(isOwn, Tracker.Data.ownPokemon[personality], Tracker.Data.otherPokemon[personality])
+	if pokemonInSlot == nil or (personality == 0 and (pokemonInSlot.trainerID == nil or pokemonInSlot.trainerID == 0)) then
+		return nil
+	end
+
+	if isOwn then
+		local isEggPokemon = Tracker.Data.ownPokemon[personality].isEgg == 1
+		if isEggPokemon then
+			-- Currently viewed pokemon is still an egg
+			local nextSlot = slotNumber
+			local numPokemon = #Tracker.Data.ownTeam
+			repeat
+				-- Cycle to the next non-egg party member (you're required at least one non-egg in the party)
+				nextSlot = (nextSlot % numPokemon) + 1
+				personality = Tracker.Data.ownTeam[nextSlot]
+				if personality ~= nil and personality ~= 0 then
+					isEggPokemon = Tracker.Data.ownPokemon[personality].isEgg == 1
+				end
+			until not isEggPokemon or nextSlot == slotNumber
+		end
+		return Tracker.Data.ownPokemon[personality]
+	elseif Battle.isGhost then
+		-- Return Ghost dummy instead of showing the hidden mon's data, but keep the level
+		local retPokemon = Tracker.getGhostPokemon()
+		retPokemon.level = Tracker.Data.otherPokemon[personality].level
+		return retPokemon
+	end
+	if  Memory.readbyte(GameSettings.gBattleTypeFlags) ==0 then return nil end
+	return Tracker.Data.otherPokemon[personality]
+end
+
+
+
+
+
+
+
 
 function Tracker.getViewedPokemon()
 	if not Program.isValidMapLocation() then return nil end

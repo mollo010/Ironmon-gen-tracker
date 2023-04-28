@@ -13,7 +13,7 @@ Options = {
 
 	-- 'Default' set of Options, but will get replaced by what's in Settings.ini
 	["Disable mainscreen carousel"] = false,
-	["Auto swap to enemy"] = true,
+	["Auto swap to enemy"] = false,
 	["Show random ball picker"] = true,
 	["Hide stats until summary shown"] = false,
 	["Right justified numbers"] = false,

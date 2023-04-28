@@ -1,7 +1,7 @@
 Main = {}
 
 -- The latest version of the tracker. Should be updated with each PR.
-Main.Version = { major = "0", minor = "2", patch = "4" }
+Main.Version = { major = "1", minor = "1", patch = "1" }
 
 Main.CreditsList = { -- based on the PokemonBizhawkLua project by MKDasher
 	CreatedBy = "Besteon",
@@ -147,11 +147,21 @@ function Main.Run()
 		Main.hasRunOnce = true
 		Program.hasRunOnce = true
 
+		if GameSettings.GEN==2 then
+
+
+			while Main.loadNextSeed == false do
+
+				Program.mainLoopGen2()
+				Main.frameAdvance()
+			end
+		else
+
 		while Main.loadNextSeed == false do
 			Program.mainLoop()
 			Main.frameAdvance()
 		end
-
+	end
 		Main.LoadNextRom()
 	else
 		MGBA.printStartupInstructions()
@@ -266,6 +276,8 @@ function Main.InitializeAllTrackerFiles()
 		end
 
 	end
+	if GameSettings.GEN==2 then
+	else
 	if GameSettings.game==2 then
 		Memory.write8(0x0800233E,0x1e)
 
@@ -273,6 +285,7 @@ function Main.InitializeAllTrackerFiles()
 		Memory.write8(0x08002445,0x1e)
 
 	end
+end
 	return
 	CustomCode.startup()
 end
