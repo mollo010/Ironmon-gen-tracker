@@ -140,9 +140,10 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 	data.p.positivestat = ""
 	data.p.negativestat = ""
 	data.p.stages = {}
+
 	for _, statKey in ipairs(Constants.OrderedLists.STATSTAGES) do
 		data.p[statKey] = viewedPokemon.stats[statKey] or Constants.BLANKLINE
-		data.p.stages[statKey] = viewedPokemon.statStages[statKey] or 6
+		data.p.stages[statKey] = viewedPokemon.statStages[statKey] or 7
 
 		local natureMultiplier = Utils.getNatureMultiplier(statKey, data.p.nature)
 		if natureMultiplier == 1.1 then

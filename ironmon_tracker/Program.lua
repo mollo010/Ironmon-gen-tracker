@@ -98,6 +98,7 @@ function Program.mainLoop()
 		Main.LoadNextRom()
 		return
 	end
+
 	Input.checkForInput()
 
 	Program.update()
@@ -111,6 +112,27 @@ function Program.mainLoop()
 	Program.stepFrames() -- TODO: Really want a better way to handle this
 
 end
+
+function Program.mainLoopGen2()
+	if Main.loadNextSeed and not Main.IsOnBizhawk() then -- required escape for mGBA
+		Main.LoadNextRom()
+		return
+	end
+
+	Input.checkForInput()
+
+	Program.updateGen2()
+
+	Battle.updateGen2()
+
+	CustomCode.afterEachFrame()
+
+	Program.redraw(false)
+
+	Program.stepFrames() -- TODO: Really want a better way to handle this
+
+end
+
 
 -- 'forced' = true will force a draw, skipping the normal frame wait time
 function Program.redraw(forced)
@@ -287,6 +309,135 @@ function Program.update()
 
 end
 
+
+
+
+
+
+
+
+function Program.updateGen2()
+	-- Be careful adding too many things to this 10 frame update
+	if Program.Frames.highAccuracyUpdate == 0 then
+
+		Program.updateMapLocation() -- trying this here to solve many future problems
+
+		-- If the lead Pokemon changes, then update the animated Pokemon picture box
+		if Options["Animated Pokemon popout"] then
+
+			local leadPokemon = Tracker.getPokemon(Battle.Combatants.LeftOwn, true)
+
+			if leadPokemon ~= nil and leadPokemon.pokemonID ~= 0 and Program.isValidMapLocation() then
+				if leadPokemon.pokemonID ~= Drawing.AnimatedPokemon.pokemonID then
+					Drawing.AnimatedPokemon:setPokemon(leadPokemon.pokemonID)
+				elseif Drawing.AnimatedPokemon.requiresRelocating then
+					Drawing.AnimatedPokemon:relocatePokemon()
+				end
+			end
+		end
+	end
+
+	-- Don't bother reading game data before a game even begins
+	if not Program.isValidMapLocation() then
+
+
+		return
+	end
+
+
+
+	-- Get any "new" information from game memory for player's pokemon team every half second (60 frames/sec)
+	if Program.Frames.lowAccuracyUpdate == 0 then
+
+		--Program.inCatchingTutorial = Program.isInCatchingTutorial()
+
+		if true  then
+
+			Program.updatePokemonTeamsGen2()
+
+			TeamViewArea.buildOutPartyScreen()
+
+			if Program.isValidMapLocation() then
+
+				if Program.currentScreen == StartupScreen then
+					-- If the game hasn't started yet, show the start-up screen instead of the main Tracker screen
+					Program.currentScreen = TrackerScreen
+				elseif RouteData.Locations.IsInHallOfFame[Program.GameData.mapId] and not GameOverScreen.enteredFromSpecialLocation then
+					GameOverScreen.enteredFromSpecialLocation = true
+					Program.currentScreen = GameOverScreen
+				end
+
+			elseif GameOverScreen.enteredFromSpecialLocation then
+				GameOverScreen.enteredFromSpecialLocation = false
+			end
+
+			-- Check if summary screen has being shown
+			if not Tracker.Data.hasCheckedSummary then
+				if Memory.readbyte(GameSettings.sMonSummaryScreen) ~= 0 then
+					Tracker.Data.hasCheckedSummary = true
+				end
+			end
+
+			if not Battle.inBattle then
+				Program.updateBattleEncounterType()
+			end
+
+			-- Check if a Pokemon in the player's party is learning a move, if so track it
+			--local learnedInfoTable = Program.getLearnedMoveInfoTable()
+			--if learnedInfoTable.pokemonID ~= nil then
+			---	Tracker.TrackMove(learnedInfoTable.pokemonID, learnedInfoTable.moveId, learnedInfoTable.level)
+			--end
+
+			if false and Options["Display repel usage"] and not (Battle.inBattle or Battle.battleStarting) then
+				-- Check if the player is in the start menu (for hiding the repel usage icon)
+				Program.inStartMenu = Program.isInStartMenu()
+				-- Check for active repel and steps remaining
+				if not Program.inStartMenu then
+					Program.updateRepelSteps()
+				end
+			end
+
+			-- Update step count only if the option is enabled
+			if Program.Pedometer:isInUse() then
+				Program.Pedometer.totalSteps = 0
+			end
+
+			Program.AutoSaver:checkForNextSave()
+			TimeMachineScreen.checkCreatingRestorePoint()
+		end
+	end
+
+	-- Only update "Heals in Bag", Evolution Stones, "PC Heals", and "Badge Data" info every 3 seconds (3 seconds * 60 frames/sec)
+	if Program.Frames.three_sec_update == 0 then
+		Program.updateBagItemsGen2()
+
+		Program.updatePCHeals()
+
+		Program.updateBadgesObtained()
+
+	end
+
+	-- Only save tracker data every 1 minute (60 seconds * 60 frames/sec) and after every battle (set elsewhere)
+	if Program.Frames.saveData == 0 then
+		-- Don't bother saving tracked data if the player doesn't have a Pokemon yet
+		if Options["Auto save tracked game data"] and Tracker.getPokemon(1, true) ~= nil then
+			Tracker.saveData()
+		end
+	end
+
+	if Program.Frames.lowAccuracyUpdate == 0 then
+		CustomCode.afterProgramDataUpdate()
+	end
+
+end
+
+
+
+
+
+
+
+
 function Program.stepFrames()
 	Program.Frames.highAccuracyUpdate = (Program.Frames.highAccuracyUpdate - 1) % 10
 	Program.Frames.lowAccuracyUpdate = (Program.Frames.lowAccuracyUpdate - 1) % 30
@@ -325,6 +476,8 @@ function Program.updateRepelSteps()
 end
 
 function Program.updatePokemonTeams()
+
+
 	-- Check for updates to each pokemon team
 	local addressOffset = 0
 
@@ -412,6 +565,275 @@ function Program.updatePokemonTeams()
 	end
 
 end
+
+
+
+
+
+
+
+function Program.updatePokemonTeamsGen2()
+	-- Check for updates to each pokemon team
+	local addressOffset = 0
+
+	-- Check if it's a new game (no Pokémon yet)
+	if not Tracker.Data.isNewGame and Tracker.Data.ownTeam[1] == 0 then
+		Tracker.Data.isNewGame = true
+	end
+
+	for i = 1, 6, 1 do
+		-- Lookup information on the player's Pokemon first
+		local id = Memory.readbyte(GameSettings.pstats + addressOffset)
+
+		-- local previousPersonality = Tracker.Data.ownTeam[i] -- See below
+		Tracker.Data.ownTeam[i] = id
+
+		if id ~= 0 then
+			local newPokemonData = Program.readNewPokemonGen2(GameSettings.pstats + addressOffset, id)
+
+			if Program.validPokemonData(newPokemonData) then
+
+				-- Sets the player's trainerID as soon as they get their first Pokemon
+				if Tracker.Data.isNewGame and newPokemonData.trainerID ~= nil and newPokemonData.trainerID ~= 0 then
+					if Tracker.Data.trainerID == nil or Tracker.Data.trainerID == 0 then
+						Tracker.Data.trainerID = newPokemonData.trainerID
+					elseif Tracker.Data.trainerID ~= newPokemonData.trainerID then
+						-- Reset the tracker data as old data was loaded and we have a different trainerID now
+						print("Old/Incorrect data was detected for this ROM. Initializing new data.")
+						Tracker.resetData()
+						Tracker.Data.trainerID = newPokemonData.trainerID
+					end
+
+					-- Unset the new game flag
+					Tracker.Data.isNewGame = false
+				end
+
+				-- Remove trainerID value from the pokemon data itself since it's now owned by the player, saves data space
+				-- No longer remove, as it's currently used to verify Trainer pokemon with personality values of 0
+				newPokemonData.trainerID = nil
+
+				-- Include experience information for each Pokemon in the player's team
+				--local curExp, totalExp = Program.getNextLevelExp(newPokemonData.pokemonID, newPokemonData.level, newPokemonData.experience)
+				newPokemonData.currentExp = 0
+				newPokemonData.totalExp = 0
+
+				Tracker.addUpdatePokemon(newPokemonData, id, true)
+
+				-- TODO: Removing for now until some better option is available, not sure there is one
+				-- If this is a newly caught Pokémon, track all of its moves. Can't do this later cause TMs/HMs
+				-- if previousPersonality == 0 then
+				-- 	for _, move in ipairs(newPokemonData.moves) do
+				-- 		Tracker.TrackMove(newPokemonData.pokemonID, move.id, newPokemonData.level)
+				-- 	end
+				-- end
+			end
+
+		end
+
+		-- Then lookup information on the opposing Pokemon
+
+
+		-- Next Pokemon - Each is offset by 44 bytes
+		addressOffset = addressOffset + 44
+	end
+
+
+	local trainerID = Memory.readbyte(GameSettings.estats  )
+	Tracker.Data.otherTeam[1] = trainerID
+
+	if  trainerID ~= 0 then
+		local newPokemonData = Program.readNewEnemyPokemonGen2(GameSettings.estats , trainerID)
+
+		if Program.validPokemonData(newPokemonData) then
+
+			-- Double-check a race condition where current PP values are wildly out of range if retrieved right before a battle begins
+			if not Battle.inBattle then
+				for _, move in pairs(newPokemonData.moves) do
+					if move.id ~= 0 then
+						move.pp = tonumber(MoveData.Moves[move.id].pp) -- set value to max PP
+					end
+				end
+			end
+
+			Tracker.addUpdatePokemon(newPokemonData, trainerID, false)
+		end
+	end
+
+end
+
+
+function Program.readNewPokemonGen2(startAddress, id)
+	-- Pokemon Data structure:https://datacrystal.romhacking.net/wiki/Pokémon_Red/Blue:RAM_map#Player
+
+
+	local species = id -- Pokemon's Pokedex ID
+	local abilityNum = "None" -- [0 or 1] to determine which ability, available in PokemonData
+
+	-- Determine status condition
+	local status_aux = Memory.readbyte(startAddress + 16)
+	local sleep_turns_result = 0
+	local status_result = 0
+	if status_aux == 0 then --None
+		status_result = 0
+	elseif status_aux < 8 then -- Sleep
+		sleep_turns_result = status_aux
+		status_result = 1
+	elseif status_aux == 8 then -- Poison
+		status_result = 2
+	elseif status_aux == 16 then -- Burn
+		status_result = 3
+	elseif status_aux == 32 then -- Freeze
+		status_result = 4
+	elseif status_aux == 64 then -- Paralyze
+		status_result = 5
+
+	end
+
+	-- Can likely improve this further using memory.read_bytes_as_array but would require testing to verify
+	local cur_level =  Memory.readbyte(startAddress + 31)
+	local curr_hp= Utils.reverseEndian16(Memory.readword(startAddress+34))
+	local maxhp =  Utils.reverseEndian16( Memory.readword(startAddress + 36))
+	local attack1 =  Utils.reverseEndian16( Memory.readword(startAddress + 38))
+	local def =  Utils.reverseEndian16(Memory.readword(startAddress + 40))
+	local sped=  Utils.reverseEndian16(Memory.readword(startAddress + 42))
+	local spatk = Utils.reverseEndian16(Memory.readword(startAddress + 44))
+	local spad = Utils.reverseEndian16(Memory.readword(startAddress + 46))
+
+	local attack= Memory.readdword(startAddress+2)
+	local move_pp= Memory.readdword(startAddress+23)
+	local train_id =Memory.readword(startAddress+12)
+
+
+	local item =Memory.readbyte(startAddress+1)
+
+
+	return {
+		personality = (id),
+		nickname = MiscData.InternalID[id],
+		trainerID = train_id,
+		pokemonID = species,
+		heldItem = item,
+		experience = 0,
+		friendship = 0,
+		level = cur_level,
+		nature = 0,
+		isEgg = 0, -- [0 or 1] to determine if mon is still an egg (1 if true)
+		abilityNum = abilityNum,
+		status = status_result,
+		sleep_turns = sleep_turns_result,
+		curHP = math.floor(curr_hp),
+		stats = {
+			hp = math.floor(maxhp),
+			atk = math.floor(attack1),
+			def = math.floor(def),
+			spa = math.floor(spatk),
+			spd=math.floor(spad),
+			spe = math.floor(sped),
+		},
+		statStages = { hp = 7, atk = 7, def = 7, spa = 7,spd=7,  spe = 7, acc = 7, eva = 7 },
+		moves = {
+			{ id = Utils.getbits(attack, 0, 8), level = 1, pp = Utils.getbits(move_pp, 0, 6)   },
+			{ id = Utils.getbits(attack, 8, 8), level = 1, pp = Utils.getbits(move_pp, 8, 6) },
+			{ id = Utils.getbits(attack, 16, 8), level = 1, pp = Utils.getbits(move_pp, 16, 6) },
+			{ id = Utils.getbits(attack, 24, 8), level = 1, pp = Utils.getbits(move_pp, 24, 6) },
+		},
+
+		-- Unused data that can be added back in later
+		-- secretID = Utils.getbits(otid, 16, 16), -- Unused
+		-- pokerus = Utils.getbits(misc1, 0, 8), -- Unused
+		-- iv = misc2,
+		-- ev1 = effort1,
+		-- ev2 = effort2,
+	}
+end
+
+
+function Program.readNewEnemyPokemonGen2(startAddress, id)
+	-- Pokemon Data structure:https://datacrystal.romhacking.net/wiki/Pokémon_Red/Blue:RAM_map#Player
+
+
+
+	local species = id -- Pokemon's Pokedex ID
+	local abilityNum = "None" -- [0 or 1] to determine which ability, available in PokemonData
+
+	-- Determine status condition
+	local status_aux = Memory.readbyte(startAddress + 14)
+	local sleep_turns_result = 0
+	local status_result = 0
+	if status_aux == 0 then --None
+		status_result = 0
+	elseif status_aux < 8 then -- Sleep
+		sleep_turns_result = status_aux
+		status_result = 1
+	elseif status_aux == 8 then -- Poison
+		status_result = 2
+	elseif status_aux == 16 then -- Burn
+		status_result = 3
+	elseif status_aux == 32 then -- Freeze
+		status_result = 4
+	elseif status_aux == 64 then -- Paralyze
+		status_result = 5
+
+	end
+
+	-- Can likely improve this further using memory.read_bytes_as_array but would require testing to verify
+	local cur_level = Memory.readbyte(startAddress + 13)
+	local curr_hp= Utils.reverseEndian16(Memory.readword(startAddress+16))
+	local maxhp =  Utils.reverseEndian16( Memory.readword(startAddress + 15))
+	local attack1 =  Utils.reverseEndian16( Memory.readword(startAddress + 17))
+	local def =  Utils.reverseEndian16(Memory.readword(startAddress + 19))
+	local sped=  Utils.reverseEndian16(Memory.readword(startAddress + 21))
+	local spatk = Utils.reverseEndian16(Memory.readword(startAddress + 23))
+	local spad = Utils.reverseEndian16(Memory.readword(startAddress + 48))
+
+
+
+	local attack= Memory.readdword(startAddress+2)
+	local move_pp= Memory.readdword(startAddress+8)
+	local train_id =Memory.readword(startAddress+12)
+
+
+	return {
+		personality = id,
+		nickname = MiscData.InternalID[id],
+		trainerID = "enemy",
+		pokemonID = species,
+		heldItem = nil,
+		experience = 0,
+		friendship = 0,
+		level = cur_level,
+		nature = 0,
+		isEgg = 0, -- [0 or 1] to determine if mon is still an egg (1 if true)
+		abilityNum = abilityNum,
+		status = status_result,
+		sleep_turns = sleep_turns_result,
+		curHP = math.floor(curr_hp),
+		stats = {
+			hp = math.floor(maxhp),
+			atk = math.floor(attack1),
+			def = math.floor(def),
+			spa = math.floor(spatk),
+			spd = math.floor(spad),
+			spe = math.floor(sped),
+		},
+		statStages = { hp = 7, atk = 7, def = 7, spa = 7, spd = 7, spe = 7, acc = 7, eva = 7 },
+		moves = {
+			{ id = Utils.getbits(attack, 0, 8), level = 1, pp = Utils.getbits(move_pp, 0, 8) },
+			{ id = Utils.getbits(attack, 8, 8), level = 1, pp = Utils.getbits(move_pp, 8, 8) },
+			{ id = Utils.getbits(attack, 16, 8), level = 1, pp = Utils.getbits(move_pp, 16, 8) },
+			{ id = Utils.getbits(attack, 24, 8), level = 1, pp = Utils.getbits(move_pp, 24, 8) },
+		},
+
+		-- Unused data that can be added back in later
+		-- secretID = Utils.getbits(otid, 16, 16), -- Unused
+		-- pokerus = Utils.getbits(misc1, 0, 8), -- Unused
+		-- iv = misc2,
+		-- ev1 = effort1,
+		-- ev2 = effort2,
+	}
+end
+
+
 
 function Program.readNewPokemon(startAddress, id)
 	-- Pokemon Data structure:https://datacrystal.romhacking.net/wiki/Pokémon_Red/Blue:RAM_map#Player
@@ -559,7 +981,7 @@ function Program.readNewEnemyPokemon(startAddress, id)
 
 			spe = sped,
 		},
-		statStages = { hp = 6, atk = 6, def = 6, spa = 6,  spe = 6, acc = 6, eva = 6 },
+		statStages = { hp = 7, atk = 7, def = 7, spa = 7, spd = 7, spe = 7, acc = 7, eva = 7 },
 		moves = {
 			{ id = Utils.getbits(attack, 0, 8), level = 1, pp = Utils.getbits(move_pp, 0, 8) },
 			{ id = Utils.getbits(attack, 8, 8), level = 1, pp = Utils.getbits(move_pp, 8, 8) },
@@ -828,6 +1250,24 @@ function Program.updateBagItems()
 	end
 end
 
+function Program.updateBagItemsGen2()
+	if not Tracker.Data.isViewingOwn then return end
+
+	local leadPokemon = Battle.getViewedPokemon(true)
+
+	if leadPokemon ~= nil then
+		local healingItems, evolutionStones = Program.getBagItems()
+		if healingItems ~= nil then
+			Tracker.Data.healingItems = Program.calcBagHealingItems(leadPokemon.stats.hp, healingItems)
+		end
+		if evolutionStones ~= nil then
+			Program.GameData.evolutionStones = evolutionStones
+		end
+	end
+end
+
+
+
 function Program.calcBagHealingItems(pokemonMaxHP, healingItemsInBag)
 	local totals = {
 		healing = 0,
@@ -875,9 +1315,9 @@ function Program.getBagItems()
 		[97] = 0, -- Water Stone
 		[98] = 0, -- Leaf Stone
 	}
-
-
-	local size=Memory.readbyte(GameSettings.bagPocket_Items_Size)
+	local size=20
+	if GameSettings.GEN==2 then  size=20
+	else	 size=Memory.readbyte(GameSettings.bagPocket_Items_Size) end
 	local address =GameSettings.bagPocket_Items_offset
 		for i = 0, (size - 1), 1 do
 			--read 4 bytes at once, should be less expensive than reading two sets of 2 bytes.

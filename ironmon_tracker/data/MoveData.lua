@@ -98,6 +98,9 @@ MoveData.IsTypelessMove = { -- Moves which inflict typeless damage (unaffected b
 }
 
 function MoveData.initialize()
+	if GameSettings.GEN==2 then
+
+	else
 	-- Reads the Move's type, power, accuracy, and pp
 	-- If any data at all was randomized, read in full move data from memory
 	if MoveData.checkIfDataIsRandomized() then
@@ -136,6 +139,7 @@ function MoveData.initialize()
 		end
 		-- print(datalog:sub(1, -3)) -- Remove trailing ", "
 	end
+end
 
 end
 

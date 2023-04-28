@@ -120,6 +120,13 @@ PokemonData.BlankPokemon = {
 function PokemonData.initialize()
 	-- Reads the types and abilities for each Pokemon in the Pokedex
 	-- If any data at all was randomized, read in full Pokemon data from memory
+	if GameSettings.GEN ==2 then
+
+		PokemonData.totalPokemon=251
+
+	end
+
+
 	PokemonData.UpdateBST()
 	for pokemonID=1, PokemonData.totalPokemon, 1 do
 		local pokemonData = PokemonData.Pokemon[pokemonID]
@@ -169,7 +176,7 @@ end
 
 function PokemonData.readPokemonTypesFromMemory(pokemonID)
 	local typesData=0
-	if GameSettings.game ==1 and pokemonID==151 then
+	if GameSettings.game ==1 and pokemonID==151 and not (GameSettings.GEN ==2 )then
 
 		 typesData = Memory.readword(GameSettings.MEw + 0x06)
 
@@ -202,6 +209,22 @@ end
 
 
 function PokemonData.UpdateBST()
+
+	if GameSettings.GEN==2 then
+		for pokemonID=1, PokemonData.totalPokemon , 1 do
+			local bst= 0
+
+
+			for i=1, 6,1 do
+				bst= bst+ Memory.readbyte(GameSettings.gBaseStats  +i +(pokemonID-1)* 32)
+			end
+
+
+			PokemonData.Pokemon[pokemonID]["bst"]=tostring(bst)
+
+		end
+	else
+
 	for pokemonID=1, PokemonData.totalPokemon -1, 1 do
 		local bst= 0
 		for i=0, 4,1 do
@@ -232,6 +255,7 @@ function PokemonData.UpdateBST()
 
 
 	end
+end
 end
 
 
@@ -1578,7 +1602,807 @@ PokemonData.Pokemon = {
 		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
 		evolution = PokemonData.Evolutions.NONE,
 		bst = "600",
-		movelvls = { { 10,20,30,40 }, { 10 ,20 ,30 ,40   } },
+		movelvls = { { 10, 20, 30, 40, 50 }, { 10, 20, 30, 40, 50 } },
 		weight = 4.0
-	}
+	},
+	{
+		name = "Chikorita",
+		types = { PokemonData.Types.GRASS, PokemonData.Types.EMPTY },
+		evolution = "16",
+		bst = "318",
+		movelvls = { { 8, 12, 15, 22, 29, 36, 43, 50 }, { 8, 12, 15, 22, 29, 36, 43, 50 } },
+		weight = 6.4
+	},
+	{
+		name = "Bayleef",
+		types = { PokemonData.Types.GRASS, PokemonData.Types.EMPTY },
+		evolution = "32",
+		bst = "405",
+		movelvls = { { 8, 12, 15, 23, 31, 39, 47, 55 }, { 8, 12, 15, 23, 31, 39, 47, 55 } },
+		weight = 15.8
+	},
+	{
+		name = "Meganium",
+		types = { PokemonData.Types.GRASS, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "525",
+		movelvls = { { 8, 12, 15, 23, 31, 41, 51, 61 }, { 8, 12, 15, 23, 31, 41, 51, 61 } },
+		weight = 100.5
+	},
+	{
+		name = "Cyndaquil",
+		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
+		evolution = "14",
+		bst = "309",
+		movelvls = { { 6, 12, 19, 27, 36, 46 }, { 6, 12, 19, 27, 36, 46 } },
+		weight = 7.9
+	},
+	{
+		name = "Quilava",
+		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
+		evolution = "36",
+		bst = "405",
+		movelvls = { { 6, 12, 21, 31, 42, 54 }, { 6, 12, 21, 31, 42, 54 } },
+		weight = 19.0
+	},
+	{
+		name = "Typhlosion",
+		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "534",
+		movelvls = { { 6, 12, 21, 31, 45, 60 }, { 6, 12, 21, 31, 45, 60 } },
+		weight = 79.5
+	},
+	{
+		name = "Totodile",
+		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
+		evolution = "18",
+		bst = "314",
+		movelvls = { { 7, 13, 20, 27, 35, 43, 52 }, { 7, 13, 20, 27, 35, 43, 52 } },
+		weight = 9.5
+	},
+	{
+		name = "Croconaw",
+		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
+		evolution = "30",
+		bst = "405",
+		movelvls = { { 7, 13, 21, 28, 37, 45, 55 }, { 7, 13, 21, 28, 37, 45, 55 } },
+		weight = 25.0
+	},
+	{
+		name = "Feraligatr",
+		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "530",
+		movelvls = { { 7, 13, 21, 28, 38, 47, 58 }, { 7, 13, 21, 28, 38, 47, 58 } },
+		weight = 88.8
+	},
+	{
+		name = "Sentret",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = "15",
+		bst = "215",
+		movelvls = { { 4, 7, 12, 17, 24, 31, 40, 49 }, { 4, 7, 12, 17, 24, 31, 40, 49 } },
+		weight = 6.0
+	},
+	{
+		name = "Furret",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "415",
+		movelvls = { { 4, 7, 12, 19, 28, 37, 48, 59 }, { 4, 7, 12, 19, 28, 37, 48, 59 } },
+		weight = 32.5
+	},
+	{
+		name = "Hoothoot",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
+		evolution = "20",
+		bst = "262",
+		movelvls = { { 6, 11, 16, 22, 28, 34, 48 }, { 6, 11, 16, 22, 28, 34, 48 } },
+		weight = 21.2
+	},
+	{
+		name = "Noctowl",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "442",
+		movelvls = { { 6, 11, 16, 25, 33, 41, 57 }, { 6, 11, 16, 25, 33, 41, 57 } },
+		weight = 40.8
+	},
+	{
+		name = "Ledyba",
+		types = { PokemonData.Types.BUG, PokemonData.Types.FLYING },
+		evolution = "18",
+		bst = "265",
+		movelvls = { { 8, 15, 22, 22, 22, 29, 36, 43, 50 }, { 8, 15, 22, 22, 22, 29, 36, 43, 50 } },
+		weight = 10.8
+	},
+	{
+		name = "Ledian",
+		types = { PokemonData.Types.BUG, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "390",
+		movelvls = { { 8, 15, 24, 24, 24, 33, 42, 51, 60 }, { 8, 15, 24, 24, 24, 33, 42, 51, 60 } },
+		weight = 35.6
+	},
+	{
+		name = "Spinarak",
+		types = { PokemonData.Types.BUG, PokemonData.Types.POISON },
+		evolution = "22",
+		bst = "250",
+		movelvls = { { 6, 11, 17, 23, 30, 37, 45, 53 }, { 6, 11, 17, 23, 30, 37, 45, 53 } },
+		weight = 8.5
+	},
+	{
+		name = "Ariados",
+		types = { PokemonData.Types.BUG, PokemonData.Types.POISON },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "390",
+		movelvls = { { 6, 11, 17, 25, 34, 43, 53, 63 }, { 6, 11, 17, 25, 34, 43, 53, 63 } },
+		weight = 33.5
+	},
+	{
+		name = "Crobat",
+		types = { PokemonData.Types.POISON, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "535",
+		movelvls = { { 6, 11, 16, 21, 28, 35, 42, 49, 56 }, { 6, 11, 16, 21, 28, 35, 42, 49, 56 } },
+		weight = 75.0
+	},
+	{
+		name = "Chinchou",
+		types = { PokemonData.Types.WATER, PokemonData.Types.ELECTRIC },
+		evolution = "27",
+		bst = "330",
+		movelvls = { { 5, 13, 17, 25, 29, 37, 41, 49 }, { 5, 13, 17, 25, 29, 37, 41, 49 } },
+		weight = 12.0
+	},
+	{
+		name = "Lanturn",
+		types = { PokemonData.Types.WATER, PokemonData.Types.ELECTRIC },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "460",
+		movelvls = { { 5, 13, 17, 25, 32, 43, 50, 61 }, { 5, 13, 17, 25, 32, 43, 50, 61 } },
+		weight = 22.5
+	},
+	{
+		name = "Pichu",
+		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.FRIEND,
+		bst = "205",
+		movelvls = { { 6, 8, 11 }, { 6, 8, 11 } },
+		weight = 2.0
+	},
+	{
+		name = "Cleffa",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.FRIEND,
+		bst = "218",
+		movelvls = { { 4, 8, 13 }, { 4, 8, 13, 17 } },
+		weight = 3.0
+	},
+	{
+		name = "Igglybuff",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.FRIEND,
+		bst = "210",
+		movelvls = { { 4, 9, 14 }, { 4, 9, 14 } },
+		weight = 1.0
+	},
+	{
+		name = "Togepi",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.FRIEND,
+		bst = "245",
+		movelvls = { { 6, 11, 16, 21, 26, 31, 36, 41 }, { 4, 9, 13, 17, 21, 25, 29, 33, 37, 41 } },
+		weight = 1.5
+	},
+	{
+		name = "Togetic",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "405",
+		movelvls = { { 6, 11, 16, 21, 26, 31, 36, 41 }, { 4, 9, 13, 17, 21, 25, 29, 33, 37, 41 } },
+		weight = 3.2
+	},
+	{
+		name = "Natu",
+		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.FLYING },
+		evolution = "25",
+		bst = "320",
+		movelvls = { { 10, 20, 30, 30, 40, 50 }, { 10, 20, 30, 30, 40, 50 } },
+		weight = 2.0
+	},
+	{
+		name = "Xatu",
+		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "470",
+		movelvls = { { 10, 20, 35, 35, 50, 65 }, { 10, 20, 35, 35, 50, 65 } },
+		weight = 15.0
+	},
+	{
+		name = "Mareep",
+		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
+		evolution = "15",
+		bst = "280",
+		movelvls = { { 9, 16, 23, 30, 37 }, { 9, 16, 23, 30, 37 } },
+		weight = 7.8
+	},
+	{
+		name = "Flaaffy",
+		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
+		evolution = "30",
+		bst = "365",
+		movelvls = { { 9, 18, 27, 36, 45 }, { 9, 18, 27, 36, 45 } },
+		weight = 13.3
+	},
+	{
+		name = "Ampharos",
+		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "500",
+		movelvls = { { 9, 18, 27, 30, 42, 57 }, { 9, 18, 27, 30, 42, 57 } },
+		weight = 61.5
+	},
+	{
+		name = "Bellossom",
+		types = { PokemonData.Types.GRASS, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "480",
+		movelvls = { { 44, 55 }, { 44, 55 } },
+		weight = 5.8
+	},
+	{
+		name = "Marill",
+		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
+		evolution = "18",
+		bst = "250",
+		movelvls = { { 3, 6, 10, 15, 21, 28, 36, 45 }, { 3, 6, 10, 15, 21, 28, 36, 45 } },
+		weight = 8.5
+	},
+	{
+		name = "Azumarill",
+		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "410",
+		movelvls = { { 3, 6, 10, 15, 24, 34, 45, 57 }, { 3, 6, 10, 15, 24, 34, 45, 57 } },
+		weight = 28.5
+	},
+	{
+		name = "Sudowoodo",
+		types = { PokemonData.Types.ROCK, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "410",
+		movelvls = { { 9, 17, 25, 33, 41, 49, 57 }, { 9, 17, 25, 33, 41, 49, 57 } },
+		weight = 38.0
+	},
+	{
+		name = "Politoed",
+		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "500",
+		movelvls = { { 35, 51 }, { 35, 51 } },
+		weight = 33.9
+	},
+	{
+		name = "Hoppip",
+		types = { PokemonData.Types.GRASS, PokemonData.Types.FLYING },
+		evolution = "18",
+		bst = "250",
+		movelvls = { { 5, 5, 10, 13, 15, 17, 20, 25, 30 }, { 5, 5, 10, 13, 15, 17, 20, 25, 30 } },
+		weight = 0.5
+	},
+	{
+		name = "Skiploom",
+		types = { PokemonData.Types.GRASS, PokemonData.Types.FLYING },
+		evolution = "27",
+		bst = "340",
+		movelvls = { { 5, 5, 10, 13, 15, 17, 22, 29, 36 }, { 5, 5, 10, 13, 15, 17, 22, 29, 36 } },
+		weight = 1.0
+	},
+	{
+		name = "Jumpluff",
+		types = { PokemonData.Types.GRASS, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "450",
+		movelvls = { { 5, 5, 10, 13, 15, 17, 22, 33, 44 }, { 5, 5, 10, 13, 15, 17, 22, 33, 44 } },
+		weight = 3.0
+	},
+	{
+		name = "Aipom",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "360",
+		movelvls = { { 6, 13, 18, 25, 31, 38, 43, 50 }, { 6, 13, 18, 25, 31, 38, 43, 50 } },
+		weight = 11.5
+	},
+	{
+		name = "Sunkern",
+		types = { PokemonData.Types.GRASS, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.SUN,
+		bst = "180",
+		movelvls = { { 6, 13, 18, 25, 30, 37, 42 }, { 6, 13, 18, 25, 30, 37, 42 } },
+		weight = 1.8
+	},
+	{
+		name = "Sunflora",
+		types = { PokemonData.Types.GRASS, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "425",
+		movelvls = { { 6, 13, 18, 25, 30, 37, 42 }, { 6, 13, 18, 25, 30, 37, 42 } },
+		weight = 8.5
+	},
+	{
+		name = "Yanma",
+		types = { PokemonData.Types.BUG, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "390",
+		movelvls = { { 7, 13, 19, 25, 31, 37, 43, 49 }, { 6, 12, 17, 23, 28, 34, 39, 45, 50 } },
+		weight = 38.0
+	},
+	{
+		name = "Wooper",
+		types = { PokemonData.Types.WATER, PokemonData.Types.GROUND },
+		evolution = "20",
+		bst = "210",
+		movelvls = { { 11, 16, 21, 31, 36, 41, 51, 51 }, { 11, 16, 21, 31, 36, 41, 51, 51 } },
+		weight = 8.5
+	},
+	{
+		name = "Quagsire",
+		types = { PokemonData.Types.WATER, PokemonData.Types.GROUND },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "430",
+		movelvls = { { 11, 16, 23, 35, 42, 49, 61, 61 }, { 11, 16, 23, 35, 42, 49, 61, 61 } },
+		weight = 75.0
+	},
+	{
+		name = "Espeon",
+		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "525",
+		movelvls = { { 8, 16, 23, 30, 36, 42, 47, 52 }, { 8, 16, 23, 30, 36, 42, 47, 52 } },
+		weight = 26.5
+	},
+	{
+		name = "Umbreon",
+		types = { PokemonData.Types.DARK, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "525",
+		movelvls = { { 8, 16, 23, 30, 36, 42, 47, 52 }, { 8, 16, 23, 30, 36, 42, 47, 52 } },
+		weight = 27.0
+	},
+	{
+		name = "Murkrow",
+		types = { PokemonData.Types.DARK, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "405",
+		movelvls = { { 9, 14, 22, 27, 35, 40, 48 }, { 9, 14, 22, 27, 35, 40, 48 } },
+		weight = 2.1
+	},
+	{
+		name = "Slowking",
+		types = { PokemonData.Types.WATER, PokemonData.Types.PSYCHIC },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "490",
+		movelvls = { { 6, 15, 20, 29, 34, 43, 48 }, { 6, 13, 17, 24, 29, 36, 40, 47 } },
+		weight = 79.5
+	},
+	{
+		name = "Misdreavus",
+		types = { PokemonData.Types.GHOST, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "435",
+		movelvls = { { 6, 11, 17, 23, 30, 37, 45, 53 }, { 6, 11, 17, 23, 30, 37, 45, 53 } },
+		weight = 1.0
+	},
+	{
+		name = "Unown",
+		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "336",
+		movelvls = { {}, {} },
+		weight = 5.0
+	},
+	{
+		name = "Wobbuffet",
+		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "405",
+		movelvls = { {}, {} },
+		weight = 28.5
+	},
+	{
+		name = "Girafarig",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.PSYCHIC },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "455",
+		movelvls = { { 7, 13, 19, 25, 31, 37, 43, 49 }, { 7, 13, 19, 25, 31, 37, 43, 49 } },
+		weight = 41.5
+	},
+	{
+		name = "Pineco",
+		types = { PokemonData.Types.BUG, PokemonData.Types.EMPTY },
+		evolution = "31",
+		bst = "290",
+		movelvls = { { 8, 15, 22, 29, 36, 43, 50 }, { 8, 15, 22, 29, 36, 43, 50 } },
+		weight = 7.2
+	},
+	{
+		name = "Forretress",
+		types = { PokemonData.Types.BUG, PokemonData.Types.STEEL },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "465",
+		movelvls = { { 8, 15, 22, 29, 39, 49, 59 }, { 8, 15, 22, 29, 31, 39, 49, 59 } },
+		weight = 125.8
+	},
+	{
+		name = "Dunsparce",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "415",
+		movelvls = { { 4, 11, 14, 21, 24, 31, 34, 41 }, { 4, 11, 14, 21, 24, 31, 34, 41, 44, 51 } },
+		weight = 14.0
+	},
+	{
+		name = "Gligar",
+		types = { PokemonData.Types.GROUND, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "430",
+		movelvls = { { 6, 13, 20, 28, 36, 44, 52 }, { 6, 13, 20, 28, 36, 44, 52 } },
+		weight = 64.8
+	},
+	{
+		name = "Steelix",
+		types = { PokemonData.Types.STEEL, PokemonData.Types.GROUND },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "510",
+		movelvls = { { 9, 13, 21, 25, 33, 37, 45, 49, 57 }, { 8, 12, 19, 23, 30, 34, 41, 45, 52, 56 } },
+		weight = 400.0
+	},
+	{
+		name = "Snubbull",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = "23",
+		bst = "300",
+		movelvls = { { 4, 8, 13, 19, 26, 34, 43, 53 }, { 4, 8, 13, 19, 26, 34, 43, 53 } },
+		weight = 7.8
+	},
+	{
+		name = "Granbull",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "450",
+		movelvls = { { 4, 8, 13, 19, 28, 38, 49, 61 }, { 4, 8, 13, 19, 28, 38, 49, 61 } },
+		weight = 48.7
+	},
+	{
+		name = "Qwilfish",
+		types = { PokemonData.Types.WATER, PokemonData.Types.POISON },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "430",
+		movelvls = { { 10, 10, 19, 28, 37, 46 }, { 9, 9, 13, 21, 25, 33, 37, 45 } },
+		weight = 3.9
+	},
+	{
+		name = "Scizor",
+		types = { PokemonData.Types.BUG, PokemonData.Types.STEEL },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "500",
+		movelvls = { { 6, 11, 16, 21, 26, 31, 36, 41, 46 }, { 6, 11, 16, 21, 26, 31, 36, 41, 46 } },
+		weight = 118.0
+	},
+	{
+		name = "Shuckle",
+		types = { PokemonData.Types.BUG, PokemonData.Types.ROCK },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "505",
+		movelvls = { { 9, 14, 23, 28, 37 }, { 9, 14, 23, 28, 37 } },
+		weight = 20.5
+	},
+	{
+		name = "Heracross",
+		types = { PokemonData.Types.BUG, PokemonData.Types.FIGHTING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "500",
+		movelvls = { { 6, 11, 17, 23, 30, 37, 45, 53 }, { 6, 11, 17, 23, 30, 37, 45, 53 } },
+		weight = 54.0
+	},
+	{
+		name = "Sneasel",
+		types = { PokemonData.Types.DARK, PokemonData.Types.ICE },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "430",
+		movelvls = { { 8, 15, 22, 29, 36, 43, 50, 57, 64 }, { 8, 15, 22, 29, 36, 43, 50, 57, 64 } },
+		weight = 28.0
+	},
+	{
+		name = "Teddiursa",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = "30",
+		bst = "330",
+		movelvls = { { 7, 13, 19, 25, 31, 37, 43, 49 }, { 7, 13, 19, 25, 31, 37, 43, 49 } },
+		weight = 8.8
+	},
+	{
+		name = "Ursaring",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "500",
+		movelvls = { { 7, 13, 19, 25, 31, 37, 43, 49 }, { 7, 13, 19, 25, 31, 37, 43, 49 } },
+		weight = 125.8
+	},
+	{
+		name = "Slugma",
+		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
+		evolution = "38",
+		bst = "250",
+		movelvls = { { 8, 15, 22, 29, 36, 43, 50 }, { 8, 15, 22, 29, 36, 43, 50 } },
+		weight = 35.0
+	},
+	{
+		name = "Magcargo",
+		types = { PokemonData.Types.FIRE, PokemonData.Types.ROCK },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "410",
+		movelvls = { { 8, 15, 22, 29, 36, 48, 60 }, { 8, 15, 22, 29, 36, 48, 60 } },
+		weight = 55.0
+	},
+	{
+		name = "Swinub",
+		types = { PokemonData.Types.ICE, PokemonData.Types.GROUND },
+		evolution = "33",
+		bst = "250",
+		movelvls = { { 10, 19, 28, 37, 46, 55 }, { 10, 19, 28, 37, 46, 55 } },
+		weight = 6.5
+	},
+	{
+		name = "Piloswine",
+		types = { PokemonData.Types.ICE, PokemonData.Types.GROUND },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "450",
+		movelvls = { { 10, 19, 28, 33, 42, 56, 70 }, { 10, 19, 28, 33, 42, 56, 70 } },
+		weight = 55.8
+	},
+	{
+		name = "Corsola",
+		types = { PokemonData.Types.WATER, PokemonData.Types.ROCK },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "380",
+		movelvls = { { 6, 12, 17, 17, 23, 28, 34, 39, 45 }, { 6, 12, 17, 17, 23, 28, 34, 39, 45 } },
+		weight = 5.0
+	},
+	{
+		name = "Remoraid",
+		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
+		evolution = "25",
+		bst = "300",
+		movelvls = { { 11, 22, 22, 22, 33, 44, 55 }, { 11, 22, 22, 22, 33, 44, 55 } },
+		weight = 12.0
+	},
+	{
+		name = "Octillery",
+		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "480",
+		movelvls = { { 11, 22, 22, 22, 25, 38, 54, 70 }, { 11, 22, 22, 22, 25, 38, 54, 70 } },
+		weight = 28.5
+	},
+	{
+		name = "Delibird",
+		types = { PokemonData.Types.ICE, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "330",
+		movelvls = { {}, {} },
+		weight = 16.0
+	},
+	{
+		name = "Mantine",
+		types = { PokemonData.Types.WATER, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "465",
+		movelvls = { { 8, 15, 22, 29, 36, 43, 50 }, { 8, 15, 22, 29, 36, 43, 50 } },
+		weight = 220.0
+	},
+	{
+		name = "Skarmory",
+		types = { PokemonData.Types.STEEL, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "465",
+		movelvls = { { 10, 13, 16, 26, 29, 32, 42, 45 }, { 10, 13, 16, 26, 29, 32, 42, 45 } },
+		weight = 50.5
+	},
+	{
+		name = "Houndour",
+		types = { PokemonData.Types.DARK, PokemonData.Types.FIRE },
+		evolution = "24",
+		bst = "330",
+		movelvls = { { 7, 13, 19, 25, 31, 37, 43, 49 }, { 7, 13, 19, 25, 31, 37, 43, 49 } },
+		weight = 10.8
+	},
+	{
+		name = "Houndoom",
+		types = { PokemonData.Types.DARK, PokemonData.Types.FIRE },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "500",
+		movelvls = { { 7, 13, 19, 27, 35, 43, 51, 59 }, { 7, 13, 19, 27, 35, 43, 51, 59 } },
+		weight = 35.0
+	},
+	{
+		name = "Kingdra",
+		types = { PokemonData.Types.WATER, PokemonData.Types.DRAGON },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "540",
+		movelvls = { { 8, 15, 22, 29, 40, 51, 62 }, { 8, 15, 22, 29, 40, 51, 62 } },
+		weight = 152.0
+	},
+	{
+		name = "Phanpy",
+		types = { PokemonData.Types.GROUND, PokemonData.Types.EMPTY },
+		evolution = "25",
+		bst = "330",
+		movelvls = { { 9, 17, 25, 33, 41, 49 }, { 9, 17, 25, 33, 41, 49 } },
+		weight = 33.5
+	},
+	{
+		name = "Donphan",
+		types = { PokemonData.Types.GROUND, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "500",
+		movelvls = { { 9, 17, 25, 33, 41, 49 }, { 9, 17, 25, 33, 41, 49 } },
+		weight = 120.0
+	},
+	{
+		name = "Porygon2",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "515",
+		movelvls = { { 9, 12, 20, 24, 32, 36, 44, 48 }, { 9, 12, 20, 24, 32, 36, 44, 48 } },
+		weight = 32.5
+	},
+	{
+		name = "Stantler",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "465",
+		movelvls = { { 7, 13, 19, 25, 31, 37, 43, 49 }, { 7, 11, 17, 21, 27, 31, 37, 41, 47 } },
+		weight = 71.2
+	},
+	{
+		name = "Smeargle",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "250",
+		movelvls = { { 11, 21, 31, 41, 51, 61, 71, 81, 91 }, { 11, 21, 31, 41, 51, 61, 71, 81, 91 } },
+		weight = 58.0
+	},
+	{
+		name = "Tyrogue",
+		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
+		evolution = "20",
+		bst = "210",
+		movelvls = { {}, {} },
+		weight = 21.0
+	},
+	{
+		name = "Hitmontop",
+		types = { PokemonData.Types.FIGHTING, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "455",
+		movelvls = { { 7, 13, 19, 20, 25, 31, 37, 43, 49 }, { 7, 13, 19, 20, 25, 31, 37, 43, 49 } },
+		weight = 48.0
+	},
+	{
+		name = "Smoochum",
+		types = { PokemonData.Types.ICE, PokemonData.Types.PSYCHIC },
+		evolution = "30",
+		bst = "305",
+		movelvls = { { 9, 13, 21, 25, 33, 37, 45, 49, 57 }, { 9, 13, 21, 25, 33, 37, 45, 49, 57 } },
+		weight = 6.0
+	},
+	{
+		name = "Elekid",
+		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
+		evolution = "30",
+		bst = "360",
+		movelvls = { { 9, 17, 25, 33, 41, 49 }, { 9, 17, 25, 33, 41, 49 } },
+		weight = 23.5
+	},
+	{
+		name = "Magby",
+		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
+		evolution = "30",
+		bst = "365",
+		movelvls = { { 7, 13, 19, 25, 31, 37, 43, 49 }, { 7, 13, 19, 25, 31, 37, 43, 49 } },
+		weight = 21.4
+	},
+	{
+		name = "Miltank",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "490",
+		movelvls = { { 4, 8, 13, 19, 26, 34, 43, 53 }, { 4, 8, 13, 19, 26, 34, 43, 53 } },
+		weight = 75.5
+	},
+	{
+		name = "Blissey",
+		types = { PokemonData.Types.NORMAL, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "540",
+		movelvls = { { 4, 7, 10, 13, 18, 23, 28, 33, 40, 47 }, { 4, 7, 10, 13, 18, 23, 28, 33, 40, 47 } },
+		weight = 46.8
+	},
+	{
+		name = "Raikou",
+		types = { PokemonData.Types.ELECTRIC, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "580",
+		movelvls = { { 11, 21, 31, 41, 51, 61, 71, 81 }, { 11, 21, 31, 41, 51, 61, 71, 81 } },
+		weight = 178.0
+	},
+	{
+		name = "Entei",
+		types = { PokemonData.Types.FIRE, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "580",
+		movelvls = { { 11, 21, 31, 41, 51, 61, 71, 81 }, { 11, 21, 31, 41, 51, 61, 71, 81 } },
+		weight = 198.0
+	},
+	{
+		name = "Suicune",
+		types = { PokemonData.Types.WATER, PokemonData.Types.EMPTY },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "580",
+		movelvls = { { 11, 21, 31, 41, 51, 61, 71, 81 }, { 11, 21, 31, 41, 51, 61, 71, 81 } },
+		weight = 187.0
+	},
+	{
+		name = "Larvitar",
+		types = { PokemonData.Types.ROCK, PokemonData.Types.GROUND },
+		evolution = "30",
+		bst = "300",
+		movelvls = { { 8, 15, 22, 29, 36, 43, 50, 57 }, { 8, 15, 22, 29, 36, 43, 50, 57 } },
+		weight = 72.0
+	},
+	{
+		name = "Pupitar",
+		types = { PokemonData.Types.ROCK, PokemonData.Types.GROUND },
+		evolution = "55",
+		bst = "410",
+		movelvls = { { 8, 15, 22, 29, 38, 47, 56, 65 }, { 8, 15, 22, 29, 38, 47, 56, 65 } },
+		weight = 152.0
+	},
+	{
+		name = "Tyranitar",
+		types = { PokemonData.Types.ROCK, PokemonData.Types.DARK },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "600",
+		movelvls = { { 8, 15, 22, 29, 38, 47, 61, 75 }, { 8, 15, 22, 29, 38, 47, 61, 75 } },
+		weight = 202.0
+	},
+	{
+		name = "Lugia",
+		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "680",
+		movelvls = { { 11, 22, 33, 44, 55, 66, 77, 88, 99 }, { 11, 22, 33, 44, 55, 66, 77, 88, 99 } },
+		weight = 216.0
+	},
+	{
+		name = "Ho-Oh",
+		types = { PokemonData.Types.FIRE, PokemonData.Types.FLYING },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "680",
+		movelvls = { { 11, 22, 33, 44, 55, 66, 77, 88, 99 }, { 11, 22, 33, 44, 55, 66, 77, 88, 99 } },
+		weight = 199.0
+	},
+	{
+		name = "Celebi",
+		types = { PokemonData.Types.PSYCHIC, PokemonData.Types.GRASS },
+		evolution = PokemonData.Evolutions.NONE,
+		bst = "600",
+		movelvls = { { 10, 20, 30, 40, 50 }, { 10, 20, 30, 40, 50 } },
+		weight = 5.0
+	},
 }

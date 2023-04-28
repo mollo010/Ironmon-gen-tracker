@@ -136,10 +136,85 @@ function GameSettings.initialize()
 	local gameIndex, versionIndex = 1 ,1
 
 	if GameSettings.GEN ==2 then
+		local gameIndex, versionIndex = 1 ,1
+		GameSettings.setGen2Addresses()
+		Constants.OrderedLists.STATSTAGES = {
+			"hp",
+			"atk",
+			"def",
+			"spa",
+			"spd",
+			"spe",
+		}
+
+
+
+		MiscData.HealingItems = {
+			[18] = {
+				id = 18,
+				name = "Potion",
+				amount = 20,
+				type = MiscData.HealingType.Constant,
+				pocket = MiscData.BagPocket.Items,
+			},
+			[14] = {
+				id = 14,
+				name = "Full Restore",
+				amount = 100,
+				type = MiscData.HealingType.Percentage,
+				pocket = MiscData.BagPocket.Items,
+			},
+			[15] = {
+				id = 15,
+				name = "Max Potion",
+				amount = 100,
+				type = MiscData.HealingType.Percentage,
+				pocket = MiscData.BagPocket.Items,
+			},
+			[16] = {
+				id = 16,
+				name = "Hyper Potion",
+				amount = 200,
+				type = MiscData.HealingType.Constant,
+				pocket = MiscData.BagPocket.Items,
+			},
+			[17] = {
+				id = 17,
+				name = "Super Potion",
+				amount = 50,
+				type = MiscData.HealingType.Constant,
+				pocket = MiscData.BagPocket.Items,
+			},
+			[46] = {
+				id = 46,
+				name = "Fresh Water",
+				amount = 50,
+				type = MiscData.HealingType.Constant,
+				pocket = MiscData.BagPocket.Items,
+			},
+			[47] = {
+				id = 47,
+				name = "Soda Pop",
+				amount = 60,
+				type = MiscData.HealingType.Constant,
+				pocket = MiscData.BagPocket.Items,
+			},
+			[48] = {
+				id = 48,
+				name = "Lemonade",
+				amount = 80,
+				type = MiscData.HealingType.Constant,
+				pocket = MiscData.BagPocket.Items,
+			}
+		}
+
+
+
 
 
 
 	else
+		local gameIndex, versionIndex = 1 ,1
 		-- 0x04...
 		GameSettings.setWramAddresses()
 		-- 0x08...
@@ -147,7 +222,70 @@ function GameSettings.initialize()
 		-- Ability auto-tracking scripts
 	--GameSettings.setAbilityTrackingAddresses(gameIndex, versionIndex)
 	end
+	local gameIndex, versionIndex = 1 ,1
 end
+
+function GameSettings.setGen2Addresses()
+	local addresses = {
+
+	---Rom Addresses
+		gBattleMoves =
+			{ 0x08041AFB}
+
+		,
+		gBaseStats =
+			{ 0x08051424}
+		,
+
+		gEvo_move =
+			{ 0x080425B1}
+		,
+		trainnerpoke =
+			{ 0x08039999}
+
+
+	,
+
+	---Ram  Addresses
+	pstats = {0x02001cdf},
+
+	estats = {0x02001206 },
+	gTurn={0x020006dd},
+	eMove={0x02000608},
+	eType=		{0x02000fea},
+	StatChange= {0x020006c8},
+
+
+
+	gBattlerPartyIndexes={0x02001163},
+
+	gBattleTypeFlags = { 0x0200015A},
+	gMapHeader = { 0x0200015a},
+
+	gPlayerPartyCount={0x0200189C},
+
+	badgeOffset = { 0x02001857},
+	bagPocket_Items_offset = {   0x02001893 },
+	bagPocket_Berries_offset = { 0x0200131E },
+	bagPocket_Items_Size = {20},
+
+
+
+	}
+
+	for key, address in pairs(addresses) do
+		local value = address[1]
+		if value ~= nil then
+			if GameSettings.game == 2 and key ~="StatChange" and key ~="gTurn" and key ~="gBattleTypeFlags" then
+				GameSettings[key] = value-1
+			else
+				GameSettings[key] = value
+
+			end
+		end
+	end
+end
+
 
 function GameSettings.getRomName()
 	if Main.IsOnBizhawk() then
@@ -210,13 +348,14 @@ function GameSettings.setGameInfo(gamecode)
 			BADGE_PREFIX = "FRLG",
 			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
 		},
-		[0x474c4441] = {
+
+		[0x414C0042] = {
 			GAME_NUMBER = 1,
-			GAME_NAME = "Pokemon Gold(U)",
+			GAME_NAME = "Pokemon Crystal(1,1)",
 			VERSION_GROUP = 1,
-			VERSION_COLOR = "Gold",
+			VERSION_COLOR = "Crystal",
 			LANGUAGE = "English",
-			BADGE_PREFIX = "GLD",
+			BADGE_PREFIX = "FRLG",
 			BADGE_XOFFSETS = { 1, 1, 0, 0, 1, 1, 1, 1 },
 			GEN=2,
 		}
@@ -234,6 +373,7 @@ function GameSettings.setGameInfo(gamecode)
 	}
 
 	local game = games[gamecode]
+
 	if game ~= nil then
 		GameSettings.game = game.GAME_NUMBER
 		GameSettings.gamename = game.GAME_NAME
