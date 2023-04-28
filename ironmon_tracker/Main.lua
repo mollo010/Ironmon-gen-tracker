@@ -151,6 +151,7 @@ function Main.Run()
 
 
 			while Main.loadNextSeed == false do
+
 				Program.mainLoopGen2()
 				Main.frameAdvance()
 			end

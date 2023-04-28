@@ -701,7 +701,7 @@ function Program.readNewPokemonGen2(startAddress, id)
 
 	local attack= Memory.readdword(startAddress+2)
 	local move_pp= Memory.readdword(startAddress+23)
-	local train_id =Memory.readword(startAddress+12)
+	local train_id =id
 
 
 	local item =Memory.readbyte(startAddress+1)
@@ -1216,17 +1216,21 @@ function Program.validPokemonData(pokemonData)
 
 	-- If the Pokemon exists, but it's ID is invalid
 	if not PokemonData.isValid(pokemonData.pokemonID) and pokemonData.pokemonID ~= 0 then -- 0 = blank pokemon id
+
 		return false
 	end
 
 	-- If the Pokemon is holding an item, and that item is invalid
 	if pokemonData.heldItem ~= nil and (pokemonData.heldItem < 0 or pokemonData.heldItem > 376) then
+
 		return false
 	end
 
 	-- For each of the Pokemon's moves that isn't blank, is that move real
 	for _, move in pairs(pokemonData.moves) do
+
 		if not MoveData.isValid(move.id) and move.id ~= 0 then -- 0 = blank move id
+
 			return false
 		end
 	end
