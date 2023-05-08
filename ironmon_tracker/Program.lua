@@ -670,7 +670,8 @@ function Program.readNewPokemonGen2(startAddress, id)
 	local abilityNum = "None" -- [0 or 1] to determine which ability, available in PokemonData
 
 	-- Determine status condition
-	local status_aux = Memory.readbyte(startAddress + 16)
+	local status_aux = Memory.readbyte(startAddress + 32)
+
 	local sleep_turns_result = 0
 	local status_result = 0
 	if status_aux == 0 then --None

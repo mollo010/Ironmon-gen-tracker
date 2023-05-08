@@ -253,7 +253,7 @@ function GameSettings.setGen2Addresses()
 	gTurn={0x020006dd},
 	eMove={0x02000608},
 	eType=		{0x02000fea},
-	StatChange= {0x020006c8},
+	StatChange= {0x020006cc},
 
 
 
