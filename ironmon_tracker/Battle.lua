@@ -511,11 +511,12 @@ function Battle.updateTrackedInfoGen2()
 
 	-- Always track your own Pokemons' abilities, unless you are in a half-double battle alongside an NPC (3 + 3 vs 3 + 3)
 	local ownLeftPokemon = Tracker.getPokemon(Battle.Combatants.LeftOwn,true)
+	Battle.updateStatStagesGen2(ownLeftPokemon, true)
 	if ownLeftPokemon ~= nil and Battle.Combatants.LeftOwn <= Battle.partySize then
 		local ownLeftAbilityId = PokemonData.getAbilityId(ownLeftPokemon.pokemonID, ownLeftPokemon.abilityNum)
 		--Tracker.TrackAbility(ownLeftPokemon.pokemonID, ownLeftAbilityId)
 
-		Battle.updateStatStagesGen2(ownLeftPokemon, true)
+
 	end
 
 
@@ -761,7 +762,7 @@ end
 
 function Battle.updateStatStagesGen2(pokemon, isOwn)
 
-	local startAddress = GameSettings.StatChange + Utils.inlineIf(isOwn, 0x0, 12)
+	local startAddress = GameSettings.StatChange + Utils.inlineIf(isOwn, 0x0, 8)
 	local isLeftOffset = 0
 
 	--local hp_atk_def_speed = Memory.readdword(startAddress + isLeftOffset )
