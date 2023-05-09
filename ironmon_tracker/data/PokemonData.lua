@@ -128,6 +128,7 @@ function PokemonData.initialize()
 
 
 	PokemonData.UpdateBST()
+	PokemonData.updatemoves()
 	for pokemonID=1, PokemonData.totalPokemon, 1 do
 		local pokemonData = PokemonData.Pokemon[pokemonID]
 
@@ -262,6 +263,31 @@ function PokemonData.UpdateBST()
 
 	end
 end
+end
+
+function PokemonData.updatemoves()
+	if GameSettings.GEN==2 then
+		local pointer_offset =GameSettings.levelup
+		print("test")
+		for i =1, PokemonData.totalPokemon,1 do
+			local pointer= pointer_offset+(i-1)*2
+			--- skip evo data
+			while  not (Memory.readbyte(pointer) ==0) do
+				if (Memory.readbyte(pointer) ==5) then pointer = pointer+5 else  pointer = pointer+3   end
+			end
+			pointer =1 +pointer
+			local movelevels={}
+
+			while  not (Memory.readbyte(pointer) ==0) do
+				if not (Memory.readbyte(pointer) ==1)then
+				table.insert(movelevels,Memory.readbyte(pointer))
+				end
+				pointer =2 +pointer
+			end
+			PokemonData.Pokemon[i].movelvls= {movelevels}
+
+			end
+		end
 end
 
 

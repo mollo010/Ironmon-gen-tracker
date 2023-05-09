@@ -257,6 +257,17 @@ function RandomizerLog.parseBaseStatsItems(logLines)
 		local pokemonId = RandomizerLog.PokemonNameToIdMap[pokemon]
 		local pokemonData = RandomizerLog.Data.Pokemon[pokemonId]
 		if pokemonData ~= nil then
+			if GameSettings.GEN==2 then
+				pokemonData.BaseStats = {
+					hp = tonumber(t[4]) or 0,
+					atk = tonumber(t[5]) or 0,
+					def = tonumber(t[6]) or 0,
+					spa = tonumber(t[7]) or 0,
+					spd = tonumber(t[8]) or 0,
+					spe = tonumber(t[9]) or 0,
+				}
+
+			else
 			pokemonData.BaseStats = {
 				hp = tonumber(t[4]) or 0,
 				atk = tonumber(t[5]) or 0,
@@ -265,6 +276,7 @@ function RandomizerLog.parseBaseStatsItems(logLines)
 				spd = tonumber(t[6]) or 0,
 				spe = tonumber(t[7]) or 0,
 			}
+		   end
 			if helditems ~= nil and helditems ~= "" then
 				pokemonData.BaseStats.helditems = RandomizerLog.formatInput(helditems)
 			end
