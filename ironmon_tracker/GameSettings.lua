@@ -243,7 +243,10 @@ function GameSettings.setGen2Addresses()
 		trainnerpoke =
 			{ 0x08039999}
 			,
+
 			levelup =
+			{ 0x080427A7},
+			offset =
 			{ 0x080425B1}
 
 
