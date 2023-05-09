@@ -129,7 +129,7 @@ function PokemonData.initialize()
 
 	PokemonData.UpdateBST()
 	PokemonData.updatemoves()
-	print(PokemonData.Pokemon[3].movelvls[1])
+
 	for pokemonID=1, PokemonData.totalPokemon, 1 do
 		local pokemonData = PokemonData.Pokemon[pokemonID]
 
