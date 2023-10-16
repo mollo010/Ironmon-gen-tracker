@@ -230,7 +230,7 @@ function GameSettings.setGen2Addresses()
 		gTurn = {0x020006dd},
 		oppTurn = {0x020006dc},
 		eMove = {0x02000608},
-		eType = {0x02000fea},
+		eType = {0x02001224},
 		StatChange = {0x020006cc},
 		gBattlerPartyIndexes = {0x02001163},
 		gBattleTypeFlags = {0x0200015A},
