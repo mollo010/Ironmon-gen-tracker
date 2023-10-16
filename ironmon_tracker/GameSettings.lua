@@ -319,7 +319,7 @@ function GameSettings.setGameInfo(gamecode)
 			VERSION_GROUP = 1,
 			VERSION_COLOR = "Crystal",
 			LANGUAGE = "English",
-			BADGE_PREFIX = "FRLG",
+			BADGE_PREFIX = "GSC",
 			BADGE_XOFFSETS = {1, 1, 0, 0, 1, 1, 1, 1},
 			GEN = 2
 		},
