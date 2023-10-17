@@ -138,7 +138,6 @@ function Battle.updateBattleStatusGen2()
 	--	Battle.battleStarting = true
 	--end
 	--Battle.totalBattles = totalBattles
-	print(lastBattleStatus)
 
 	if not Battle.inBattle and lastBattleStatus ~= 0 and opposingPokemon ~= nil then
 		-- Battle.isWildEncounter = Tracker.Data.trainerID == opposingPokemon.trainerID -- NOTE: doesn't work well, temporarily removing
