@@ -86,7 +86,6 @@ end
 -- Returns a table with all of the important display data safely formatted to draw on screen.
 -- forceView: optional, if true forces view as viewingOwn, otherwise forces enemy view
 function DataHelper.buildTrackerScreenDisplay(forceView)
-
 	local data = {}
 	data.p = {} -- data about the Pokemon itself
 	data.m = {} -- data about the Moves of the Pokemon
@@ -104,10 +103,8 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 	local opposingPokemon = Tracker.getPokemon(1, false) -- currently used exclusively for Low Kick weight calcs
 
 	if viewedPokemon == nil or viewedPokemon.pokemonID == 0 or not Program.isValidMapLocation() then
-
 		viewedPokemon = Tracker.getDefaultPokemon()
 	elseif not Tracker.Data.hasCheckedSummary then
-
 		-- Don't display any spoilers about the stats/moves, but still show the pokemon icon, name, and level
 		local defaultPokemon = Tracker.getDefaultPokemon()
 		defaultPokemon.pokemonID = viewedPokemon.pokemonID
@@ -117,7 +114,6 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 
 	-- Add in Pokedex information about the Pokemon
 	if PokemonData.isValid(viewedPokemon.pokemonID) then
-
 		for key, value in pairs(PokemonData.Pokemon[viewedPokemon.pokemonID]) do
 			viewedPokemon[key] = value
 		end
@@ -158,13 +154,14 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 	-- Update: Pokemon Types
 	if Battle.inBattle and (data.x.viewingOwn or not Battle.isGhost) then
 		-- Update displayed types as typing changes (i.e. Color Change)
-		data.p.types = { viewedPokemon.types[1], viewedPokemon.types[2], }
+		data.p.types = {viewedPokemon.types[1], viewedPokemon.types[2]}
 	else
-		data.p.types = { viewedPokemon.types[1], viewedPokemon.types[2], }
+		data.p.types = {viewedPokemon.types[1], viewedPokemon.types[2]}
 	end
 
 	-- Update: Pokemon Evolution
-	local isFriendEvoReady = data.p.evo == PokemonData.Evolutions.FRIEND and viewedPokemon.friendship >= Program.GameData.friendshipRequired
+	local isFriendEvoReady =
+		data.p.evo == PokemonData.Evolutions.FRIEND and viewedPokemon.friendship >= Program.GameData.friendshipRequired
 	if Options["Determine friendship readiness"] and data.x.viewingOwn and isFriendEvoReady then
 		data.p.evo = PokemonData.Evolutions.FRIEND_READY
 	end
@@ -192,14 +189,15 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 	end
 
 	-- Add: Move Header wip not sure if works correctly
-	data.m.nextmoveheader, data.m.nextmovelevel, data.m.nextmovespacing = Utils.getMovesLearnedHeader(viewedPokemon.pokemonID, viewedPokemon.level)
+	data.m.nextmoveheader, data.m.nextmovelevel, data.m.nextmovespacing =
+		Utils.getMovesLearnedHeader(viewedPokemon.pokemonID, viewedPokemon.level)
 
 	-- MOVES OF POKEMON (data.m)
-	data.m.moves = { {}, {}, {}, {}, } -- four empty move placeholders
+	data.m.moves = {{}, {}, {}, {}} -- four empty move placeholders
 
 	local stars
 	if data.x.viewingOwn then
-		stars = { "", "", "", "" }
+		stars = {"", "", "", ""}
 	else
 		stars = Utils.calculateMoveStars(viewedPokemon.pokemonID, viewedPokemon.level)
 	end
@@ -259,7 +257,7 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 		end
 
 		-- Update: If STAB
-		if Battle.inBattle and false then
+		if Battle.inBattle then
 			local ownTypes = Program.getPokemonTypes(data.x.viewingOwn, Battle.isViewingLeft)
 			move.isstab = Utils.isSTAB(move, move.type, ownTypes)
 		end
@@ -317,11 +315,12 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 		move.showeffective = move.showeffective and Options["Show move effectiveness"] and Battle.inBattle
 
 		-- Update: Calculate move effectiveness
-		if move.showeffective then
-
+		if move.showeffective and data.x.viewingOwn then
 			local enemyTypes = Program.getePokemonTypes(1, 1)
 			move.effectiveness = Utils.netEffectiveness(move, move.type, enemyTypes)
-
+		elseif move.showeffective and not data.x.viewingOwn then
+			local ourTypes = Program.getPokemonTypes(1, 1)
+			move.effectiveness = Utils.netEffectiveness(move, move.type, ourTypes)
 		else
 			move.effectiveness = 1
 		end
@@ -350,7 +349,6 @@ function DataHelper.buildTrackerScreenDisplay(forceView)
 end
 
 function DataHelper.buildPokemonInfoDisplay(pokemonID)
-
 	local data = {}
 	data.p = {} -- data about the Pokemon itself
 	data.e = {} -- data about the Type Effectiveness of the Pokemon
@@ -373,10 +371,13 @@ function DataHelper.buildPokemonInfoDisplay(pokemonID)
 	data.p.evo = Utils.getDetailedEvolutionsInfo(pokemon.evolution)
 
 	-- Hide Pokemon types if player shouldn't know about them
-	if not PokemonData.IsRand.pokemonTypes or Options["Reveal info if randomized"] or (pokemon.pokemonID == ownLeadPokemon.pokemonID) then
-		data.p.types = { pokemon.types[1], pokemon.types[2] }
+	if
+		not PokemonData.IsRand.pokemonTypes or Options["Reveal info if randomized"] or
+			(pokemon.pokemonID == ownLeadPokemon.pokemonID)
+	 then
+		data.p.types = {pokemon.types[1], pokemon.types[2]}
 	else
-		data.p.types = { PokemonData.Types.UNKNOWN, PokemonData.Types.UNKNOWN }
+		data.p.types = {PokemonData.Types.UNKNOWN, PokemonData.Types.UNKNOWN}
 	end
 
 	data.p.movelvls = {}
@@ -556,10 +557,10 @@ function DataHelper.buildPokemonLogDisplay(pokemonID)
 	data.p.id = pokemonDex.pokemonID or 0
 	data.p.name = pokemonDex.name or Constants.BLANKLINE
 	data.p.bst = pokemonDex.bst or Constants.BLANKLINE
-	data.p.types = { pokemonDex.types[1], pokemonDex.types[2] }
+	data.p.types = {pokemonDex.types[1], pokemonDex.types[2]}
 	data.p.abilities = {
 		PokemonData.getAbilityId(pokemonDex.pokemonID, 0),
-		PokemonData.getAbilityId(pokemonDex.pokemonID, 1),
+		PokemonData.getAbilityId(pokemonDex.pokemonID, 1)
 	}
 
 	-- The following are all Randomizer Log information
@@ -583,7 +584,7 @@ function DataHelper.buildPokemonLogDisplay(pokemonID)
 	for _, evoId in ipairs(pokemonLog.Evolutions or {}) do
 		local evoInfo = {
 			id = evoId,
-			name = PokemonData.Pokemon[evoId].name,
+			name = PokemonData.Pokemon[evoId].name
 		}
 		table.insert(data.p.evos, evoInfo)
 	end
@@ -596,7 +597,7 @@ function DataHelper.buildPokemonLogDisplay(pokemonID)
 			id = move.moveId,
 			level = move.level,
 			name = moveDex.name,
-			isstab = Utils.isSTAB(moveDex, moveDex.type, data.p.types),
+			isstab = Utils.isSTAB(moveDex, moveDex.type, data.p.types)
 		}
 		table.insert(data.p.moves, moveInfo)
 	end
@@ -617,7 +618,7 @@ function DataHelper.buildPokemonLogDisplay(pokemonID)
 			moveId = moveId,
 			moveName = MoveData.Moves[moveId].name,
 			gymNum = gymTMs[tmNumber] or 9,
-			isstab = Utils.isSTAB(moveDex, moveDex.type, data.p.types),
+			isstab = Utils.isSTAB(moveDex, moveDex.type, data.p.types)
 		}
 		table.insert(data.p.tmmoves, tmInfo)
 	end
@@ -653,7 +654,7 @@ function DataHelper.buildTrainerLogDisplay(trainerId)
 			name = PokemonData.Pokemon[partyMon.pokemonID].name or Constants.BLANKLINE,
 			level = partyMon.level or 0,
 			moves = {},
-			helditem = partyMon.helditem,
+			helditem = partyMon.helditem
 		}
 		local movesLeftToAdd = 4
 		local pokemonMoves = RandomizerLog.Data.Pokemon[partyMon.pokemonID].MoveSet or {}
@@ -662,7 +663,7 @@ function DataHelper.buildTrainerLogDisplay(trainerId)
 			if pokemonMoves[j].level <= partyMon.level then
 				local moveToAdd = {
 					moveId = pokemonMoves[j].moveId,
-					name = MoveData.Moves[pokemonMoves[j].moveId].name,
+					name = MoveData.Moves[pokemonMoves[j].moveId].name
 				}
 				table.insert(pokemonInfo.moves, 1, moveToAdd) -- insert at the front to add them in "reverse" or bottom-up
 				movesLeftToAdd = movesLeftToAdd - 1

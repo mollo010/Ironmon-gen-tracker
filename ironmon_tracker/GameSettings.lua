@@ -233,6 +233,7 @@ function GameSettings.setGen2Addresses()
 		eType = {0x02001224},
 		StatChange = {0x020006cc},
 		gBattlerPartyIndexes = {0x02001163},
+		gBattleMons = {0x0200064a},
 		gBattleTypeFlags = {0x0200122d},
 		gMapHeader = {0x0200015a},
 		gPlayerPartyCount = {0x02000cd7},

@@ -1151,7 +1151,7 @@ end
 function Program.getPokemonTypes(isOwn, isLeft)
 	local ownerAddressOffset = Utils.inlineIf(isOwn, 0x0, 0x58)
 	local leftAddressOffset = Utils.inlineIf(isLeft, 0x0, 0xB0)
-	local typesData = Memory.readword(GameSettings.gBattleMons + 0x21 + ownerAddressOffset + leftAddressOffset)
+	local typesData = Memory.readword(GameSettings.gBattleMons)
 	return {
 		PokemonData.TypeIndexMap[Utils.getbits(typesData, 0, 8)],
 		PokemonData.TypeIndexMap[Utils.getbits(typesData, 8, 8)],
