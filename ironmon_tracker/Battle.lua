@@ -130,7 +130,7 @@ function Battle.updateGen2()
 end
 
 function Battle.updateBattleStatusGen2()
-	-- BattleStatus [0 = Not in Battle, 1 = In Battle, 8 = Picked up item]
+	-- BattleStatus [0 = Not in Battle, 1 = Wild Battle, 2 = Trainer Battle]
 	local lastBattleStatus = Memory.readbyte(GameSettings.gBattleTypeFlags)
 	local opposingPokemon = Tracker.getPokemonGen2(1, false) -- get the lead pokemon on the enemy team
 	--local totalBattles = Utils.getGameStat(Constants.GAME_STATS.TOTAL_BATTLES)
@@ -140,7 +140,7 @@ function Battle.updateBattleStatusGen2()
 	--Battle.totalBattles = totalBattles
 	print(lastBattleStatus)
 
-	if not Battle.inBattle and lastBattleStatus == 1 and opposingPokemon ~= nil then
+	if not Battle.inBattle and lastBattleStatus ~= 0 and opposingPokemon ~= nil then
 		-- Battle.isWildEncounter = Tracker.Data.trainerID == opposingPokemon.trainerID -- NOTE: doesn't work well, temporarily removing
 		DataHelper.Gameover = false
 
