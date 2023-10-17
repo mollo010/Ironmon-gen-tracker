@@ -130,7 +130,7 @@ function Battle.updateGen2()
 end
 
 function Battle.updateBattleStatusGen2()
-	-- BattleStatus [0 = In battle, 1 = Won the match, 2 = Lost the match, 4 = Fled, 7 = Caught]
+	-- BattleStatus [0 = Not in Battle, 1 = In Battle]
 	local lastBattleStatus = Memory.readbyte(GameSettings.gBattleTypeFlags)
 	local opposingPokemon = Tracker.getPokemonGen2(1, false) -- get the lead pokemon on the enemy team
 	--local totalBattles = Utils.getGameStat(Constants.GAME_STATS.TOTAL_BATTLES)
